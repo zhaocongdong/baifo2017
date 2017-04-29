@@ -1,4 +1,164 @@
+p{ margin:0; padding:0; }
+ul{ margin:0; padding:0; list-style:none; }
+input[type="button"]{ border:none; background-color:transparent; }
+input[type="button"]:focus{ outline:none; border:none; }
+input[type="button"]:hover{ outline:none; border:none; }
+
+.aburnjoss-container{ position:relative; width:1000px; height:700px; }
+.fo-lists-container{ position:relative; width:1000px; height:700px; }
+.fo-lists{ overflow:hidden; position:relative; width:1000px; height:700px; }
+.fo-lists li{ position:absolute; top:0; left:1000px; width:1000px; height:700px; background-repeat:no-repeat; background-position:0 0; }
+.fo-lists li.active{ left:0; }
+.fo-lists li.fo1{ background-image:url('../images/aburnjoss/fo/fo1_guanshiyin.jpg'); }
+.fo-lists li.fo2{ background-image:url('../images/aburnjoss/fo/fo2_shijiamoni.jpg'); }
+.fo-lists li.fo3{ background-image:url('../images/aburnjoss/fo/fo3_wenshupusa.jpg'); }
+.fo-lists li.fo4{ background-image:url('../images/aburnjoss/fo/fo4_wenquxingjun.jpg'); }
+.fo-lists li.fo5{ background-image:url('../images/aburnjoss/fo/fo5_yuelao.jpg'); }
+.fo-lists li.fo6{ background-image:url('../images/aburnjoss/fo/fo6_songziguanyin.jpg'); }
+.fo-lists li.fo7{ background-image:url('../images/aburnjoss/fo/fo7_milefo.jpg'); }
+.fo-lists li.fo8{ background-image:url('../images/aburnjoss/fo/fo8_mazu.jpg'); }
+.fo-lists li.fo9{ background-image:url('../images/aburnjoss/fo/fo9_guangong.jpg'); }
+.fo-lists li.fo10{ background-image:url('../images/aburnjoss/fo/fo10_dashizhi.jpg'); }
+.fo-lists li.fo11{ background-image:url('../images/aburnjoss/fo/fo11_caishenye.jpg'); }
+.fo-lists li.fo12{ background-image:url('../images/aburnjoss/fo/fo12_dizangwang.jpg'); }
+.fo-lists li.fo13{ background-image:url('../images/aburnjoss/fo/fo13_amituofo.jpg'); }
+.fo-lists li.fo14{ background-image:url('../images/aburnjoss/fo/fo14_puxian.jpg'); }
+.fo-lists li.fo15{ background-image:url('../images/aburnjoss/fo/fo15_yaoshifo.jpg'); }
+
+.fo-handle{ position:absolute; top:346px; left:0; width:100%; }
 .fo-handle .arrow-left,
-.fo-handle .arrow-right{ width:49px; height:54px; background-image:url('../images/aburnjoss/arw-left.png'); background-repeat:no-repeat; }
+.fo-handle .arrow-right{ width:49px; height:54px; background-image:url('../images/aburnjoss/arw-left.png'); background-repeat:no-repeat; cursor:pointer; }
+.fo-handle .arrow-left{ float:left; margin-left:50px; }
+.fo-handle .arrow-right{ float:right; margin-right:50px; }
 .fo-handle .arrow-left:hover{ background-image:url('../images/aburnjoss/arw-left-hover.png'); }
+.fo-handle .arrow-right{ background-image:url('../images/aburnjoss/arw-right.png') }
 .fo-handle .arrow-right:hover{ background-image:url('../images/aburnjoss/arw-right-hover.png'); }
+
+.draw-pot{ position:absolute; left:36px; top:90px; width:80px; height:100px; background:url('../images/aburnjoss/draw-pot.png') no-repeat 0 0; background-size: 100% 100%; cursor:pointer; }
+.merit-box{ position:absolute; left:20px; bottom:0; width:144px; height:99px; background:url('../images/aburnjoss/merit-box.png') no-repeat 0 0; cursor:pointer; }
+.py-huanyuan{ position:absolute; left:35px; top:17px; width:100px; height:50px; background:url('../images/aburnjoss/py-huanyuan.png') no-repeat 0 0; cursor:pointer; }
+
+.tribute-lists-container{ position:absolute; left:167px; bottom:0; width:833px; height:110px; }
+.tribute-lists-bg{ width:665px; height:110px; border:1px solid transparent; background:url('../images/aburnjoss/tribute-bg.png') no-repeat 0 0; }
+.tribute-lists-nav { margin:15px 0 0 35px; font-size:0; }
+.tribute-lists-nav span{ position:relative; display:inline-block; width:52px; height:28px; margin-right:1px; background-repeat:no-repeat; cursor:pointer; }
+.tribute-lists-nav span:hover{}
+.tribute-lists-nav span:hover::after,
+.tribute-lists-nav span.active::after{ content:""; position:absolute; left:21px; bottom:-7px; width:10px; height:7px; background:url('../images/aburnjoss/tribute-nav/top-arrow-hover.png') no-repeat 0 0; }
+.tribute-lists-nav span.nav01{ background-image:url('../images/aburnjoss/tribute-nav/01.png') }
+.tribute-lists-nav span.nav02{ background-image:url('../images/aburnjoss/tribute-nav/02.png') }
+.tribute-lists-nav span.nav03{ background-image:url('../images/aburnjoss/tribute-nav/03.png') }
+.tribute-lists-nav span.nav04{ background-image:url('../images/aburnjoss/tribute-nav/04.png') }
+.tribute-lists-nav span.nav05{ background-image:url('../images/aburnjoss/tribute-nav/05.png') }
+.tribute-lists-nav span.nav06{ background-image:url('../images/aburnjoss/tribute-nav/06.png') }
+.tribute-lists-nav span.nav07{ background-image:url('../images/aburnjoss/tribute-nav/07.png') }
+.tribute-lists-nav span.nav08{ background-image:url('../images/aburnjoss/tribute-nav/08.png') }
+.tribute-lists-nav span.nav09{ background-image:url('../images/aburnjoss/tribute-nav/09.png') }
+.tribute-lists-nav span.nav10{ background-image:url('../images/aburnjoss/tribute-nav/10.png') }
+.tribute-lists-nav span.nav11{ background-image:url('../images/aburnjoss/tribute-nav/11.png') }
+.tribute-lists{ overflow:hidden; position:relative; width:577px; height:50px; margin:11px 0 0 44px; }
+.tribute-lists li{ display:none; position:absolute; top:0; left:0; }
+.tribute-lists li.display-block{ display:block }
+.tribute-lists li span{ display:inline-block; width:50px; height:50px; margin-right:7px; cursor:pointer; }
+
+.tribute-lists li.type01 span{ background:url('../images/aburnjoss/tributes/tribute-type-1.png') no-repeat 0 0; }
+.tribute-lists li.type02 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-1.png'); }
+.tribute-lists li.type02 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-2.png'); }
+.tribute-lists li.type02 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-3.png'); }
+.tribute-lists li.type02 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-4.png'); }
+.tribute-lists li.type02 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-5.png'); }
+.tribute-lists li.type02 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-6.png'); }
+.tribute-lists li.type02 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-7.png'); }
+
+.tribute-lists li.type03 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-3-1.png'); }
+.tribute-lists li.type03 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-3-2.png'); }
+.tribute-lists li.type03 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-3-3.png'); }
+.tribute-lists li.type03 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-3-4.png'); }
+.tribute-lists li.type03 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-3-5.png'); }
+.tribute-lists li.type03 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-3-6.png'); }
+.tribute-lists li.type03 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-5ype-3-7.png'); }
+
+.tribute-lists li.type04 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-1.png'); }
+.tribute-lists li.type04 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-2.png'); }
+.tribute-lists li.type04 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-3.png'); }
+.tribute-lists li.type04 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-4.png'); }
+.tribute-lists li.type04 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-5.png'); }
+.tribute-lists li.type04 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-6.png'); }
+.tribute-lists li.type04 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-7.png'); }
+
+.tribute-lists li.type05 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-1.png'); }
+.tribute-lists li.type05 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-2.png'); }
+.tribute-lists li.type05 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-3.png'); }
+.tribute-lists li.type05 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-4.png'); }
+.tribute-lists li.type05 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-5.png'); }
+.tribute-lists li.type05 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-6.png'); }
+.tribute-lists li.type05 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-7.png'); }
+
+.tribute-lists li.type06 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-1.png'); }
+.tribute-lists li.type06 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-2.png'); }
+.tribute-lists li.type06 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-3.png'); }
+.tribute-lists li.type06 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-4.png'); }
+.tribute-lists li.type06 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-5.png'); }
+.tribute-lists li.type06 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-6.png'); }
+.tribute-lists li.type06 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-7.png'); }
+
+.tribute-lists li.type07 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-1.png'); }
+.tribute-lists li.type07 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-2.png'); }
+.tribute-lists li.type07 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-3.png'); }
+.tribute-lists li.type07 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-4.png'); }
+.tribute-lists li.type07 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-5.png'); }
+.tribute-lists li.type07 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-6.png'); }
+.tribute-lists li.type07 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-7.png'); }
+
+.tribute-lists li.type08 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-1.png'); }
+.tribute-lists li.type08 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-2.png'); }
+.tribute-lists li.type08 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-3.png'); }
+.tribute-lists li.type08 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-4.png'); }
+.tribute-lists li.type08 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-5.png'); }
+.tribute-lists li.type08 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-6.png'); }
+.tribute-lists li.type08 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-7.png'); }
+
+.tribute-lists li.type09 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-1.png'); }
+.tribute-lists li.type09 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-2.png'); }
+.tribute-lists li.type09 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-3.png'); }
+.tribute-lists li.type09 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-4.png'); }
+.tribute-lists li.type09 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-5.png'); }
+.tribute-lists li.type09 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-6.png'); }
+.tribute-lists li.type09 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-7.png'); }
+
+.tribute-lists li.type10 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-1.png'); }
+.tribute-lists li.type10 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-2.png'); }
+.tribute-lists li.type10 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-3.png'); }
+.tribute-lists li.type10 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-4.png'); }
+.tribute-lists li.type10 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-5.png'); }
+.tribute-lists li.type10 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-6.png'); }
+.tribute-lists li.type10 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-7.png'); }
+
+.tribute-lists li.type11 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-1.jpg'); }
+.tribute-lists li.type11 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-2.jpg'); }
+.tribute-lists li.type11 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-3.jpg'); }
+.tribute-lists li.type11 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-4.jpg'); }
+.tribute-lists li.type11 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-5.jpg'); }
+.tribute-lists li.type11 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-6.jpg'); }
+.tribute-lists li.type11 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-7.jpg'); }
+.tribute-lists li.type11 span.t08{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-8.jpg'); }
+.tribute-lists li.type11 span.t09{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-9.jpg'); }
+.tribute-lists li.type11 span.t10{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-10.jpg'); }
+
+
+.tribute-handle .arrow-left,
+.tribute-handle .arrow-right{ position:absolute; top:50px; background-repeat:no-repeat; width:35px; height:33px; }
+.tribute-handle .arrow-left{ left:-12px; background-image:url('../images/aburnjoss/tribute-arw-left.png'); }
+.tribute-handle .arrow-right{ left:628px; background-image:url('../images/aburnjoss/tribute-arw-right.png'); }
+.tribute-confirm-submit{ position:absolute; right:5px; bottom:7px; }
+.tribute-confirm-submit p{ padding-left:20px; width:163px; height:24px; margin-bottom:6px; background:url('../images/aburnjoss/tribute-counts-bg.png') no-repeat 0 0; }
+.tribute-confirm-submit input{ display:block; width:156px; height:48px; background:url('../images/aburnjoss/confirm-tribute.png') no-repeat 0 0; }
+
+.layer-block{ display:none; position:absolute; top:0; left:0; z-index:11; width:100%; height:100%; background-color:rgba(0,0,0,0.5); }
+.layer-merit-box{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-90px 0 0 -148px; width:296px; height:181px; background:url('../images/aburnjoss/layer-merit-bg.png') no-repeat 0 0; }
+.input-merit-amount{ width:260px; margin:80px 0 0 19px; }
+.confirm-merit-amount{ display:inline-block; width:99px; height:52px; margin:5px 20px 0 39px; background:url('../images/aburnjoss/button-confirm-1.png') no-repeat 0 0; }
+.close-layer-merit{ display:inline-block; width:99px; height:52px; background:url('../images/aburnjoss/button-close-1.png') no-repeat 0 0; }
+
+
+
