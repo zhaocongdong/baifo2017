@@ -1,0 +1,4 @@
+.fo-handle .arrow-left,
+.fo-handle .arrow-right{ width:49px; height:54px; background-image:url('../images/aburnjoss/arw-left.png'); background-repeat:no-repeat; }
+.fo-handle .arrow-left:hover{ background-image:url('../images/aburnjoss/arw-left-hover.png'); }
+.fo-handle .arrow-right:hover{ background-image:url('../images/aburnjoss/arw-right-hover.png'); }

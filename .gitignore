@@ -8,3 +8,4 @@ tmp/cache/*
 tmp/extension/*
 .idea/*
 .gitkeep
+.phpintel/*
