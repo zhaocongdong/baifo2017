@@ -9,7 +9,7 @@
  *  May you find forgiveness for yourself and forgive others.
  *  May you share freely, never taking more than you give.
  */
-class alogin extends control
+class zuser extends control
 {
     /**
      * The construct function.
