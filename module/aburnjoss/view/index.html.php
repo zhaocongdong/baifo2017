@@ -12,6 +12,8 @@
 ?>
 <?php include '../../common/view/header.html.php';?>
 <div class='container'>
-    烧香
+    <div class="content">
+
+    </div>
 </div>
 <?php include '../../common/view/footer.html.php';?>
