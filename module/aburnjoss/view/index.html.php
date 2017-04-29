@@ -13,7 +13,13 @@
 <?php include '../../common/view/header.html.php';?>
 <div class='container'>
     <div class="content">
-
+        <div class="shaoxiang">
+            <div class="fo-lists-coantainer">
+                <ul class="fo-lists">
+                    <li></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 <?php include '../../common/view/footer.html.php';?>
