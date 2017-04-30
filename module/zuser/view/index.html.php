@@ -22,9 +22,10 @@
             <tr>
                 <td width='50'>编号</td>
                 <td>用户名</td>
-                <td class='text-center' width='150'>邮箱</td>
-                <td class='text-center' width='120'>手机号</td>
-                <td class='text-center' width='120'>操作</td>
+                <td>功德</td>
+                <td>银两</td>
+                <td>注册时间</td>
+                <td>上次登录</td>
             </tr>
             </thead>
             <tbody>
@@ -32,20 +33,16 @@
                 <tr>
                     <td class='text-center'><?php echo $user->id;?></td>
                     <td><?php echo $user->name;?></td>
-                    <td><?php echo $user->email;?></td>
-                    <td>
-                        <?php
-                        echo html::a($this->createLink('zuser', 'view',   "id=$article->id"), "查看");
-//                        echo html::a($this->createLink('zuser', 'edit',   "id=$article->id"), "编辑");
-//                        echo html::a($this->createLink('zuser', 'delete', "id=$article->id"), "删除");
-                        ?>
-                    </td>
+                    <td><?php echo $user->merit_num;?></td>
+                    <td><?php echo $user->gold_num;?></td>
+                    <td><?php echo $user->register_time;?></td>
+                    <td><?php echo $user->last_time;?></td>
                 </tr>
             <?php endforeach;?>
             </tbody>
             <tfoot>
             <tr>
-                <td colspan='5'>
+                <td colspan='6'>
                     <?php
                     $pager->show('right', 'short');
                     ?>
