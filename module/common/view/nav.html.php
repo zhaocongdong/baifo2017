@@ -6,19 +6,21 @@
           <?php echo html::a($this->createLink('afreeanimal'),  "放生",       "class='navbar-brand' style='font-size:17px'")?>
           <?php echo html::a($this->createLink('afostore'),     "拜佛商城",    "class='navbar-brand' style='font-size:17px'")?>
           <?php //echo html::a($this->createLink('blog'),         "blog",       "class='navbar-brand' style='font-size:17px'")?>
-          <?php
-          $session_flag = false;
-          if (isset($_SESSION["userid"]) && !empty($_SESSION["userid"])) {
-              $session_flag = true;
-          }
-          if ($session_flag) {
-              echo html::a($this->createLink('auser','loginout'), "注销", "class='navbar-brand' style='font-size:17px'");
-              echo html::a($this->createLink('auser', 'index'), $_SESSION["username"], "class='navbar-brand' style='font-size:17px'");
-          }else {
-              echo html::a($this->createLink('auser','login'), "登录", "class='navbar-brand' style='font-size:17px'");
-              echo html::a($this->createLink('auser','register'), "注册", "class='navbar-brand' style='font-size:17px'");
-          }
-          ?>
+  </div>
+  <div class='navbar-header' style="float: right;">
+      <?php
+      $session_flag = false;
+      if (!empty($_SESSION[USER_ID])) {
+          $session_flag = true;
+      }
+      if ($session_flag) {
+          echo html::a($this->createLink('auser', 'index'), $_SESSION[USER_NAME], "class='navbar-brand' style='font-size:17px'");
+          echo html::a($this->createLink('auser','logout'), "注销", "class='navbar-brand' style='font-size:14px'");
+      } else {
+          echo html::a($this->createLink('auser','login'), "登录", "class='navbar-brand' style='font-size:17px'");
+          echo html::a($this->createLink('auser','register'), "注册", "class='navbar-brand' style='font-size:17px'");
+      }
+      ?>
   </div>
   <div class="collapse navbar-collapse">
     <ul class='nav navbar-nav nav-reverce'>

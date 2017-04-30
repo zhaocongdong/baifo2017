@@ -13,6 +13,7 @@
 <?php
 class auserModel extends model
 {
+
     /**
      * Get an article.
      * 
@@ -22,7 +23,7 @@ class auserModel extends model
      */
     public function getById($id)
     {
-        return $this->dao->findById($id)->from('blog')->fetch();
+        return $this->dao->findById($id)->from('bf_user')->fetch();
     }
 
     /**
@@ -31,10 +32,18 @@ class auserModel extends model
      * @access public
      * @return void
      */
-    public function create()
+    public function register()
     {
-        $article = fixer::input('post')->specialchars('title, content')->add('date', date('Y-m-d H:i:s'))->get();
-        $this->dao->insert('blog')->data($article)->autoCheck()->batchCheck('title,content', 'notempty')->exec();
+        $user = fixer::input('post')->specialchars('name, password')->add('register_time', date(DATE_FORMAT))->add('last_time', date(DATE_FORMAT))->get();
+        $user->tid = 1;
+        if (!empty($_SESSION[RMD_UID])) {
+            $user->rmd_uid = $_SESSION[RMD_UID];
+        }
+        $user->merit_num = 0; // 功德
+        $user->gold_num = 1000; // 银两默认1000
+        $this->dao->insert('bf_user')->data($user)
+            ->check('name', 'unique')
+            ->exec();
         return $this->dao->lastInsertID();
     }
 

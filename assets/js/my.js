@@ -57,3 +57,12 @@ function switchLang(switcher)
     $.cookie('lang', $(switcher).data('lang'));
     location.href = location.href;
 }
+
+function copyUrl(obj)
+{
+    console.log(obj);
+    s = obj.select();
+    console.log(s);
+    document.execCommand("Copy")
+    alert("复制成功!");
+}

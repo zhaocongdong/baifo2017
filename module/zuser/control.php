@@ -33,7 +33,8 @@ class zuser extends control
         $this->app->loadClass('pager');
         $pager = new pager($recTotal, $recPerPage, $pageID);
 
-        $this->view->articles = $this->zuser->getList($pager);
+        $s = $this->zuser->getList($pager);
+        $this->view->users = $s;
         $this->view->pager    = $pager;
         $this->display();
     }
