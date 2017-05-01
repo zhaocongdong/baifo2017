@@ -97,49 +97,18 @@ css::import($webRoot . 'module/afostore/css/fostore.css');
             </div>
         </div>
         <div class="sidebar">
-            <div class="sidebar_content"><h3 class="h_title">产品分类</h3>
-                <ul class="list">
-                    <li><a href="shop.html?cid=19" class="left" title="佛珠">佛珠</a></li>
-                    <li><a href="shop.html?cid=20" class="left" title="挂件">挂件</a></li>
-                    <li><a href="shop.html?cid=22" class="left" title="摆设">摆设</a></li>
-                    <li><a href="shop.html?cid=23" class="left" title="转经轮系列">转经轮系列</a></li>
-                    <li><a href="shop.html?cid=24" class="left" title="佛塔坛城类">佛塔坛城类</a></li>
-                    <li><a href="shop.html?cid=25" class="left" title="小精品类">小精品类</a></li>
-                    <li><a href="shop.html?cid=26" class="left" title="佛像类">佛像类</a></li>
-                    <li><a href="shop.html?cid=27" class="left" title="挥洒">挥洒</a></li>
-                    <li><a href="shop.html?cid=28" class="left" title="方位改运类">方位改运类</a></li>
-                    <li><a href="shop.html?cid=29" class="left" title="综合佛品类">综合佛品类</a></li>
-                    <li><a href="shop.html?cid=30" class="left" title="护身金卡\护身符类">护身金卡\护身符类</a></li>
-                    <li><a href="shop.html?cid=31" class="left" title="综合佛品系列">综合佛品系列</a></li>
-                    <li><a href="shop.html?cid=32" class="left" title="琉璃挂件">琉璃挂件</a></li>
-                    <li><a href="shop.html?cid=37" class="left" title="开光灵符">开光灵符</a></li>
-                </ul>
-            </div>
-            <div class="sidebar_content"><h3 class="h_title">热门产品</h3>
-                <ul class="list">
-                    <li><a href="Shop-1397.html" class="left" title="黄金木佛珠">黄金木佛珠</a></li>
-                    <li><a href="Shop-1399.html" class="left" title="香柏木佛珠">香柏木佛珠</a></li>
-                    <li><a href="Shop-1402.html" class="left" title="小叶红檀佛珠">小叶红檀佛珠</a></li>
-                    <li><a href="Shop-1405.html" class="left" title="黄金木佛珠">黄金木佛珠</a></li>
-                    <li><a href="Shop-1411.html" class="left" title="紫罗兰木佛珠">紫罗兰木佛珠</a></li>
-                </ul>
-            </div>
             <div class="sidebar_content"><h3 class="h_title">推荐产品</h3>
                 <ul class="list">
-                    <li><a href="shop-1402.html" class="left" title="小叶红檀佛珠">小叶红檀佛珠</a></li>
-                    <li><a href="shop-1405.html" class="left" title="黄金木佛珠">黄金木佛珠</a></li>
-                    <li><a href="shop-1415.html" class="left" title="酸枝提珠">酸枝提珠</a></li>
-                    <li><a href="shop-1481.html" class="left" title="莲花生大士护身符">莲花生大士护身符</a></li>
-                    <li><a href="shop-1511.html" class="left" title="金刚萨垛(大)">金刚萨垛(大)</a></li>
+                    <?php foreach($rmd_goods_list as $rmd_goods):?>
+                        <li><a href="<?php echo $this->createLink('afostore', 'detail', array('id'=>$rmd_goods->id));?>" class="left" title="<?php echo $rmd_goods->goods_name;?>"><?php echo $rmd_goods->goods_name;?></a></li>
+                    <?php endforeach;?>
                 </ul>
             </div>
-            <div class="sidebar_content"><h3 class="h_title">新品推荐</h3>
+            <div class="sidebar_content"><h3 class="h_title">产品分类</h3>
                 <ul class="list">
-                    <li><a href="Shop-1499.html" class="left" title="琉璃骑龙观音">琉璃骑龙观音</a></li>
-                    <li><a href="Shop-1509.html" class="left" title="绿度母">绿度母</a></li>
-                    <li><a href="Shop-1556.html" class="left" title="驾驶避祸平安符">驾驶避祸平安符</a></li>
-                    <li><a href="Shop-1560.html" class="left" title="经文同步祥云念佛机">经文同步祥云念佛机</a></li>
-                    <li><a href="Shop-1563.html" class="left" title="血龙木佛珠">血龙木佛珠</a></li>
+                    <?php foreach($goods_cate_list as $goods_cate):?>
+                        <li><a href="<?php echo $this->createLink('afostore', 'index', array('cate_id'=>$goods_cate->id));?>" class="left" title="<?php echo $goods_cate->cate_name;?>"><?php echo $goods_cate->cate_name;?></a></li>
+                    <?php endforeach;?>
                 </ul>
             </div>
         </div>

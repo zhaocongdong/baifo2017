@@ -18,7 +18,7 @@ css::import($webRoot . 'module/afostore/css/fostore.css');
 <div class='container'>
     <div class="column">
         <div class="main main_list">
-            <h2 class="main_title">最新精品</h2>
+            <h2 class="main_title"><?php echo empty($good_cate) ?  '最新精品' : $good_cate->cate_name;?></h2>
             <ul class="clearfix">
                 <?php foreach($all_goods as $goods):?>
                 <li class="acc_adv_li">
