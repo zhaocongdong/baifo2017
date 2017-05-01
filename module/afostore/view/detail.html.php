@@ -34,25 +34,15 @@ css::import($webRoot . 'module/afostore/css/fostore.css');
                             <span class="tb-metatit">数量:</span>
                             <span class="ui-spinner ui-widget ui-widget-content ui-corner-all">
                                 <input type="text" name="buy_num" id="buy_num" value="1" class="goods_num ui-spinner-input" readonly="" aria-valuemin="0" aria-valuenow="1" autocomplete="off" role="spinbutton">
-                                <a class="ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false">
-                                    <span class="ui-button-text">
-                                        <span class="ui-icon ui-icon-triangle-1-n">▲</span>
-                                    </span>
-                                </a>
-                                <a class="ui-spinner-button ui-spinner-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false">
-                                    <span class="ui-button-text">
-                                        <span class="ui-icon ui-icon-triangle-1-s">▼</span>
-                                    </span>
-                                </a>
                             </span>
                         </li>
                         <li>
                             <span class="tb-metatit">总价:</span>
-                            <input type="text" readonly="" name="totalnum" id="totalnum" value="<?php echo $goods->goods_price; ?>">
+                            <input type="text" readonly="" name="totalnum" id="totalnum" value="<?php echo sprintf("%.2f", $goods->goods_price); ?>">
                         </li>
                         <li>
-                            <input type="button" value="立刻购买" class="submit" onclick="in_buy_car(1568,'花奇楠佛珠',$('#buy_num').val(),'88.00',true);">
-                            <input type="button" value="加入购物车" class="submit" onclick="in_buy_car(1568,'花奇楠佛珠',$('#buy_num').val(),'88.00');"></li>
+                            <input type="button" value="立刻购买" class="submit" onclick="in_buy_car(<?php echo $goods->id; ?>, '<?php echo $goods->goods_name; ?>',$('#buy_num').val(),'<?php echo sprintf("%.2f", $goods->goods_price); ?>','<?php echo COOKIE_DOMAIN;?>',true);">
+                            <input type="button" value="加入购物车" class="submit" onclick="in_buy_car(<?php echo $goods->id; ?>, '<?php echo $goods->goods_name; ?>',$('#buy_num').val(),'<?php echo sprintf("%.2f", $goods->goods_price); ?>','<?php echo COOKIE_DOMAIN;?>');"></li>
                     </ul>
                 </form>
             </div>
@@ -114,4 +104,16 @@ css::import($webRoot . 'module/afostore/css/fostore.css');
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(function(){
+//        RefreshShopCar();
+        $("#buy_num").spinner({
+            min	: 1,
+            spin: function( event, ui ) {
+                $('#totalnum').val((parseFloat('<?php echo $goods->goods_price;?>')*parseFloat(ui.value)).toFixed(2));
+            }
+        });
+    });
+
+</script>
 <?php include '../../common/view/footer.html.php'; ?>

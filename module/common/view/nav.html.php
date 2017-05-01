@@ -20,6 +20,10 @@
           echo html::a($this->createLink('auser','login'), "登录", "class='navbar-brand' style='font-size:17px'");
           echo html::a($this->createLink('auser','register'), "注册", "class='navbar-brand' style='font-size:17px'");
       }
+
+      $car_num_str = empty($_COOKIE[BUY_CART]) ? '0' : $_COOKIE[BUY_CART];
+      $str_buy_cart = '购物车('. $car_num_str .')';
+      echo html::a($this->createLink('buycart','index'), $str_buy_cart, "id='buycart', class='navbar-brand' style='font-size:17px'");
       ?>
   </div>
   <div class="collapse navbar-collapse">
