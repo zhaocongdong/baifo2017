@@ -659,4 +659,201 @@ if (!window.cancelAnimationFrame) {
     };
 }
 
-ABurnjoss.start();
+var AnimalManifest = {
+    "hamster":{
+        stay:["./assets/images/afreeanimal/mouse/mouse"],
+        move:["./assets/images/afreeanimal/mouse/mouse2_"]
+    },
+    "goose":{
+        stay:["./assets/images/afreeanimal/goose/goose"],
+        move:["./assets/images/afreeanimal/goose/goose2_"]
+    },
+    "seaotter":{
+        stay:["./assets/images/afreeanimal/seaotter/seaotter"],
+        move:["./assets/images/afreeanimal/seaotter/seaotter2_"]
+    },
+    "rabbit":{
+        stay:["./assets/images/afreeanimal/rabbit/rabbit"],
+        move:["./assets/images/afreeanimal/rabbit/rabbit2_"]
+    },
+    "deer":{
+        stay:["./assets/images/afreeanimal/sikadeer/sikadeer"],
+        move:["./assets/images/afreeanimal/sikadeer/sikadeer2_"]
+    },
+    "koala":{
+        stay:["./assets/images/afreeanimal/koala/koala"],
+        move:["./assets/images/afreeanimal/koala/koala2_"]
+    },
+    "flamingo":{
+        stay:["./assets/images/afreeanimal/flamingo/flamingo"],
+        move:["./assets/images/afreeanimal/flamingo/flamingo2_"]
+    }
+}
+var deepCopy = function(obj){
+    var newObj = {}
+    for(var i in obj){
+        newObj[i] = obj[i];
+    }
+    return newObj;
+}
+var AFreeAnimal = {
+    selectedName:"",
+    selectedCount:1,
+    selectedUnitPrice:20,
+    animalList:{},
+    onDisplayAnimal :function(){
+        var _this = this;
+        var oAnimalLists = $(".animal-lists li");
+        var oAnimalDisplayContainer = $(".animal-show-container");
+        var oAnimalName = $(".animal-name");
+        var oInputAnimalCount = $(".animal-count input");
+        var oAnimalTotalPrice = $(".animal-cost span");
+        oAnimalLists.each(function(){
+            var $this = $(this);
+            $this.bind("click",function(){
+                var sAnimalName = $this.attr("data-name");
+                if(_this.selectedName != sAnimalName){
+                    _this.selectedCount = 1;
+                    _this.selectedUnitPrice = $this.attr("data-price");
+                    oAnimalName.html("名称："+$this.find("label").html()).show();
+                    oInputAnimalCount.val(_this.selectedCount);
+                    oAnimalTotalPrice.html(_this.selectedUnitPrice);
+
+                    if(_this.runningAnimal){
+                        _this.runningAnimal.stop();
+                    }else{
+                        $(".is-not-selected").hide();
+                        _this.onCountHandle();
+                    }
+                    if(_this.animalList[sAnimalName]){
+                        _this.animalList[sAnimalName].stay();
+                    }else{
+                        var _animal = new Animal(100,70);
+                        _animal.setStayFrames($this.attr("data-frames"));
+                        _animal.load(AnimalManifest[sAnimalName],150);
+                        _animal.setImageZoom(0,0,650,488);
+                        _this.animalList[sAnimalName] = _animal;
+                        oAnimalDisplayContainer.append(_animal.o);
+                    }
+                    _this.runningAnimal = _this.animalList[sAnimalName];
+                }
+                _this.selectedName = sAnimalName;
+            });
+        });
+    },
+    onCountHandle:function(){
+        var _this = this;
+        var oPlusButton = $(".plus-button");
+        var oMinusButton = $(".minus-button");
+        var oInputAnimalCount = $(".animal-count input");
+        var oAnimalTotalPrice = $(".animal-cost span");
+        var nPriceCount;
+        oPlusButton.bind("click",function(){
+            _this.selectedCount++;
+            nPriceCount = _this.selectedUnitPrice * _this.selectedCount;
+            oInputAnimalCount.val(_this.selectedCount);
+            oAnimalTotalPrice.html(nPriceCount);
+        });
+        oMinusButton.bind("click",function(){
+            if(_this.selectedCount > 0){
+                _this.selectedCount--;
+                nPriceCount = _this.selectedUnitPrice * _this.selectedCount;
+                oInputAnimalCount.val(_this.selectedCount);
+                oAnimalTotalPrice.html(nPriceCount);
+            }
+        });
+    },
+    onPurchaseAnimal:function(){
+        var _this = this;
+        var oPurchaseAnimalButton = $(".animal-purchase-button");
+        var oLayerAnimalShop = $(".layer-animal-shop");
+        var oAnimalFarm = $(".animal-farm");
+        var nMaxLeft = oAnimalFarm.width();
+        var nMaxTop = oAnimalFarm.height();
+        oPurchaseAnimalButton.bind("click",function(){
+            for(var i = 0;i < _this.selectedCount;i++){
+                var newAnimal = deepCopy(_this.runningAnimal);
+                newAnimal.init();
+                newAnimal.setImageZoom(162,122,325,244);
+                var x = Math.round(Math.random() * nMaxLeft) - 65;
+                var y = Math.round(Math.random() * nMaxTop) - 45;
+                newAnimal.randomRender(x,y);
+                oAnimalFarm.append(newAnimal.o);
+            }
+            oLayerAnimalShop.fadeOut();
+        });
+    },
+    onReleaseAnimal:function(){
+        var oAnimalFarm = $(".animal-farm");
+        oAnimalFarm.bind("click",function(e){
+            $(e.target).remove();
+        });
+    },
+    start:function(){
+        this.onDisplayAnimal();
+        this.onPurchaseAnimal();
+        this.onReleaseAnimal();
+    }
+}
+
+var Animal = function(w,h){
+    this.w = w;
+    this.h = h;
+    this.stayImages = [];
+};
+Animal.prototype = {
+    load:function(manifest,rate){
+        var _image;
+        for(var i = 0;i<this.stayFrames;i++){
+            _image = document.createElement("img");
+            _image.src = manifest.stay + (i + 1) + ".png";
+            this.stayImages.push(_image);
+        }
+        this.rate = rate;
+        this.init();
+    },
+    setImageZoom:function(sl,st,sw,sh){
+        this.sl = sl;
+        this.st = st;
+        this.sw = sw;
+        this.sh = sh;
+    },
+    setStayFrames:function(value){
+        this.stayFrames = value;
+    },
+    init:function(){
+        this.o = document.createElement("canvas");
+        this.o.width = 100;
+        this.o.height = 70;
+        this.ctx = this.o.getContext("2d");
+        this.stay();
+    },
+    randomRender:function(x,y){
+        this.o.style.left = x + "px";
+        this.o.style.top = y + "px";
+    },
+    render:function(images,frames){
+        var _this = this;
+        _this.ctx.clearRect(0,0,_this.w,_this.h);
+        if(frames == _this.stayFrames){
+            frames = 0;
+        };
+        _this.ctx.drawImage(images[frames],_this.sl,_this.st,_this.sw,_this.sh,0,0,_this.w,_this.h);
+        frames++;
+
+        if(_this.status !== "paused"){
+            setTimeout(function(){
+                _this.render(images,frames);
+            },_this.rate);
+        }
+    },
+    stay:function(){
+        this.o.style.display = "block";
+        this.status = "running";
+        this.render(this.stayImages,0);
+    },
+    stop:function(){
+        this.o.style.display = "none";
+        this.status = "paused";
+    }
+}

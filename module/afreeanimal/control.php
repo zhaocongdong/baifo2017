@@ -4,7 +4,7 @@
  *
  * The author disclaims copyright to this source code.  In place of
  * a legal notice, here is a blessing:
- * 
+ *
  *  May you do good and not evil.
  *  May you find forgiveness for yourself and forgive others.
  *  May you share freely, never taking more than you give.
@@ -13,7 +13,7 @@ class afreeanimal extends control
 {
     /**
      * The construct function.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -24,13 +24,14 @@ class afreeanimal extends control
 
     /**
      * The index page.
-     * 
+     *
      * @access public
      * @return void
      */
     public function index()
     {
         $this->view->title = "放生";
+        $this->view->pageJS = $this->app->getWebRoot() . "assets/js/afreeanimal.js";
         $this->display();
     }
 }
