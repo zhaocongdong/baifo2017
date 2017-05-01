@@ -5,7 +5,7 @@ input[type="button"]:focus{ outline:none; border:none; }
 input[type="button"]:hover{ outline:none; border:none; }
 
 .aburnjoss-container{ position:relative; width:1000px; height:700px; }
-.fo-lists-container{ position:relative; width:1000px; height:700px; }
+.fo-lists-container{ position:relative; z-index:1; width:1000px; height:700px; }
 .fo-lists{ overflow:hidden; position:relative; width:1000px; height:700px; }
 .fo-lists li{ position:absolute; top:0; left:1000px; width:1000px; height:700px; background-repeat:no-repeat; background-position:0 0; }
 .fo-lists li.active{ left:0; }
@@ -25,7 +25,7 @@ input[type="button"]:hover{ outline:none; border:none; }
 .fo-lists li.fo14{ background-image:url('../images/aburnjoss/fo/fo14_puxian.jpg'); }
 .fo-lists li.fo15{ background-image:url('../images/aburnjoss/fo/fo15_yaoshifo.jpg'); }
 
-.fo-handle{ position:absolute; top:346px; left:0; width:100%; }
+.fo-handle{ position:absolute; top:346px; left:0; z-index:2; width:100%; }
 .fo-handle .arrow-left,
 .fo-handle .arrow-right{ width:49px; height:54px; background-image:url('../images/aburnjoss/arw-left.png'); background-repeat:no-repeat; cursor:pointer; }
 .fo-handle .arrow-left{ float:left; margin-left:50px; }
@@ -34,11 +34,49 @@ input[type="button"]:hover{ outline:none; border:none; }
 .fo-handle .arrow-right{ background-image:url('../images/aburnjoss/arw-right.png') }
 .fo-handle .arrow-right:hover{ background-image:url('../images/aburnjoss/arw-right-hover.png'); }
 
-.draw-pot{ position:absolute; left:36px; top:90px; width:80px; height:100px; background:url('../images/aburnjoss/draw-pot.png') no-repeat 0 0; background-size: 100% 100%; cursor:pointer; }
-.merit-box{ position:absolute; left:20px; bottom:0; width:144px; height:99px; background:url('../images/aburnjoss/merit-box.png') no-repeat 0 0; cursor:pointer; }
-.py-huanyuan{ position:absolute; left:35px; top:17px; width:100px; height:50px; background:url('../images/aburnjoss/py-huanyuan.png') no-repeat 0 0; cursor:pointer; }
+.fo-sample-container{ position:absolute; left:155px; top:180px; z-index:1; width:700px; height:270px; }
+#sample-type01{ position: absolute; top: 0; left: 250px; width:200px; height:160px; }
+#sample-type02{ position: absolute; top: -25px; left:140px; width:416px; height:312px; }
+#sample-type03{ position: absolute; top: -95px; left:40px; width:618px; height:463px; }
+#sample-type04{ position: absolute; top:70px; left:250px; width:270px; height:200px; }
+#sample-type05{ position: absolute; top:-90px; left:15px; width:680px; height:510px; }
+#sample-type06{ position: absolute; top:-10px; left:120px; width:520px; height:390px; }
+#sample-type07{ position: absolute; top:-145px; left:-30px; width:820px; height:616px; }
+#sample-type08{ position: absolute; top:130px; left:250px; width:195px; height:200px; }
+#sample-type09{ position: absolute; top:50px; left:150px; width:400px; height:300px; }
+#sample-type10{ position: absolute; top:-50px; left:55px; width:640px; height:480px; }
 
-.tribute-lists-container{ position:absolute; left:167px; bottom:0; width:833px; height:110px; }
+.fo-sample-container canvas{
+    position:absolute;
+    top:0;
+    left:0;
+    visibility:hidden;
+    -webkit-transform: translate(0,-30px);
+    -moz-transform: translate(0,-30px);
+    -ms-transform: translate(0,-30px);
+    -o-transform: translate(0,-30px);
+    transform: translate(0,-30px);
+}
+.fo-sample-container canvas.active{
+    visibility:visible;
+    -webkit-transform: translate(0,0);
+    -moz-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    -o-transform: translate(0,0);
+    transform: translate(0,0);
+
+    -webkit-transition:all .3s linear;
+    -moz-transition: all .3s linear;
+    -ms-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    transition: all .3s linear
+}
+
+.draw-pot{ position:absolute; left:36px; top:90px; z-index:2; width:80px; height:100px; background:url('../images/aburnjoss/draw-pot.png') no-repeat 0 0; background-size: 100% 100%; cursor:pointer; }
+.merit-box{ position:absolute; left:20px; bottom:0; z-index:2; width:144px; height:99px; background:url('../images/aburnjoss/merit-box.png') no-repeat 0 0; cursor:pointer; }
+.py-huanyuan{ position:absolute; left:35px; top:17px; z-index:2; width:100px; height:50px; background:url('../images/aburnjoss/py-huanyuan.png') no-repeat 0 0; cursor:pointer; }
+
+.tribute-lists-container{ position:absolute; left:167px; bottom:0; z-index:2; width:833px; height:110px; }
 .tribute-lists-bg{ width:665px; height:110px; border:1px solid transparent; background:url('../images/aburnjoss/tribute-bg.png') no-repeat 0 0; }
 .tribute-lists-nav { margin:15px 0 0 35px; font-size:0; }
 .tribute-lists-nav span{ position:relative; display:inline-block; width:52px; height:28px; margin-right:1px; background-repeat:no-repeat; cursor:pointer; }
@@ -85,6 +123,8 @@ input[type="button"]:hover{ outline:none; border:none; }
 .tribute-lists li.type04 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-5.png'); }
 .tribute-lists li.type04 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-6.png'); }
 .tribute-lists li.type04 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-7.png'); }
+.tribute-lists li.type04 span.t08{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-8.png'); }
+.tribute-lists li.type04 span.t09{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-9.png'); }
 
 .tribute-lists li.type05 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-1.png'); }
 .tribute-lists li.type05 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-2.png'); }
@@ -145,20 +185,33 @@ input[type="button"]:hover{ outline:none; border:none; }
 .tribute-lists li.type11 span.t09{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-9.jpg'); }
 .tribute-lists li.type11 span.t10{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-10.jpg'); }
 
-
 .tribute-handle .arrow-left,
 .tribute-handle .arrow-right{ position:absolute; top:50px; background-repeat:no-repeat; width:35px; height:33px; }
 .tribute-handle .arrow-left{ left:-12px; background-image:url('../images/aburnjoss/tribute-arw-left.png'); }
 .tribute-handle .arrow-right{ left:628px; background-image:url('../images/aburnjoss/tribute-arw-right.png'); }
-.tribute-confirm-submit{ position:absolute; right:5px; bottom:7px; }
-.tribute-confirm-submit p{ padding-left:20px; width:163px; height:24px; margin-bottom:6px; background:url('../images/aburnjoss/tribute-counts-bg.png') no-repeat 0 0; }
+.tribute-confirm-submit{ position:absolute; right:5px; bottom:7px; z-index:12; }
+.tribute-confirm-submit p{ padding-left:20px; width:163px; height:24px; margin-bottom:6px; background:url('../images/aburnjoss/tribute-counts-bg.png') no-repeat 0 0; color:#ff0000; font-size:16px; }
 .tribute-confirm-submit input{ display:block; width:156px; height:48px; background:url('../images/aburnjoss/confirm-tribute.png') no-repeat 0 0; }
 
 .layer-block{ display:none; position:absolute; top:0; left:0; z-index:11; width:100%; height:100%; background-color:rgba(0,0,0,0.5); }
+.layer-py-huanyuan{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-217px 0 0 -172px; width:344px; height:435px; background:url('../images/aburnjoss/layer-py-huanyuan-bg.png') no-repeat 0 0; }
+.layer-py-huanyuan ul{ height: 340px; margin: 80px 19px 0 28px; background-color: #fff; }
+.layer-py-huanyuan ul li{ padding:3px 0 3px 5px; border-bottom:1px solid #999; }
+.layer-py-huanyuan ul li:hover { background-color:#009dff; color:#fff; cursor:pointer; }
+.layer-py-huanyuan-close{ position:absolute; right:8px; top:16px; width:24px; height:20px; background:url('../images/aburnjoss/x.png') no-repeat 0 0; }
+.layer-py-huanyuan-close:hover{ background-image:url('../images/aburnjoss/x1.png') }
 .layer-merit-box{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-90px 0 0 -148px; width:296px; height:181px; background:url('../images/aburnjoss/layer-merit-bg.png') no-repeat 0 0; }
 .input-merit-amount{ width:260px; margin:80px 0 0 19px; }
 .confirm-merit-amount{ display:inline-block; width:99px; height:52px; margin:5px 20px 0 39px; background:url('../images/aburnjoss/button-confirm-1.png') no-repeat 0 0; }
 .close-layer-merit{ display:inline-block; width:99px; height:52px; background:url('../images/aburnjoss/button-close-1.png') no-repeat 0 0; }
-
-
-
+.layer-draw-pot{ display:none; position:absolute; top:0; left:0; z-index:12; width:100%; height:100%; cursor:pointer; }
+.draw-start,.draw-over{ margin: 30px 0 0 150px; }
+.draw-over{ display:none; }
+.draw-result{ display:none; position:absolute; top:50%; left:50%; margin:-250px 0 0 -166px; width:333px; height:500px; background:url('../images/aburnjoss/layer-draw-bg.png') no-repeat 0 0; }
+.draw-number{ position:absolute; right:76px; bottom:261px; width:30px; text-align:center; font:700 20px/1.3 "宋体"; color:red; }
+.draw-title{ position:absolute; right:116px; bottom:238px; width:20px; text-align:left; font:700 17px/1.3 "宋体"; }
+.draw-content{ position:absolute; right:170px; top:80px; }
+.draw-content p{ float:right; width:18px; margin-left:15px; font:700 16px/1.1 "宋体"; }
+.layer-draw-close{ position:absolute; top:0; right:15px; width:30px; height:30px; background:url('../images/aburnjoss/icon-close.png') no-repeat 0 0; }
+.layer-hint-tribute{ display:none; position:absolute; left:145px; bottom:130px; z-index:12; width:172px; height:67px; background:url('../images/aburnjoss/layer-hint-tribute.png') no-repeat 0 0; }
+.layer-hint-merit{ display:none; position:absolute; top:0; left:50%; margin:0 0 0 -210px; width:420px; height:84px; background:url('../images/aburnjoss/layer-hint-merit.png') no-repeat 0 0; }
