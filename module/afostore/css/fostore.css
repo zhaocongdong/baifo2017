@@ -187,8 +187,8 @@
 .goods_description li {margin-bottom:15px;color:#666;}
 .goods_description h3 {font-size:1.143em;}
 .tb-metatit {margin-right:15px;}
-.goods_num {border:1px solid;border-color:#B3B3B3 #E5E5E5 #EAEAEA;width:10%;height:22px;line-height:22px;padding:0 5px;}
-.submit {width: 125px;height: 40px;margin-left:50px;color: #FFF;cursor: pointer;word-spacing: 5px;font-size: 1.143em;font-weight: bold;text-shadow: 0 1px 1px #666;}
+.goods_num {border-color:#B3B3B3 #E5E5E5 #EAEAEA;height:22px;line-height:22px;padding:0 5px;}
+.submit {background: url(../Images/input_btn.png) no-repeat;width: 125px;height: 40px;margin-left:50px;color: #FFF;cursor: pointer;word-spacing: 5px;font-size: 1.143em;font-weight: bold;text-shadow: 0 1px 1px #666;}
 .submit:hover {background-position: 0 -40px;}
 .submit:active {background-position: 0 -80px;}
 .goods_details {margin-top:20px;word-wrap: break-word;}
