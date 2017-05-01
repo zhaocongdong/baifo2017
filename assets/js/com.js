@@ -729,8 +729,9 @@ var AFreeAnimal = {
                         _this.animalList[sAnimalName].stay();
                     }else{
                         var _animal = new Animal(100,70);
-                        _animal.setStayFrames($this.attr("data-frames"));
-                        _animal.load(AnimalManifest[sAnimalName],150);
+                        _animal.setStayFrames($this.attr("data-frames"),150);
+                        _animal.setMoveFrames($this.attr("data-move-frames"),150)
+                        _animal.load(AnimalManifest[sAnimalName]);
                         _animal.setImageZoom(0,0,650,488);
                         _this.animalList[sAnimalName] = _animal;
                         oAnimalDisplayContainer.append(_animal.o);
@@ -763,6 +764,9 @@ var AFreeAnimal = {
             }
         });
     },
+    animalInFarm:{
+        length:0
+    },
     onPurchaseAnimal:function(){
         var _this = this;
         var oPurchaseAnimalButton = $(".animal-purchase-button");
@@ -770,6 +774,7 @@ var AFreeAnimal = {
         var oAnimalFarm = $(".animal-farm");
         var nMaxLeft = oAnimalFarm.width();
         var nMaxTop = oAnimalFarm.height();
+
         oPurchaseAnimalButton.bind("click",function(){
             for(var i = 0;i < _this.selectedCount;i++){
                 var newAnimal = deepCopy(_this.runningAnimal);
@@ -778,21 +783,49 @@ var AFreeAnimal = {
                 var x = Math.round(Math.random() * nMaxLeft) - 65;
                 var y = Math.round(Math.random() * nMaxTop) - 45;
                 newAnimal.randomRender(x,y);
+                _this.animalInFarm["id-"+_this.animalInFarm.length] = newAnimal;
+                newAnimal.o.id = "id-"+_this.animalInFarm.length;
                 oAnimalFarm.append(newAnimal.o);
+                _this.animalInFarm.length++;
             }
             oLayerAnimalShop.fadeOut();
         });
     },
     onReleaseAnimal:function(){
+        var _this = this;
         var oAnimalFarm = $(".animal-farm");
+        var oLayerReleaseAnimal = $(".layer-release-animal");
         oAnimalFarm.bind("click",function(e){
-            $(e.target).remove();
+            _this.willReleaseAnimal = e.target;
+            oLayerReleaseAnimal.fadeIn();
+        });
+    },
+    onConfirmReleaseAnimal:function(){
+        var _this = this;
+        var oAFreeAnimal = $(".afreeanimal-container");
+        var oConfirmRelease = $(".animal-release-button");
+        var oLayerReleaseAnimal = $(".layer-release-animal");
+        oConfirmRelease.bind("click",function(){
+            oLayerReleaseAnimal.fadeOut(function(){
+                var _animal = _this.animalInFarm[_this.willReleaseAnimal.getAttribute("id")];
+                _animal.stop();
+                _animal.setImageZoom(0,0,1000,600);
+                _animal.setStartPoint(250,150);
+                _animal.setCanvasSize(1000,600);
+                _animal.o.style.position = "absolute";
+                _animal.o.style.top = 0;
+                _animal.o.style.left = 0;
+                oAFreeAnimal.append(_animal.o);
+                _animal.leave();
+                // _this.willReleaseAnimal.parentNode.removeChild(_this.willReleaseAnimal);
+            })
         });
     },
     start:function(){
         this.onDisplayAnimal();
         this.onPurchaseAnimal();
         this.onReleaseAnimal();
+        this.onConfirmReleaseAnimal();
     }
 }
 
@@ -800,16 +833,22 @@ var Animal = function(w,h){
     this.w = w;
     this.h = h;
     this.stayImages = [];
+    this.moveImages = [];
 };
 Animal.prototype = {
-    load:function(manifest,rate){
+    load:function(manifest){
         var _image;
         for(var i = 0;i<this.stayFrames;i++){
             _image = document.createElement("img");
             _image.src = manifest.stay + (i + 1) + ".png";
             this.stayImages.push(_image);
         }
-        this.rate = rate;
+        for(var i = 0;i<this.moveFrames;i++){
+            _image = document.createElement("img");
+            _image.src = manifest.move + (i + 1) + ".png";
+            this.moveImages.push(_image);
+        }
+
         this.init();
     },
     setImageZoom:function(sl,st,sw,sh){
@@ -818,42 +857,74 @@ Animal.prototype = {
         this.sw = sw;
         this.sh = sh;
     },
-    setStayFrames:function(value){
+    setCanvasSize:function(w,h){
+        this.w = w;
+        this.h = h;
+        this.o.width = w;
+        this.o.height = h;
+    },
+    setStartPoint:function(x,y){
+        this.cx = x;
+        this.cy = y;
+    },
+    setStayFrames:function(value,rate){
         this.stayFrames = value;
+        this.stayRate = rate;
+    },
+    setMoveFrames:function(value,rate){
+        this.moveFrames = value;
+        this.moveRate = rate;
     },
     init:function(){
         this.o = document.createElement("canvas");
         this.o.width = 100;
         this.o.height = 70;
         this.ctx = this.o.getContext("2d");
+        this.cx = 0;
+        this.cy = 0;
         this.stay();
     },
     randomRender:function(x,y){
         this.o.style.left = x + "px";
         this.o.style.top = y + "px";
     },
-    render:function(images,frames){
+    render:function(images,frames,rate){
         var _this = this;
         _this.ctx.clearRect(0,0,_this.w,_this.h);
         if(frames == _this.stayFrames){
-            frames = 0;
+            if(_this.status === "leaving"){
+                _this.status = "paused";
+                _this.remove();
+            }else{
+                frames = 0;
+            }
         };
-        _this.ctx.drawImage(images[frames],_this.sl,_this.st,_this.sw,_this.sh,0,0,_this.w,_this.h);
+        _this.ctx.drawImage(images[frames],_this.sl,_this.st,_this.sw,_this.sh,_this.cx,_this.cy,_this.w,_this.h);
         frames++;
 
         if(_this.status !== "paused"){
-            setTimeout(function(){
-                _this.render(images,frames);
-            },_this.rate);
+            _this.timeout = setTimeout(function(){
+                _this.render(images,frames,rate);
+            },rate);
         }
     },
     stay:function(){
         this.o.style.display = "block";
-        this.status = "running";
-        this.render(this.stayImages,0);
+        this.status = "staying";
+        this.render(this.stayImages,0,this.stayRate);
     },
     stop:function(){
         this.o.style.display = "none";
         this.status = "paused";
+        clearTimeout(this.timeout);
+    },
+    leave:function(){
+        console.log("leave");
+        this.o.style.display = "block";
+        this.status = "leaving";
+        this.render(this.moveImages,0,this.moveRate);
+    },
+    remove:function(){
+        this.o.parentNode.removeChild(this.o);
     }
 }
