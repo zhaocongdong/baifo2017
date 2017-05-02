@@ -21,11 +21,15 @@
           echo html::a($this->createLink('auser','register'), "注册", "class='navbar-brand' style='font-size:17px'");
       }
 
-      $car_num_str = empty($_COOKIE[BUY_CART]) ? '0' : $_COOKIE[BUY_CART];
-      $str_buy_cart = '购物车('. $car_num_str .')';
+      $str_buy_cart = '购物车(0)';
       echo html::a($this->createLink('buycart','index'), $str_buy_cart, "id='buycart', class='navbar-brand' style='font-size:17px'");
       ?>
   </div>
+<script type="text/javascript">
+    $(function(){
+        RefreshShopCar();
+    });
+</script>
   <div class="collapse navbar-collapse">
     <ul class='nav navbar-nav nav-reverce'>
       <?php
