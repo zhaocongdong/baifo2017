@@ -201,7 +201,7 @@ input[type="button"]:hover{ outline:none; border:none; }
 .layer-py-huanyuan-close{ position:absolute; right:8px; top:16px; width:24px; height:20px; background:url('../images/aburnjoss/x.png') no-repeat 0 0; }
 .layer-py-huanyuan-close:hover{ background-image:url('../images/aburnjoss/x1.png') }
 .layer-merit-box{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-90px 0 0 -148px; width:296px; height:181px; background:url('../images/aburnjoss/layer-merit-bg.png') no-repeat 0 0; }
-.input-merit-amount{ width:260px; margin:80px 0 0 19px; }
+.input-merit-amount{ width:260px; margin:85px 0 0 19px; padding-left:5px; color:#f00; }
 .confirm-merit-amount{ display:inline-block; width:99px; height:52px; margin:5px 20px 0 39px; background:url('../images/aburnjoss/button-confirm-1.png') no-repeat 0 0; }
 .close-layer-merit{ display:inline-block; width:99px; height:52px; background:url('../images/aburnjoss/button-close-1.png') no-repeat 0 0; }
 .layer-draw-pot{ display:none; position:absolute; top:0; left:0; z-index:12; width:100%; height:100%; cursor:pointer; }
@@ -214,7 +214,27 @@ input[type="button"]:hover{ outline:none; border:none; }
 .draw-content p{ float:right; width:18px; margin-left:15px; font:700 16px/1.1 "宋体"; }
 .layer-draw-close{ position:absolute; top:0; right:15px; width:30px; height:30px; background:url('../images/aburnjoss/icon-close.png') no-repeat 0 0; }
 .layer-hint-tribute{ display:none; position:absolute; left:145px; bottom:130px; z-index:12; width:172px; height:67px; background:url('../images/aburnjoss/layer-hint-tribute.png') no-repeat 0 0; }
-.layer-hint-merit{ display:none; position:absolute; top:0; left:50%; margin:0 0 0 -210px; width:420px; height:84px; background:url('../images/aburnjoss/layer-hint-merit.png') no-repeat 0 0; }
+.layer-hint-merit{ display:none; position:absolute; top:0; left:50%; z-index:12; margin:0 0 0 -210px; width:420px; height:84px; background:url('../images/aburnjoss/layer-hint-merit.png') no-repeat 0 0; }
+.layer-make-wish{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-185px 0 0 -242px; width:485px; height:371px; background:url('../images/aburnjoss/layer-make-wish.png') no-repeat 0 0; }
+.layer-make-wish-content{ padding:80px 0 0 50px; }
+.make-wish-or-not{ margin-bottom:10px; font-size:20px; }
+.make-wish-or-not label{ display:inline-block; margin-right:25px;  }
+.make-wish-or-not input[type="radio"]{ margin-right:10px; vertical-align:2px; }
+.wish-options{ display:block; width:370px; height:36px; margin-bottom:15px; font-size:14px; color:#F00; }
+.wish-content{ display:block; width:370px; height:80px; margin-bottom:15px; padding:5px 10px; font-size:14px; color:#F00; resize:none; }
+.wish-private-or-not{ font-size:20px; }
+.wish-private-or-not label{ margin-right:5px; }
+.wish-private-or-not input[type="radio"]{ margin-right:10px; vertical-align:3px; }
+.wish-confirm,.wish-cancel{ width:99px; height:52px; border:none; background-color:transparent; background-repeat:no-repeat; background-position:0 0; }
+.wish-confirm{ background-image:url('../images/aburnjoss/button-confirm-1.png'); }
+.wish-cancel{ background-image:url('../images/aburnjoss/button-close-1.png'); }
+.wish-handle{ display:inline-block; vertical-align:middle; }
+.layer-wish-complete{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-141px 0 0 -80px; width:160px; height:82px; background:url('../images/aburnjoss/layer-wish-complete.png') no-repeat 0 0; }
+.layer-balance-not-enough{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-41px 0 0 -80px; width:160px; height:82px; background:url('../images/aburnjoss/layer-balance-not-enough.png') no-repeat 0 0; }
+
+.has-made-wished .tribute-lists-container{ display:none; }
+.has-made-wished .draw-pot{ display:none; }
+.has-made-wished .py-huanyuan{ display:none; }
 
 .afreeanimal-container{ position:relative; width:1000px; height:600px; }
 .animal-farm{ position:absolute; top:480px; left:570px; width:430px; height:70px; }

@@ -16,21 +16,21 @@
         <div class="aburnjoss-container">
             <div class="fo-lists-container">
                 <ul class="fo-lists">
-                    <li class="fo1 active"></li>
-                    <li class="fo2"></li>
-                    <li class="fo3"></li>
-                    <li class="fo4"></li>
-                    <li class="fo5"></li>
-                    <li class="fo6"></li>
-                    <li class="fo7"></li>
-                    <li class="fo8"></li>
-                    <li class="fo9"></li>
-                    <li class="fo10"></li>
-                    <li class="fo11"></li>
-                    <li class="fo12"></li>
-                    <li class="fo13"></li>
-                    <li class="fo14"></li>
-                    <li class="fo15"></li>
+                    <li class="fo1 active" data-fo="fo1_guanshiyin"></li>
+                    <li class="fo2" data-fo="fo2_shijiamoni"></li>
+                    <li class="fo3" data-fo="fo3_wenshupusa"></li>
+                    <li class="fo4" data-fo="fo4_wenquxingjun"></li>
+                    <li class="fo5" data-fo="fo5_yuelao"></li>
+                    <li class="fo6" data-fo="fo6_songziguanyin"></li>
+                    <li class="fo7" data-fo="fo7_milefo"></li>
+                    <li class="fo8" data-fo="fo8_mazu"></li>
+                    <li class="fo9" data-fo="fo9_guangong"></li>
+                    <li class="fo10" data-fo="fo10_dashizhi"></li>
+                    <li class="fo11" data-fo="fo11_caishenye"></li>
+                    <li class="fo12" data-fo="fo12_dizangwang"></li>
+                    <li class="fo13" data-fo="fo13_amituofo"></li>
+                    <li class="fo14" data-fo="fo14_puxian"></li>
+                    <li class="fo15" data-fo="fo15_yaoshifo"></li>
                 </ul>
                 <div class="fo-handle">
                     <input type="button" class="arrow-left" />
@@ -104,9 +104,40 @@
                     <a href="javascript:void(0)" class="layer-draw-close"></a>
                 </div>
             </div>
+            <div class="layer-make-wish">
+                <div class="layer-make-wish-content">
+                    <div class="make-wish-or-not">
+                        <label>是否许愿：</label>
+                        <label><input type="radio" name="make-wish-or-not">许愿</label>
+                        <label><input type="radio" name="make-wish-or-not" checked="checked">不许愿</label>
+                    </div>
+                    <select class="wish-options">
+                        <option data-desc="学业猛进，考试顺利！学有所成，学业进步！各金榜题名，无往不利！稳中求胜，成绩满分！考试顺利，如愿高中！">学业猛进，考试顺利！</option>
+                        <option data-desc="财源广进、步步高升！横财滚滚，笑逐颜开！一本万利，东成西就！投资有道，年年有余！和气生财，时来运转！猪笼入水，飞黄腾达！">财源广进，步步高升！</option>
+                        <option data-desc="长命百岁、寿比南山！快高长大，茁壮成长！身壮力健、福寿双全！老当益壮，寿若松柏！身体安康，健康活力！">长命百岁，寿比南山！</option>
+                        <option data-desc="万事如意，合家安康！福寿双全，平安美满！一帆风顺，四季平安！出入平安，事事顺境！风调雨顺，万事大吉！">万事如意，合家安康！</option>
+                        <option data-desc="千里姻缘，携手共牵！众里寻他，天造地设！白头到老，永结同心！百年好合，甜蜜幸福！佳偶天成，出双入对！">千里烟缘，携手共牵！</option>
+                    </select>
+                    <textarea class="wish-content" name="wish-content">学业猛进，考试顺利！学有所成，学业进步！各金榜题名，无往不利！稳中求胜，成绩满分！考试顺利，如愿高中！</textarea>
+                    <div class="wish-private-or-not">
+                        <label>
+                            <input type="radio" name="private-or-not" checked="checked" />保密
+                        </label>
+                        <label>
+                            <input type="radio" name="private-or-not" />不保密
+                        </label>
+                        <label class="wish-handle">
+                            <button type="button" class="wish-confirm"></button>
+                            <button type="button" class="wish-cancel"></button>
+                        </label>
+                    </div>
+                </div>
+            </div>
             <div class="layer-hint-py-huanyuan"></div>
             <div class="layer-hint-tribute"></div>
             <div class="layer-hint-merit"></div>
+            <div class="layer-wish-complete"></div>
+            <div class="layer-balance-not-enough"></div>
         </div>
     </div>
 </div>

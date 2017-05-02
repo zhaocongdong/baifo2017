@@ -388,16 +388,27 @@ GifElement.prototype = {
 var fnDoubleDigit = function(n){
     return ("0" + n).substr(-2,2);
 };
-
+Array.prototype.indexOf = Array.prototype.indexOf || function(str){
+    var _index = -1;
+    for(var i = 0,len = this.length;i < len;i++){
+        if(this[i] === str){
+            _index = i;
+            break;
+        }
+    }
+    return _index;
+};
 var ABurnjoss = {
+    sCurrentFo:"fo1_guanshiyin",
     foCarousel:function(){
+        var _this = this;
         var oFoUl = $(".fo-lists");
         var oFoLists = $(".fo-lists li");
         var nLiCounts = oFoLists.length;
         var oLeftButton = $(".fo-handle .arrow-left");
         var oRightButton = $(".fo-handle .arrow-right");
         var oActiveLi = $(".fo-lists li.active");
-        var nCurrentId = 0, nInitLeft, oTargetLi,isMoving = false;
+        var nCurrentId = 0, nInitLeft, oTargetLi,isMoving = false,_timeout;
         var fnSlide = function(n){
             if(!isMoving){
                 isMoving = true;
@@ -411,6 +422,13 @@ var ABurnjoss = {
                     nCurrentId = nLiCounts - 2;
                 }
                 nCurrentId = nCurrentId - n;
+
+                _this.sCurrentFo = oFoLists.eq(nCurrentId).attr("data-fo");
+                _this.stopAll();
+                clearTimeout(_timeout);
+                _timeout = setTimeout(function(){
+                    _this.setCurrentState();
+                },500);
 
                 oActiveLi.animate({"left":n*1000},100,function(){
                     $(this).removeClass("active");
@@ -428,6 +446,22 @@ var ABurnjoss = {
             fnSlide(-1);
         });
     },
+    stopAll:function(){
+        for(var prop in this.activeSampleLists){
+            this.activeSampleLists[prop].element.stop();
+        }
+    },
+    clearSamples:function(){
+        this.foSampleList[this.sCurrentFo] = {};
+        this.activeSampleLists = {};
+    },
+    calculateTributeAmount:function(){
+        this.totalPrice = 0;
+        for(var prop in this.activeSampleLists){
+            this.totalPrice += this.activeSampleLists[prop].price;
+        };
+        this.oTributeAmount.html("共 "+ this.totalPrice +" 两");
+    },
     tributeSwitch:function(){
         var oTributeNav = $(".tribute-lists-nav");
         var oTributeNavs = $(".tribute-lists-nav span");
@@ -444,6 +478,12 @@ var ABurnjoss = {
                 oTributeLi.addClass("display-block");
             });
         });
+    },
+    payBill:function(amount){
+        var oLayerBalanceNotEnough = $(".layer-balance-not-enough");
+        if(amount > balance){
+            oLayerBalanceNotEnough.css({"margin-top":-121}).fadeIn().animate({"margin-top":-21},1500).fadeOut();
+        }
     },
     oLayerBlock:$(".layer-block"),
     onOpenMeritBox:function(){
@@ -491,12 +531,14 @@ var ABurnjoss = {
     totalPrice:0,
     selectedTribute:{},
     sampleLists:{},
+    activeSampleLists:{},
+    foSampleList:{},
     insertElm:function(data,type,id){
         var _this = this;
         var sSampleKey = type;
         var sSampleActiveKey = sSampleKey + "-" + id;
-        if(_this.sampleLists[sSampleKey]){
-            _this.sampleLists[sSampleKey].stop();
+        if(_this.activeSampleLists[sSampleKey]){
+            _this.activeSampleLists[sSampleKey].element.stop();
         }
         if(!_this.sampleLists[sSampleActiveKey]){
             var _parent = document.getElementById("sample-"+sSampleKey);
@@ -505,15 +547,17 @@ var ABurnjoss = {
         }else{
             _this.sampleLists[sSampleActiveKey].run();
         }
-        _this.selectedTribute[sSampleKey] = data.price;
-        _this.sampleLists[sSampleKey] = _this.sampleLists[sSampleActiveKey];
+
+        _this.foSampleList[_this.sCurrentFo][sSampleKey] = {};
+        _this.foSampleList[_this.sCurrentFo][sSampleKey].element = _this.sampleLists[sSampleActiveKey];
+        _this.foSampleList[_this.sCurrentFo][sSampleKey].price = data.price;
+        _this.activeSampleLists[sSampleKey] = _this.foSampleList[_this.sCurrentFo][sSampleKey];
     },
     renderTribute:function(){
         var _this = this;
         var _ul = document.createDocumentFragment(),
             _li,_span,_sample;
         var oTributeUl = $(".tribute-lists");
-        var oTributeAmount = $(".tribute-confirm-submit p");
         for(var i = 0,len = Tributes.length;i<len;i++){
             _li = document.createElement("li");
             _li.className = "type"+fnDoubleDigit(i+1) + (i === 0 ? " display-block":"");
@@ -532,10 +576,8 @@ var ABurnjoss = {
                         var sSampleKey = sDataType + "-" + id;
 
                         if(data.include.length > 0){
-                            _this.selectedTribute = {};
-                            for(var prop in _this.sampleLists){
-                                _this.sampleLists[prop].stop();
-                            }
+                            _this.stopAll();
+                            _this.clearSamples();
                             data.include.forEach(function(item){
                                 var arrIndex = item.split("-");
                                 _this.insertElm(Tributes[arrIndex[0]].children[arrIndex[1]],"type"+fnDoubleDigit(parseInt(arrIndex[0])+1),fnDoubleDigit(arrIndex[1]+1))
@@ -543,12 +585,7 @@ var ABurnjoss = {
                         }else{
                             _this.insertElm(data,sDataType,id);
                         }
-
-                        _this.totalPrice = 0;
-                        for(var prop in _this.selectedTribute){
-                            _this.totalPrice += _this.selectedTribute[prop];
-                        };
-                        oTributeAmount.html("共 "+ _this.totalPrice +" 两");
+                        _this.calculateTributeAmount();
                     })
                 }(nTributeId,Tributes[i].children[j]));
                 _li.appendChild(_span);
@@ -585,6 +622,12 @@ var ABurnjoss = {
         var _this = this;
         var oConfirmTributes = $(".tribute-confirm-submit input");
         var oHintTribute = $(".layer-hint-tribute");
+        var oLayerMakeWish = $(".layer-make-wish");
+        var oLayerWishComplete = $(".layer-wish-complete");
+        var oWishConfirm = $(".wish-confirm");
+        var oWishCancel = $(".wish-cancel");
+        var oWishContent = $(".wish-content");
+        var oWishOptions = $(".wish-options");
         var _bottom = {},_direction = "bottom",nTimes = 0;
         oConfirmTributes.bind("click",function(){
             if(_this.totalPrice === 0){
@@ -606,7 +649,22 @@ var ABurnjoss = {
                         return true;
                     }
                 }())
+            }else{
+                oLayerMakeWish.fadeIn();
             }
+        });
+        oWishConfirm.bind("click",function(){
+            oLayerMakeWish.fadeOut(function(){
+                oLayerWishComplete.fadeIn().animate({"marginTop":-41}).fadeOut();
+                _this.foCompleteList.push(_this.sCurrentFo);
+                _this.setCurrentState();
+            });
+        });
+        oWishCancel.bind("click",function(){
+            oLayerMakeWish.fadeOut()
+        });
+        oWishOptions.bind("change",function(){
+            oWishContent.html(oWishOptions.find("option").eq($(this).prop("selectedIndex")).attr("data-desc"));
         });
     },
     onPyHuanyuan : function(){
@@ -623,7 +681,36 @@ var ABurnjoss = {
             oLayerPyHuanyuan.fadeOut();
         })
     },
+    setCurrentState:function(){
+
+        var _currentFoSamples;
+        if(this.foSampleList[this.sCurrentFo]){
+            _currentFoSamples = this.foSampleList[this.sCurrentFo];
+            for(var i in _currentFoSamples){
+                _currentFoSamples[i].element.run();
+            }
+        }else{
+            this.foSampleList[this.sCurrentFo] = {};
+            _currentFoSamples = {};
+        }
+        this.activeSampleLists = _currentFoSamples;
+        if(this.foCompleteList.indexOf(this.sCurrentFo) > -1){
+            $(".aburnjoss-container").addClass("has-made-wished");
+        }else{
+            $(".aburnjoss-container").removeClass("has-made-wished");
+            this.oTributeAmount.html("共 0 两");
+            this.calculateTributeAmount();
+        }
+    },
+    initData:function(){
+        this.oTributeAmount = $(".tribute-confirm-submit p");
+        this.foSampleList = {
+            "fo1_guanshiyin" :{}
+        };
+        this.foCompleteList = [];
+    },
     start:function(){
+        this.initData();
         this.foCarousel();
         this.renderTribute();
         this.tributeSwitch();
