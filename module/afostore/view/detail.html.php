@@ -41,8 +41,8 @@ css::import($webRoot . 'module/afostore/css/fostore.css');
                             <input type="text" readonly="" name="totalnum" id="totalnum" value="<?php echo sprintf("%.2f", $goods->goods_price); ?>">
                         </li>
                         <li>
-                            <input type="button" value="立刻购买" class="submit" onclick="in_buy_car(<?php echo $goods->id; ?>, '<?php echo $goods->goods_name; ?>',$('#buy_num').val(),'<?php echo sprintf("%.2f", $goods->goods_price); ?>','<?php echo COOKIE_DOMAIN;?>',true);">
-                            <input type="button" value="加入购物车" class="submit" onclick="in_buy_car(<?php echo $goods->id; ?>, '<?php echo $goods->goods_name; ?>',$('#buy_num').val(),'<?php echo sprintf("%.2f", $goods->goods_price); ?>','<?php echo COOKIE_DOMAIN;?>');"></li>
+                            <input type="button" value="立刻购买" class="submit" onclick="in_buy_car(<?php echo $goods->id; ?>, '<?php echo $goods->goods_name; ?>',$('#buy_num').val(),'<?php echo sprintf("%.2f", $goods->goods_price); ?>','<?php echo $goods->goods_img; ?>','<?php echo COOKIE_DOMAIN;?>','<?php echo $this->createLink('buycart');?>');">
+                            <input type="button" value="加入购物车" class="submit" onclick="in_buy_car(<?php echo $goods->id; ?>, '<?php echo $goods->goods_name; ?>',$('#buy_num').val(),'<?php echo sprintf("%.2f", $goods->goods_price); ?>','<?php echo $goods->goods_img; ?>','<?php echo COOKIE_DOMAIN;?>','');"></li>
                     </ul>
                 </form>
             </div>

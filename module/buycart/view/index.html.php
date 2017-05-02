@@ -16,12 +16,13 @@ css::import($webRoot . 'module/afostore/css/fostore.css');
 ?>
 <div class='container'>
     <div class="content clearfix">
-        <div class="bread_nav"></div>
+        <div class="bread_nav">
+            <?php echo html::a($this->createLink('afostore'),     "拜佛商城"); ?>&nbsp;&gt;&nbsp;
+            <span>订单提交</span></div>
         <div class="column">
-            <ol class="step step_second">
-            </ol>
+            <ol class="step step_second"><li>查看购物车</li><li>付款到支付宝</li><li>完成订单</li></ol>
             <h2 class="main_title" style="margin:20px 0;">确认收货地址</h2>
-            <form class="order_address" action="shop-readytopay.html" method="post" name="form1" id="form1">
+            <form class="order_address" action="" method="post" name="form1" id="form1">
                 <fieldset>
                     <label>省:</label>
                     <select name="province" id="province" nullmsg="收件地址不能为空！" errormsg="收件地址不能为空！" datatype="*">
@@ -87,40 +88,36 @@ css::import($webRoot . 'module/afostore/css/fostore.css');
                     <colgroup class="second_col" span="4"></colgroup>
                     <tbody>
                     <tr>
-                        <th>宝具名称</th>
-                        <th>单价(元)</th>
-                        <th>数量</th>
-                        <th>小计(元)</th>
-                        <th>删除</th>
+                        <th style="text-align: center;">宝具名称</th>
+                        <th style="text-align: center;">单价(元)</th>
+                        <th style="text-align: center;">数量</th>
+                        <th style="text-align: center;">小计(元)</th>
+                        <th style="text-align: center;">删除</th>
                     </tr>
+                    <?php foreach ($cart_list as $item): ?>
                     <tr class="buycar">
-                        <td><img alt="" style="opacity: 1;" src="/Public/Uploads/Product/54602733848e2.jpg"><a
-                                href="shop-1566.html" title="崖柏佛珠">崖柏佛珠</a></td>
-                        <td><span class="now_price" rel="1566">80.00</span></td>
+                        <td>
+                            <img class="now_img" alt="" style="opacity: 1;" src="<?php echo $item->img;?>" rel="<?php echo $item->id;?>">
+                            <a href="<?php echo $this->createLink('afostore','detail',array(id=>$item->id));?>" title="<?php echo $item->name;?>"><?php echo $item->name;?></a>
+                        </td>
+                        <td><span class="now_price" rel="<?php echo $item->id;?>"><?php echo $item->price;?></span></td>
                         <td>
                             <span class="ui-spinner ui-widget ui-widget-content ui-corner-all">
-                                <input type="text" value="1" name="subject[1566]" class="buy_num ui-spinner-input" rel="1566" readonly="" aria-valuemin="0" aria-valuenow="1" autocomplete="off" role="spinbutton">
-                                <a class="ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false">
-                                    <span class="ui-button-text">
-                                        <span class="ui-icon ui-icon-triangle-1-n">▲</span>
-                                    </span>
-                                </a>
-                                <a class="ui-spinner-button ui-spinner-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false">
-                                    <span class="ui-button-text">
-                                        <span class="ui-icon ui-icon-triangle-1-s">▼</span>
-                                    </span>
-                                </a>
+                                <input type="text" value="<?php echo $item->num;?>" name="subject[<?php echo $item->id;?>]" class="buy_num ui-spinner-input" rel="<?php echo $item->id;?>" readonly="" aria-valuemin="0" aria-valuenow="1" autocomplete="off" role="spinbutton">
                             </span>
                         </td>
-                        <td><span class="total" rel="1566">80</span></td>
-                        <td><a href="javascript:void(0);" class="del-col" rel="1566">删除</a></td>
+                        <td><span class="total" rel="<?php echo $item->id;?>"><?php echo $item->sum;?></span></td>
+                        <td><a href="javascript:void(0);" class="del-col" rel="<?php echo $item->id;?>">删除</a></td>
                     </tr>
+                    <?php endforeach;?>
                     </tbody>
                 </table>
                 <div class="total clearfix"><label>补充说明:</label><textarea class="left" name="remark"></textarea>
-                    <div class="right"><p>应付款:<em>¥ <input readonly="" value="0.00" id="total_fee"
-                                                           style="border:none;font-weight: bold;font-size: 28px;color: #C7222F;">元</em>
-                        </p><input type="submit" value="提交订单" class="submit right"></div>
+                    <div class="right">
+                        <p>应付款:
+                            <em>¥ <input readonly="" value="<?php echo $item->order_sum;?>" id="total_fee" style="border:none;font-weight: bold;font-size: 28px;color: #C7222F;">元</em>
+                        </p>
+                        <input type="submit" value="提交订单" class="submit right"></div>
                 </div>
             </form>
         </div>
@@ -130,7 +127,46 @@ css::import($webRoot . 'module/afostore/css/fostore.css');
 
 ?>
 <script type="text/javascript" >
+    function setCookie(name,value,domain,e) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + 30*24*60*60*1000);
+        if(e===true){
+            document.cookie = name + "="+ escape (value) + ";domain="+domain;
+        }else{
+            document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()+";domain="+domain;
+        }
+    }
+    function getCookie(name) {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+    function delCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval=getCookie(name);
+        if(cval!=null){
+            document.cookie= name + "="+cval+";expires="+exp.toGMTString()+";domain=.baifo365.com";
+        }
+    }
+    function tongji(){
+        var total=0;
+        $('.buycar .total').each(function(){
+            total+=parseFloat($(this).html());
+        });
+        total=total.toFixed(2);
+        if (total<=0)
+        {
+            $('.submit').attr('disabled',false);
+        }else{
+            $('.submit').attr('disabled',true);
+        }
+        $('#total_fee').val(total);
+    }
     $(function(){
+        tongji();
         $('.submit').attr('disabled',false);
         new PCAS('province','city','area','','','');
         $(".buy_num").spinner({
@@ -139,17 +175,15 @@ css::import($webRoot . 'module/afostore/css/fostore.css');
                 id=$(this).attr('rel');
                 var Num=parseFloat(ui.value);
                 var Price=parseFloat($('.now_price[rel='+id+']').html());
-                in_buy_car(id,'',Num,Price,'notips');
+                var now_img = $('.now_img[rel='+id+']').attr('src');
+                in_buy_car(id,'',Num,Price, now_img,'<?php echo COOKIE_DOMAIN;?>','notips');
                 $('.total[rel='+id+']').html((Price*Num).toFixed(2));
+                tongji();
             }
-        });
-        $("#form1").Validform({
-            tiptype:3,
-            showAllError:true
         });
         $('.del-col').click(function(){
             var pid=$(this).attr('rel');
-            var buycar=getCookie('buycar');
+            var buycar=getCookie('<?php echo BUY_CART;?>');
             var newbuycar=new Array();
             if (buycar!==null){
                 buycar=buycar.split('|');
@@ -160,10 +194,12 @@ css::import($webRoot . 'module/afostore/css/fostore.css');
                     }
                 }
                 newbuycar=newbuycar.join('|');
-                setCookie('buycar',newbuycar);
+                setCookie('<?php echo BUY_CART;?>',newbuycar, '<?php echo COOKIE_DOMAIN;?>');
             }
             $(this).parent().parent().remove();
+            tongji();
         });
     });
+
 </script>
 <?php include '../../zcommon/view/footer.html.php'; ?>

@@ -33,7 +33,7 @@ function alert(data,time){
 	});
 	dialog.time(2000);
 }
-function in_buy_car(pid,title,num,price,domain,jump){
+function in_buy_car(pid,title,num,price,img,domain,jump){
 	var buycar=getCookie('C20c6320e78a769300345e1b');
 	if (buycar!==null && buycar!=''){
 		buycar=buycar.split('|');
@@ -46,20 +46,24 @@ function in_buy_car(pid,title,num,price,domain,jump){
 		if (buycar[i][0]==pid){
 			buycar[i][2]=num;
 			buycar[i][3]=price;
+			buycar[i][4]=img;
 			has=true;
 		}
 		buycar[i]=buycar[i].join(',');		
 	}
 	if (!has){
-		buycar.push(pid+','+title+','+num+','+price);
+		buycar.push(pid+','+title+','+num+','+price+','+img);
 	}
 	buycar=buycar.join('|');
 	setCookie('C20c6320e78a769300345e1b',buycar,domain);
 	RefreshShopCar();
-	if (jump==='notips'){
-	}else if (jump===true){
-		window.location='shop-confirmorder.html';
-	}else{
+	if (jump.length > 0){
+		if (jump==='notips') {
+
+		} else {
+			window.location=jump;
+		}
+	} else {
 		alert('已加入购物车!');
 	}
 }
