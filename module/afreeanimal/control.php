@@ -37,21 +37,31 @@ class afreeanimal extends control
 
     public function opAnimal() {
         if (!empty($_POST)) {
-            var_dump($_POST);
             $opinfo = null;
             $opinfo->uid        = $_POST["uid"];
-            $opinfo->aname      = $_POST["aname"];
-            $opinfo->num        = $_POST["num"];
-            $opinfo->price      = $_POST["price"];
-            $opinfo->total      = $_POST["total"];
-            $opinfo->img_list   = $_POST["img_list"];
-            $opinfo->img_stand  = $_POST["img_stand"];
-            $opinfo->img_move   = $_POST["img_move"];
+            $opinfo->name       = $_POST["name"];
+            $opinfo->num        = intval($_POST["num"]);
+            $opinfo->total        = floatval($_POST["total"]);
             $opinfo->item_name  = $_POST["item_name"];
-            $opinfo->is_buy     = $_POST["is_buy"];
+            $opinfo->is_buy     = intval($_POST["is_buy"]);//is_buy购买-1 放生-0
+
+//            $opinfo->price      = floatval($_POST["price"]);
+//            $opinfo->img_list   = $_POST["img_list"];
+//            $opinfo->img_stand  = $_POST["img_stand"];
+//            $opinfo->img_move   = $_POST["img_move"];
+
             $opinfo->time       = date(DATE_FORMAT);
-            var_dump($opinfo);return;
             $this->dao->insert('bf_user_animal_op')->data($opinfo)->exec();
+            $lastId = $this->dao->lastInsertID();
+            $res = null;
+            if ($lastId > 0) {
+                // 更新用户金额
+                
+                $res->code = '100';
+            } else {
+                $res->code = '200';
+            }
+            echo json_encode($res);
         }
     }
 }

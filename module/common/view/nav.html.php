@@ -14,6 +14,7 @@
           $session_flag = true;
       }
       if ($session_flag) {
+          echo html::hidden(USER_ID, $_SESSION[USER_ID], "id='".USER_ID."'");
           echo html::a($this->createLink('auser', 'index'), $_SESSION[USER_NAME], "class='navbar-brand' style='font-size:17px'");
           echo html::a($this->createLink('auser','logout'), "注销", "class='navbar-brand' style='font-size:14px'");
       } else {
