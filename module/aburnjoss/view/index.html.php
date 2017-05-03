@@ -81,9 +81,7 @@
             <div class="merit-box"></div>
             <div class="layer-block"></div>
             <div class="layer-py-huanyuan">
-                <ul>
-                    <li>暂无许愿信息</li>
-                </ul>
+                <ul></ul>
                 <a class="layer-py-huanyuan-close" href="javascirpt:void(0)"></a>
             </div>
             <div class="layer-merit-box">
@@ -131,6 +129,13 @@
                             <button type="button" class="wish-cancel"></button>
                         </label>
                     </div>
+                </div>
+            </div>
+            <div class="layer-py-huanyuan-or-not">
+                <div class="py-huanyuan-text"></div>
+                <div class="py-huanyuan-handle">
+                    <button type="button" class="py-huanyuan-confirm"></button>
+                    <button type="button" class="py-huanyuan-cancel"></button>
                 </div>
             </div>
             <div class="layer-hint-py-huanyuan"></div>

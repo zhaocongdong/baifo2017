@@ -14,6 +14,19 @@
 <div class='container'>
     <div class="afreeanimal-container">
         <canvas id="gameCanvas" width="1000" height="600"></canvas>
+        <div class="top-user-handle-bar">
+            <div class="user-info">
+                <img alt="" src="./assets/images/aburnjoss/user-default.jpg" class="user-head-default" />
+                <p class="nickname">昵称：匆匆2059</p>
+                <p class="title">称呼：高级施主</p>
+                <p class="balance">银两：85两</p>
+            </div>
+            <div class="user-handle">
+                <button class="pop-layer-purchase"></button>
+                <button class="pop-layer-scene"></button>
+                <button class="pop-layer-repository"></button>
+            </div>
+        </div>
         <div class="animal-farm"></div>
         <div class="layer-release-animal">
             <p>提示：</p>
@@ -22,6 +35,7 @@
             <input type="button" class="animal-release-button" />
         </div>
         <div class="layer-animal-shop">
+            <button class="button-close-layer"></button>
             <div class="animal-type-nav">
                 <span class="animal-type-1"></span>
                 <span class="animal-type-2"></span>
@@ -90,6 +104,12 @@
                 <input type="button" class="animal-purchase-button" value="" />
             </div>
         </div>
+        <div class="layer-scene-shop">
+            <button class="button-close-layer"></button>
+            <ul class="scene-list">
+            </ul>
+        </div>
+        <div class="layer-block-transparent"></div>
     </div>
 </div>
 <script src="./assets/js/cocos2d-js-v3.13-lite.js"></script>
