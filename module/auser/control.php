@@ -105,5 +105,4 @@ class auser extends control
             ->fetch();
         return $user;
     }
-
 }

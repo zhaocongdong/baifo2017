@@ -11,6 +11,7 @@
  */
 class afreeanimal extends control
 {
+    private $tableName = "bf_user_animal_op";
     /**
      * The construct function.
      *
@@ -35,20 +36,16 @@ class afreeanimal extends control
         $this->display();
     }
 
+    // API 放生 与 购买
     public function opAnimal() {
         if (!empty($_POST)) {
             $opinfo = null;
             $opinfo->uid        = $_POST["uid"];
             $opinfo->name       = $_POST["name"];
             $opinfo->num        = intval($_POST["num"]);
-            $opinfo->total        = floatval($_POST["total"]);
+            $opinfo->total      = floatval($_POST["total"]);
             $opinfo->item_name  = $_POST["item_name"];
             $opinfo->is_buy     = intval($_POST["is_buy"]);//is_buy购买-1 放生-0
-
-//            $opinfo->price      = floatval($_POST["price"]);
-//            $opinfo->img_list   = $_POST["img_list"];
-//            $opinfo->img_stand  = $_POST["img_stand"];
-//            $opinfo->img_move   = $_POST["img_move"];
 
             $opinfo->time       = date(DATE_FORMAT);
             $this->dao->insert('bf_user_animal_op')->data($opinfo)->exec();
@@ -56,12 +53,24 @@ class afreeanimal extends control
             $res = null;
             if ($lastId > 0) {
                 // 更新用户金额
-                
+//                $user = $this->getById($opinfo->uid);
                 $res->code = '100';
             } else {
                 $res->code = '200';
             }
             echo json_encode($res);
+        }
+    }
+
+    // API 获取用户购买的 Animals
+    public function getAnimal() {
+        if (!empty($_POST)) {
+            $list = $this->dao->select("name, sum(num) num")
+                ->from($this->tableName)
+                ->where('uid')->eq($_POST['uid'])
+                ->groupBy('name')
+                ->fetchAll();
+            echo json_encode($list);
         }
     }
 }

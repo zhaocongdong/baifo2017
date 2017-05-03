@@ -60,6 +60,9 @@ class auserModel extends model
         $this->dao->update('blog')->data($article)->where('id')->eq($articleID)->exec();
     }
 
+    public function updateUserGold($user) {
+        $this->dao->update('bf_user')->data($user)->exec();
+    }
     /**
      * Delete an article.
      * 
