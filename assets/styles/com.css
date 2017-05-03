@@ -297,7 +297,7 @@ button:focus{ outline:none; }
 
 .layer-scene-shop{ display:none; position:absolute; top:170px; left:220px; z-index:12; width:586px; height:276px; background-image:url('../images/afreeanimal/layer-scene-shop.png'); }
 .scene-shop-list{ margin:50px 0 0 30px; }
-.scene-shop-list li{ float:left; margin-right:13px; }
+.scene-shop-list li{ float:left; margin-right:13px; cursor:pointer; }
 .scene-shop-list .scene-thumb{ display:block; width:120px; height:75px; }
 .scene-shop-list .scene-name{ margin:3px 0; }
 

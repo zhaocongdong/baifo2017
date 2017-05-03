@@ -143,7 +143,7 @@ var AnimalList = {
     "koala":{
         price:50,
         frames:33,
-        moveFrames:55
+        moveFrames:104
     },
     "flamingo":{
         price:80,
@@ -194,6 +194,9 @@ var dataController = {
         $.post("index.php?m=afreeanimal&f=opAnimal",{"uid":userId,"name":name,"is_buy":0,"num":-1,"total":0},function(res){
             console.log(res);
         });
+    },
+    getAnimals:function(successCallback){
+        $.post("index.php?m=afreeanimal&f=getAnimal",{"uid":userId},successCallback);
     }
 }
 
@@ -211,13 +214,22 @@ var AFreeAnimal = {
     animalList:{},
     oLayerBlockTrans:null,
     totalAmount:0,
+    createAnimal:function(name){
+        var _animal = new Animal(name,100,70);
+        var _animalData = AnimalList[name];
+        _animal.setStayFrames(_animalData.frames,150);
+        _animal.setMoveFrames(_animalData.moveFrames,150)
+        _animal.load(AnimalManifest[name]);
+        _animal.setImageZoom(0,0,650,488);
+        return _animal;
+    },
     onDisplayAnimal :function(){
         var _this = this;
         var oAnimalLists = $(".animal-lists li");
-        var oAnimalDisplayContainer = $(".animal-show-container");
         var oAnimalName = $(".animal-name");
         var oInputAnimalCount = $(".animal-count input");
         var oAnimalTotalPrice = $(".animal-cost span");
+        var oAnimalDisplayContainer = $(".animal-show-container");
         oAnimalLists.each(function(){
             var $this = $(this);
             $this.bind("click",function(){
@@ -238,13 +250,8 @@ var AFreeAnimal = {
                     if(_this.animalList[sAnimalName]){
                         _this.animalList[sAnimalName].stay();
                     }else{
-                        var _animal = new Animal(sAnimalName,100,70);
-                        _animal.setStayFrames(AnimalList[sAnimalName].frames,150);
-                        _animal.setMoveFrames(AnimalList[sAnimalName].moveFrames,150)
-                        _animal.load(AnimalManifest[sAnimalName]);
-                        _animal.setImageZoom(0,0,650,488);
-                        _this.animalList[sAnimalName] = _animal;
-                        oAnimalDisplayContainer.append(_animal.o);
+                        _this.animalList[sAnimalName] = _this.createAnimal(sAnimalName);
+                        oAnimalDisplayContainer.append(_this.animalList[sAnimalName].o);
                     }
                     _this.runningAnimal = _this.animalList[sAnimalName];
                 }
@@ -284,21 +291,11 @@ var AFreeAnimal = {
         var oPurchaseAnimalButton = $(".animal-purchase-button");
         var oLayerAnimalShop = $(".layer-animal-shop");
         var oAnimalFarm = $(".animal-farm");
-        var nMaxLeft = oAnimalFarm.width();
-        var nMaxTop = oAnimalFarm.height();
 
         oPurchaseAnimalButton.bind("click",function(){
+            var animalName = _this.selectedName;
             for(var i = 0;i < _this.selectedCount;i++){
-                var newAnimal = deepCopy(_this.runningAnimal);
-                newAnimal.init();
-                newAnimal.setImageZoom(162,122,325,244);
-                var x = Math.round(Math.random() * nMaxLeft) - 65;
-                var y = Math.round(Math.random() * nMaxTop) - 45;
-                newAnimal.randomRender(x,y);
-                _this.animalInFarm["id-"+_this.animalInFarm.length] = newAnimal;
-                newAnimal.o.id = "id-"+_this.animalInFarm.length;
-                oAnimalFarm.append(newAnimal.o);
-                _this.animalInFarm.length++;
+                _this.insertAnimalToFarm(animalName);
             }
             dataController.purchaseAnimal(_this.selectedName,1,_this.selectedCount,_this.totalAmount);
             _this.oLayerBlockTrans.fadeOut();
@@ -351,46 +348,78 @@ var AFreeAnimal = {
         oConfirmRelease.bind("click",function(){
             oLayerReleaseAnimal.fadeOut(function(){
                 var _animal = _this.animalInFarm[_this.willReleaseAnimal.getAttribute("id")];
+                dataController.releaseAnimal(_animal.name);
+
                 _animal.stop();
                 _animal.setImageZoom(0,0,1000,600);
-                _animal.setStartPoint(250,150);
+                _animal.setStartPoint(0,150);
                 _animal.setCanvasSize(1000,600);
                 _animal.o.style.position = "absolute";
                 _animal.o.style.top = 0;
                 _animal.o.style.left = 0;
                 oAFreeAnimal.append(_animal.o);
                 _animal.leave();
-                dataController.releaseAnimal(_animal.name)
-                // _this.willReleaseAnimal.parentNode.removeChild(_this.willReleaseAnimal);
+                _this.oLayerBlockTrans.fadeOut();
             })
         });
     },
+    imageRoot:"./assets/images/afreeanimal",
     sceneList:[{
         "name":"默认场景",
         "price":"0",
-        "thumb":"/afreeanimal/scene/scene-thumb-1.jpg"
+        "thumb":"/scene/scene-thumb-1.jpg"
     },{
         "name":"临路池",
         "price":"1",
-        "thumb":""
+        "thumb":"/scene/scene-thumb-2.jpg"
     },{
-        "name":"默认场景",
+        "name":"天湖",
         "price":"1",
-        "thumb":""
+        "thumb":"/scene/scene-thumb-3.jpg"
     },{
-        "name":"默认场景",
+        "name":"宁静山林",
         "price":"1",
-        "thumb":""
+        "thumb":"/scene/scene-thumb-4.jpg"
     }],
     renderSceneList:function(){
-        var _scenes = "";
+        var _scenes = "",_imageRoot = this.imageRoot;
         this.sceneList.forEach(function(item,index){
-            _scenes += "<li><img alt='"+item.name+"' class='scene-thumb'/><p class='scene-name'>"+item.name+"</p><p class='scene-price'>价格："+item.price+" 两</p></li>"
+            _scenes += "<li><img alt='"+item.name+"' class='scene-thumb' src='"+_imageRoot+item.thumb+"'/><p class='scene-name'>"+item.name+"</p><p class='scene-price'>价格："+item.price+" 两</p></li>"
         });
         $(".scene-shop-list").html(_scenes);
     },
+    insertAnimalToFarm:function(name){
+        var newAnimal = this.createAnimal(name);
+        var nAnimalId = "id-" + this.animalInFarm.length;
+        var oAnimalFarm = $(".animal-farm");
+        var nMaxLeft = oAnimalFarm.width();
+        var nMaxTop = oAnimalFarm.height();
+
+        newAnimal.init();
+        newAnimal.setImageZoom(162,122,325,244);
+        var x = Math.round(Math.random() * nMaxLeft) - 100;
+        var y = Math.round(Math.random() * nMaxTop) - 45;
+        newAnimal.randomRender(x,y);
+        this.animalInFarm[nAnimalId] = newAnimal;
+        newAnimal.o.id = nAnimalId;
+        oAnimalFarm.append(newAnimal.o);
+        this.animalInFarm.length++;
+    },
+    renderAnimal:function(name){
+
+    },
     init:function(){
+        var _this = this;
         this.oLayerBlockTrans = $(".layer-block-transparent");
+
+        dataController.getAnimals(function(data){
+            var _jsonData = JSON.parse(data);
++           _jsonData.forEach(function(item){
+                for(var i = 0,len = item.num;i < len;i++){
+                    _this.insertAnimalToFarm(item.name);
+                }
+            });
+        });
     },
     renderPage:function(){
         this.renderSceneList();
@@ -472,41 +501,45 @@ Animal.prototype = {
         this.o.style.left = x + "px";
         this.o.style.top = y + "px";
     },
-    render:function(images,frames,rate){
+    render:function(images,frames,rate,status){
         var _this = this;
+        clearTimeout(_this.timeout);
         _this.ctx.clearRect(0,0,_this.w,_this.h);
-        if(frames == _this.stayFrames){
+        if(frames >= _this.activeFrames){
             if(_this.status === "leaving"){
                 _this.status = "paused";
                 _this.remove();
+                return true;
             }else{
                 frames = 0;
             }
-        };
+        }
         _this.ctx.drawImage(images[frames],_this.sl,_this.st,_this.sw,_this.sh,_this.cx,_this.cy,_this.w,_this.h);
         frames++;
 
-        if(_this.status !== "paused"){
+        if(_this.status === status){
             _this.timeout = setTimeout(function(){
-                _this.render(images,frames,rate);
+                _this.render(images,frames,rate,status);
             },rate);
         }
     },
     stay:function(){
         this.o.style.display = "block";
         this.status = "staying";
-        this.render(this.stayImages,0,this.stayRate);
+        this.prepare(this.stayImages,this.stayRate,this.stayFrames,"staying");
     },
     stop:function(){
         this.o.style.display = "none";
         this.status = "paused";
-        clearTimeout(this.timeout);
     },
     leave:function(){
-        console.log("leave");
         this.o.style.display = "block";
         this.status = "leaving";
-        this.render(this.moveImages,0,this.moveRate);
+        this.prepare(this.moveImages,this.moveRate,this.moveFrames,"leaving");
+    },
+    prepare:function(imgs,rate,frames,type){
+        this.activeFrames = frames;
+        this.render(imgs,0,rate,type);
     },
     remove:function(){
         this.o.parentNode.removeChild(this.o);
