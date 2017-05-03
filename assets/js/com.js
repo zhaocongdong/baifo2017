@@ -368,7 +368,7 @@ var AFreeAnimal = {
     sceneList:[{
         "name":"默认场景",
         "price":"0",
-        "thumb":""
+        "thumb":"/afreeanimal/scene/scene-thumb-1.jpg"
     },{
         "name":"临路池",
         "price":"1",
@@ -387,14 +387,14 @@ var AFreeAnimal = {
         this.sceneList.forEach(function(item,index){
             _scenes += "<li><img alt='"+item.name+"' class='scene-thumb'/><p class='scene-name'>"+item.name+"</p><p class='scene-price'>价格："+item.price+" 两</p></li>"
         });
-        $(".scene-list").html(_scenes);
+        $(".scene-shop-list").html(_scenes);
     },
     init:function(){
         this.oLayerBlockTrans = $(".layer-block-transparent");
     },
     renderPage:function(){
         this.renderSceneList();
-    }
+    },
     bind:function(){
         this.onDisplayAnimal();
         this.onEnterPurchaseShop();

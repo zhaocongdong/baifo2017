@@ -357,5 +357,5 @@ var manifest = manifest.map(function(src){
 fnLoading(manifest,function(){
     AFreeAnimalAnim.init("gameCanvas",1000,600);
 });
-console.log(AFreeAnimal);
+
 AFreeAnimal.start();

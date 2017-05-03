@@ -106,7 +106,7 @@
         </div>
         <div class="layer-scene-shop">
             <button class="button-close-layer"></button>
-            <ul class="scene-list">
+            <ul class="scene-shop-list">
             </ul>
         </div>
         <div class="layer-block-transparent"></div>
