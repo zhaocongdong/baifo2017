@@ -188,15 +188,24 @@ var dataController = {
     purchaseAnimal:function(name,number,amount){
         $.post("index.php?m=afreeanimal&f=opAnimal",{"uid":userId,"name":name,"is_buy":1,"num":number,"total":amount},function(res){
             console.log(res);
-        });
+        },"json");
     },
     releaseAnimal:function(name){
         $.post("index.php?m=afreeanimal&f=opAnimal",{"uid":userId,"name":name,"is_buy":0,"num":-1,"total":0},function(res){
             console.log(res);
-        });
+        },"json");
     },
     getAnimals:function(successCallback){
-        $.post("index.php?m=afreeanimal&f=getAnimal",{"uid":userId},successCallback);
+        $.post("index.php?m=afreeanimal&f=getAnimal",{"uid":userId},successCallback,"json");
+    },
+    buyBg:function(bgid,gold,successCallback){
+        $.post("index.php?m=afreeanimal&f=buybg",{"uid":userId,"bgid":bgid,"gold":1},successCallback,"json");
+    },
+    setBg:function(bgid,successCallback){
+        $.post("index.php?m=afreeanimal&f=setBG",{"uid":userId,"bgid":bgid},successCallback,"json");
+    },
+    getMyBG:function(successCallback){
+        $.post("index.php?m=afreeanimal&f=getMyBG",{"uid":userId},successCallback,"json");
     }
 }
 
@@ -330,6 +339,20 @@ var AFreeAnimal = {
             oLayerSceneShop.fadeOut();
         });
     },
+    onEnterRepository:function(){
+        var _this = this;
+        var oButtonEnterRepository = $(".pop-layer-repository");
+        var oButtonCloseRepository = $(".layer-user-repository .button-close-layer");
+        var oLayerUserRepository = $(".layer-user-repository");
+        oButtonEnterRepository.bind("click",function(){
+            _this.oLayerBlockTrans.fadeIn();
+            oLayerUserRepository.fadeIn();
+        });
+        oButtonCloseRepository.bind("click",function(){
+            _this.oLayerBlockTrans.fadeOut();
+            oLayerUserRepository.fadeOut();
+        });
+    },
     onReleaseAnimal:function(){
         var _this = this;
         var oAnimalFarm = $(".animal-farm");
@@ -365,28 +388,78 @@ var AFreeAnimal = {
     },
     imageRoot:"./assets/images/afreeanimal",
     sceneList:[{
+        "id":"1",
         "name":"默认场景",
         "price":"0",
-        "thumb":"/scene/scene-thumb-1.jpg"
+        "thumb":"/scene/scene-thumb-1.jpg",
+        "sold":0
     },{
+        "id":"2",
         "name":"临路池",
         "price":"1",
-        "thumb":"/scene/scene-thumb-2.jpg"
+        "thumb":"/scene/scene-thumb-2.jpg",
+        "sold":0
     },{
+        "id":"3",
         "name":"天湖",
         "price":"1",
-        "thumb":"/scene/scene-thumb-3.jpg"
+        "thumb":"/scene/scene-thumb-3.jpg",
+        "sold":0
     },{
+        "id":"4",
         "name":"宁静山林",
         "price":"1",
-        "thumb":"/scene/scene-thumb-4.jpg"
+        "thumb":"/scene/scene-thumb-4.jpg",
+        "sold":0
     }],
     renderSceneList:function(){
-        var _scenes = "",_imageRoot = this.imageRoot;
+        var _this = this, oNewLi = "",_imageRoot = this.imageRoot;
+        var oSceneShopList = $(".scene-shop-list");
+        oSceneShopList.html("");
         this.sceneList.forEach(function(item,index){
-            _scenes += "<li><img alt='"+item.name+"' class='scene-thumb' src='"+_imageRoot+item.thumb+"'/><p class='scene-name'>"+item.name+"</p><p class='scene-price'>价格："+item.price+" 两</p></li>"
+            oNewLi = $("<li><img alt='"+item.name+"' class='scene-thumb' src='"+_imageRoot+item.thumb+"'/><p class='scene-name'>"+item.name+"</p><p class='scene-price'>价格："+item.price+" 两</p></li>");
+            if(item.sold == 1){
+                oNewLi.append("<div class='scene-is-sold'></div>");
+            }else{
+                oNewLi.bind("click",function(){
+                    if(confirm("是否确认购买背景："+item.name)){
+                        dataController.buyBg(item.id,1,function(){
+                            _this.getMyBg();
+                        });
+                    }
+                });
+            }
+            oSceneShopList.append(oNewLi);
         });
-        $(".scene-shop-list").html(_scenes);
+    },
+    repositoryList:[],
+    renderRepositoryList:function(){
+        var _this = this;
+        var _repositoryList = this.repositoryList;
+        var oRepositoryList = $(".repository-list ul");
+        var sHtmlRepositoryList = "";
+        var _currentSceneId = this.currentSceneId;
+        var _imageRoot = this.imageRoot;
+        oRepositoryList.html("");
+        for(var i = 0,len = _repositoryList.length;i < len; i++){
+            sHtmlRepositoryList += "<li data-id='"+ _repositoryList[i].id +"'>";
+            console.log(_currentSceneId,_repositoryList[i].id);
+            if(_currentSceneId == _repositoryList[i].id){
+                this.currentScene = _repositoryList[i].thumb;
+                sHtmlRepositoryList += "<div class='repository-is-set'></div>";
+            }
+            sHtmlRepositoryList += "<img alt='"+ _repositoryList[i].name +"' src='"+ _imageRoot + _repositoryList[i].thumb +"' /></li>";
+        }
+        oRepositoryList.html(sHtmlRepositoryList);
+        oRepositoryList.find("li").each(function(){
+            var _$this = $(this);
+            _$this.bind("click",function(){
+                _this.currentSceneId = _$this.attr("data-id")
+                dataController.setBg(_this.currentSceneId,function(data){
+                    _this.renderRepositoryList();
+                })
+            });
+        });
     },
     insertAnimalToFarm:function(name){
         var newAnimal = this.createAnimal(name);
@@ -405,29 +478,47 @@ var AFreeAnimal = {
         oAnimalFarm.append(newAnimal.o);
         this.animalInFarm.length++;
     },
-    renderAnimal:function(name){
-
+    renderScene:function(){
+        var _scene = new Scene("scene-canvas");
+        _scene.setScene(1000,600);
+        _scene.setFrames(11);
+        _scene.setImage("./assets/images/afreeanimal/scene/scene1-",".png");
+        _scene.start();
     },
     init:function(){
         var _this = this;
         this.oLayerBlockTrans = $(".layer-block-transparent");
-
         dataController.getAnimals(function(data){
-            var _jsonData = JSON.parse(data);
-+           _jsonData.forEach(function(item){
++           data.forEach(function(item){
                 for(var i = 0,len = item.num;i < len;i++){
                     _this.insertAnimalToFarm(item.name);
                 }
             });
         });
+        _this.getMyBg();
+    },
+    getMyBg:function(){
+        var _this = this;
+        dataController.getMyBG(function(data){
+            for(var i = 0,len = data.length;i < len;i++){
+                if(data[i].using === "1"){
+                    _this.currentSceneId = data[i].bgid;
+                }
+                _this.sceneList[data[i].bgid - 1].sold = 1;
+                _this.repositoryList.push(_this.sceneList[data[i].bgid - 1]);
+            }
+            _this.renderSceneList();
+            _this.renderRepositoryList();
+            _this.renderScene();
+        });
     },
     renderPage:function(){
-        this.renderSceneList();
     },
     bind:function(){
         this.onDisplayAnimal();
         this.onEnterPurchaseShop();
         this.onEnterSceneShop();
+        this.onEnterRepository();
         this.onPurchaseAnimal();
         this.onReleaseAnimal();
         this.onConfirmReleaseAnimal();
@@ -438,6 +529,50 @@ var AFreeAnimal = {
         this.renderPage();
 
         this.bind();
+    }
+}
+
+var Scene = function(cid){
+    this.o = document.getElementById(cid);
+    this.ctx = this.o.getContext("2d");
+    this.imgs = [];
+}
+Scene.prototype = {
+    setScene:function(w,h){
+        this.o.width = w;
+        this.o.height = h;
+    },
+    setFrames:function(frames){
+        this.frames = frames;
+    },
+    setImage:function(src,ext){
+        for(var i = 0,len = this.frames;i < len;i++){
+            var _img = document.createElement("img");
+            _img.src = src + (i + 1) + ext;
+            this.imgs.push(_img);
+        }
+    },
+    start:function(){
+        var _this = this,
+            n = 0;
+
+        fnLoading(_this.imgs,function(){
+            _this.render();
+        });
+        _this.img = _this.imgs[0];
+        setInterval(function(){
+            n = n == _this.frames ? 0: n;
+            _this.img = _this.imgs[n]
+            n++
+        },100);
+    },
+    render:function(){
+        var _this = this;
+        _this.ctx.clearRect(0,0,1000,600);
+        _this.ctx.drawImage(_this.img,0,0);
+        requestAnimationFrame(function(){
+            _this.render();
+        });
     }
 }
 

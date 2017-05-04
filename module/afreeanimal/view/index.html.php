@@ -13,7 +13,7 @@
 <?php include '../../common/view/header.html.php';?>
 <div class='container'>
     <div class="afreeanimal-container">
-        <canvas id="gameCanvas" width="1000" height="600"></canvas>
+        <canvas id="scene-canvas"></canvas>
         <div class="top-user-handle-bar">
             <div class="user-info">
                 <img alt="" src="./assets/images/aburnjoss/user-default.jpg" class="user-head-default" />
@@ -108,6 +108,16 @@
             <button class="button-close-layer"></button>
             <ul class="scene-shop-list">
             </ul>
+        </div>
+        <div class="layer-user-repository">
+            <button class="repository-left"></button>
+            <button class="repository-right"></button>
+            <div class="repository-list">
+                <ul>
+                    <li></li>
+                </ul>
+            </div>
+            <button class="button-close-layer"></button>
         </div>
         <div class="layer-block-transparent"></div>
     </div>
