@@ -58,8 +58,8 @@ class auser extends control
             }
             unset($_POST['repwd']);
             $uid = $this->auser->register();
-            if(dao::isError() || $uid != 0) {
-                die(js::error(dao::getError()) . js::locate('back'));
+            if(dao::isError() || $uid == 0) {
+                die(js::error('注册失败!') . js::locate('back'));
             } else {
                 $_SESSION[USER_ID]   = $uid;
                 $_SESSION[USER_NAME] = $_POST["name"];

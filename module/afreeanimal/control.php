@@ -12,23 +12,12 @@
 class afreeanimal extends control
 {
     private $tableName = "bf_user_animal_op";
-    /**
-     * The construct function.
-     *
-     * @access public
-     * @return void
-     */
+
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * The index page.
-     *
-     * @access public
-     * @return void
-     */
     public function index()
     {
         $this->view->title = "放生";
@@ -39,7 +28,7 @@ class afreeanimal extends control
     // API 放生 与 购买
     public function opAnimal() {
         if (!empty($_POST)) {
-            $opinfo = null;
+            $opinfo = (object)null;
             $opinfo->uid        = $_POST["uid"];
             $opinfo->name       = $_POST["name"];
             $opinfo->num        = intval($_POST["num"]);
@@ -50,10 +39,12 @@ class afreeanimal extends control
             $opinfo->time       = date(DATE_FORMAT);
             $this->dao->insert('bf_user_animal_op')->data($opinfo)->exec();
             $lastId = $this->dao->lastInsertID();
-            $res = null;
+            $res = (object)null;
             if ($lastId > 0) {
                 // 更新用户金额
-//                $user = $this->getById($opinfo->uid);
+
+                # TODO 更新 gold
+
                 $res->code = '100';
             } else {
                 $res->code = '200';
@@ -72,5 +63,67 @@ class afreeanimal extends control
                 ->fetchAll();
             echo json_encode($list);
         }
+    }
+
+    public function buyBG() {
+        if (!empty($_POST)) {
+            $model = (object)null;
+            $model->uid     = $_POST['uid'];
+            $model->bgid    = $_POST['bgid'];
+            $model->gold    = $_POST['gold'];
+            $this->insertBG($model);
+
+            $res = (object)null;
+            if (dao::isError()) {
+                $res->code = '200';
+            } else {
+                // 更新 gold
+                # TODO 更新 gold
+                if (dao::isError()) {
+                    $res->code = '200';
+                } else {
+                    $res->code = '100';
+                }
+            }
+            echo json_encode($res);
+        }
+    }
+    public function getMyBG() {
+        if (!empty($_POST)) {
+            $list = $this->dao->select('bgid')->from('bf_user_freebg')
+                ->where('uid')->eq($_POST['uid'])
+                ->fetchAll();
+            echo json_encode($list);
+        }
+    }
+    public function setBG() {
+        if (!empty($_POST)) {
+            $this->dao->update('bf_user_freebg')
+                ->set('using')->eq(0)
+                ->where('uid')->eq($_POST['uid'])
+                ->exec();
+            $this->dao->update('bf_user_freebg')
+                ->set('using')->eq(1)
+                ->where('uid')->eq($_POST['uid'])
+                ->andWhere('bgid')->eq($_POST['bgid'])
+                ->exec();
+            if (dao::isError()) {
+
+            } else {
+                $res = (object)null;
+                $res->code = '100';
+                echo json_encode($res);
+            }
+        }
+    }
+
+
+
+
+    public function insertBG($model) {
+        $this->dao->insert('bf_user_freebg')->data($model)->exec();
+        $lastId = $this->dao->lastInsertID();
+        $model->id = $lastId;
+        return $model;
     }
 }

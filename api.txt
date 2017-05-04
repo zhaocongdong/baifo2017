@@ -1,0 +1,14 @@
+购买放生池背景API:
+/index.php?m=afreeanimal&f=buybg
+uid,bgid,glod
+{"code":"100"}
+
+获取用户背景
+/index.php?m=afreeanimal&f=getMyBG
+uid
+[{"bgid":"2"},{"bgid":"2"}]
+
+设置用户的背景
+/index.php?m=afreeanimal&f=setBG
+uid,bgid
+{"code":"100"}
