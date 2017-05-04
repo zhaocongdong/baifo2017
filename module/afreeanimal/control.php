@@ -71,6 +71,8 @@ class afreeanimal extends control
             $model->uid     = $_POST['uid'];
             $model->bgid    = $_POST['bgid'];
             $model->gold    = $_POST['gold'];
+            $model->using   = 1;
+            $model->time    = date(DATE_FORMAT);
             $this->insertBG($model);
 
             $res = (object)null;
@@ -83,6 +85,7 @@ class afreeanimal extends control
                     $res->code = '200';
                 } else {
                     $res->code = '100';
+                    $this->setBG(1);
                 }
             }
             echo json_encode($res);
@@ -90,13 +93,13 @@ class afreeanimal extends control
     }
     public function getMyBG() {
         if (!empty($_POST)) {
-            $list = $this->dao->select('bgid')->from('bf_user_freebg')
+            $list = $this->dao->select('bgid, `using`')->from('bf_user_freebg')
                 ->where('uid')->eq($_POST['uid'])
                 ->fetchAll();
             echo json_encode($list);
         }
     }
-    public function setBG() {
+    public function setBG($f) {
         if (!empty($_POST)) {
             $this->dao->update('bf_user_freebg')
                 ->set('using')->eq(0)
@@ -112,7 +115,9 @@ class afreeanimal extends control
             } else {
                 $res = (object)null;
                 $res->code = '100';
-                echo json_encode($res);
+                if ($f == '_NOT_SET') {
+                    echo json_encode($res);
+                }
             }
         }
     }

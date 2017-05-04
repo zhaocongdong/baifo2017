@@ -6,7 +6,7 @@ uid,bgid,glod
 获取用户背景
 /index.php?m=afreeanimal&f=getMyBG
 uid
-[{"bgid":"2"},{"bgid":"2"}]
+[{"bgid":"1","using":"0"},{"bgid":"2","using":"1"}]
 
 设置用户的背景
 /index.php?m=afreeanimal&f=setBG
