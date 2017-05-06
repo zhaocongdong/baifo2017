@@ -35,4 +35,144 @@ class aburnjoss extends control
         $this->view->pageJS = $this->app->getWebRoot() . "assets/js/aburnjoss.js";
         $this->display();
     }
+
+    private $tableName_bj = 'bf_user_bj'; // 烧香信息表
+    private $tableName_xy = 'bf_user_xy'; // 许愿信息表
+    private $tableName_merit = 'bf_user_merit';// 功德箱捐赠信息表
+
+        // -------- 以下 烧香 API -------
+    public function initBJ() {
+        if (!empty($_POST)) {
+            $this->loadModel('auser');
+            $uid = $_POST['uid'];
+            $user = $this->auser->getById($uid);
+
+            if (dao::isError()) {
+
+            } else {
+                $res_user = (object)null;
+                $res_user->gold_num = $user->gold_num;
+
+                $fields = 'foid, wish';
+                $wisht_list = $this->getWishList($uid, $fields);
+                $res = (object)null;
+                $res->wish_list     = $wisht_list;
+                $res->userinfo      = $res_user;
+                echo json_encode($res);
+            }
+        }
+    }
+    public function burnjoss() {
+        if (!empty($_POST)) {
+            $res = (object)null;
+            $this->loadModel('auser');
+            $user = $this->auser->getById($_POST['uid']);
+            if ($user->gold_num > $_POST['bj_gold']) {
+                $xy = (object)null;
+                if (empty($_POST['wish_id'])) { // 许愿
+                    $xy->foid           = $_POST['foid'];
+                    $xy->uid            = $_POST['uid'];
+                    $xy->wish           = $_POST['wish'];
+                    $xy->is_private     = $_POST['is_private'];
+
+                    $xy->create_time    = date(DATE_FORMAT);
+                    $this->insert_xy($xy);
+                } else {                        // 还愿
+                    $xy->id           = $_POST['wish_id'];
+                    $this->returnWish($xy->id);
+                }
+
+                if (dao::isError()) {
+
+                } else {
+                    $bj = (object)null;
+                    $bj->gp_ids         = $_POST['gp_ids'];
+                    $bj->foid           = $_POST['foid'];
+                    $bj->foname         = $_POST['foname'];
+                    $bj->uid            = $_POST['uid'];
+                    $bj->bj_gold        = $_POST['bj_gold'];
+                    $bj->stay_time      = (int)$_POST['stay_time'];
+
+                    $bj->wishid         = $xy->id;
+                    $bj->bj_time        = time();
+                    $bj->wish_id        = 0;
+                    $this->insert_bj($bj);
+
+                    if (dao::isError()) {
+
+                    } else {
+                        # TODO 更新用户银两
+                        $user->gold_num = $user->gold_num - (int)$bj->bj_gold;
+                        $this->auser->updateUserGold($user);
+                        $res->code = '100';
+                    }
+                }
+            } else {
+                $res->error = '201';
+                $res->msg   = '银两不足';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function meritBox() {
+        if (!empty($_POST)) {
+            $res = (object)null;
+            $this->loadModel('auser');
+            $user = $this->auser->getById($_POST['uid']);
+            if ($user->gold_num > $_POST['total']) {
+                $merit = (object)null;
+                $merit->uid         = $_POST['uid'];
+                $merit->total       = $_POST['total'];
+
+                $merit->merit_time  = date(DATE_FORMAT);
+                $this->merit($merit);
+                if (dao::isError()) {
+
+                } else {
+                    $user->gold_num = $user->gold_num - (int)$merit->total;
+                    $this->auser->updateUserGold($user);
+                    $res->code = '100';
+                }
+            } else {
+                $res->error = '201';
+                $res->msg   = '银两不足';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function insert_bj($model) {
+        $this->dao->insert($this->tableName_bj)->data($model)->exec();
+        $lastId = $this->dao->lastInsertID();
+        $model->id = $lastId;
+        return $model;
+    }
+    public function insert_xy($model) {
+        $this->dao->insert($this->tableName_xy)->data($model)->exec();
+        $lastId = $this->dao->lastInsertID();
+        $model->id = $lastId;
+        return $model;
+    }
+    public function returnWish($id) {
+        $this->dao->update($this->tableName_xy)
+            ->set('is_back_wish')->eq(1)
+            ->set('back_time')->eq(date(DATE_FORMAT))
+            ->where('id')->eq($id)
+            ->exec();
+    }
+    public function getWishList($uid, $fields = '*') {
+        $list = $this->dao->select($fields)->from($this->tableName_xy)
+            ->where('uid')->eq($uid)
+            ->andWhere('is_back_wish')->eq(0)
+            ->orderBy('id desc')
+            ->fetchAll();
+        return $list;
+    }
+    public function merit($model) {
+        $this->dao->insert($this->tableName_merit)->data($model)->exec();
+        $lastId = $this->dao->lastInsertID();
+        $model->id = $lastId;
+        return $model;
+    }
 }

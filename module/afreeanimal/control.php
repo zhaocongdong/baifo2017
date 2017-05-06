@@ -28,26 +28,34 @@ class afreeanimal extends control
     // API 放生 与 购买
     public function opAnimal() {
         if (!empty($_POST)) {
-            $opinfo = (object)null;
-            $opinfo->uid        = $_POST["uid"];
-            $opinfo->name       = $_POST["name"];
-            $opinfo->num        = intval($_POST["num"]);
-            $opinfo->total      = floatval($_POST["total"]);
-            $opinfo->item_name  = $_POST["item_name"];
-            $opinfo->is_buy     = intval($_POST["is_buy"]);//is_buy购买-1 放生-0
-
-            $opinfo->time       = date(DATE_FORMAT);
-            $this->dao->insert('bf_user_animal_op')->data($opinfo)->exec();
-            $lastId = $this->dao->lastInsertID();
             $res = (object)null;
-            if ($lastId > 0) {
-                // 更新用户金额
+            $this->loadModel('auser');
+            $user = $this->auser->getById($_POST['uid']);
+            if ($user->gold_num > $_POST['total']) {
+                $opinfo = (object)null;
+                $opinfo->uid        = $_POST["uid"];
+                $opinfo->name       = $_POST["name"];
+                $opinfo->num        = intval($_POST["num"]);
+                $opinfo->total      = floatval($_POST["total"]);
+                $opinfo->item_name  = $_POST["item_name"];
+                $opinfo->is_buy     = intval($_POST["is_buy"]);//is_buy购买-1 放生-0
 
-                # TODO 更新 gold
-
-                $res->code = '100';
+                $opinfo->time       = date(DATE_FORMAT);
+                $this->dao->insert('bf_user_animal_op')->data($opinfo)->exec();
+                $lastId = $this->dao->lastInsertID();
+                if ($lastId > 0) {
+                    if ($opinfo->is_buy == '1') {
+                        # TODO 更新 gold
+                        $user->gold_num = $user->gold_num - (int)$opinfo->total;
+                        $this->auser->updateUserGold($user);
+                    }
+                    $res->code = '100';
+                } else {
+                    $res->code = '200';
+                }
             } else {
-                $res->code = '200';
+                $res->error = '201';
+                $res->msg   = '银两不足';
             }
             echo json_encode($res);
         }
@@ -67,27 +75,37 @@ class afreeanimal extends control
 
     public function buyBG() {
         if (!empty($_POST)) {
-            $model = (object)null;
-            $model->uid     = $_POST['uid'];
-            $model->bgid    = $_POST['bgid'];
-            $model->gold    = $_POST['gold'];
-            $model->using   = 1;
-            $model->time    = date(DATE_FORMAT);
-            $this->insertBG($model);
-
             $res = (object)null;
-            if (dao::isError()) {
-                $res->code = '200';
-            } else {
-                // 更新 gold
-                # TODO 更新 gold
+            $this->loadModel('auser');
+            $user = $this->auser->getById($_POST['uid']);
+            if ($user->gold_num > $_POST['gold']) {
+                $model = (object)null;
+                $model->uid     = $_POST['uid'];
+                $model->bgid    = $_POST['bgid'];
+                $model->gold    = $_POST['gold'];
+                $model->using   = 1;
+                $model->time    = date(DATE_FORMAT);
+                $this->insertBG($model);
+
+                $res = (object)null;
                 if (dao::isError()) {
                     $res->code = '200';
                 } else {
-                    $res->code = '100';
-                    $this->setBG(1);
+                    # TODO 更新 gold
+                    $user->gold_num = $user->gold_num - (int)$model->gold;
+                    $this->auser->updateUserGold($user);
+                    if (dao::isError()) {
+                        $res->code = '200';
+                    } else {
+                        $res->code = '100';
+                        $this->setBG(1);
+                    }
                 }
+            } else {
+                $res->error = '201';
+                $res->msg   = '银两不足';
             }
+
             echo json_encode($res);
         }
     }

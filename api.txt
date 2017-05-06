@@ -1,7 +1,8 @@
+
 购买放生池背景API:
 /index.php?m=afreeanimal&f=buybg
 uid,bgid,glod
-{"code":"100"}
+{"code":"100"} / {"error":"201","msg":"银两不足"}
 
 获取用户背景
 /index.php?m=afreeanimal&f=getMyBG
@@ -12,3 +13,71 @@ uid
 /index.php?m=afreeanimal&f=setBG
 uid,bgid
 {"code":"100"}
+
+放生或购买小动物:
+/index.php?m=afreeanimal&f=opAnimal
+
+uid:1
+name:树懒
+total:20.09
+num:2
+is_buy:1  // 1-购买 0-放生
+
+{"code":"100"} / {"error":"201","msg":"银两不足"}
+
+获取用户小动物:
+/index.php?m=afreeanimal&f=getAnimal
+
+uid:1
+
+[{"name":"deer","num":"0"},{"name":"flamingo","num":"1"},{"name":"goose","num":"1"},{"name":"hamster","num":"1"},{"name":"koala","num":"1"},{"name":"rabbit","num":"1"},{"name":"seaotter","num":"0"}]
+
+
+
+
+
+点击确定上香
+/index.php?m=aburnjoss&f=burnjoss // m 参数有变化
+
+uid:1
+wish_id:0                         // wish_id=0 为许愿; wish_id>0为还愿 wish与is_private可以不传
+wish:祝你平安                      // 许愿内容
+is_private:1                      // 许愿是否保密
+foid:1                            // 佛祖id
+foname:释迦牟尼佛
+gp_ids:1|2,99|3                   // 桌上贡品用,相隔  类型和具体贡品用|相隔
+bj_gold:100                       // 烧香银两
+stay_time:1494082445              // 此次烧香持续到什么时间点,比如5分钟后结束即为当前时间戳+5*60
+
+{"code":"100"} / {"error":"201","msg":"银两不足"}
+
+上香初始化 用户金额与许愿列表
+/index.php?m=aburnjoss&f=initBJ
+
+uid
+
+{"wish_list":[{"foid":"1","wish":"\u795d\u4f60\u5e73\u5b89"}],"userinfo":{"gold_num":"0"}}
+
+功德箱
+/index.php?m=aburnjoss&f=meritBox
+
+uid, total
+
+{"code":"100"} / {"error":"201","msg":"银两不足"}
+
+
+
+
+
+//-----------
+访问地址：http://baifo2017.get.vip
+
+FTP用户名：	baifo2017
+FTP密码：	t5ymznjm
+上传地址：	baifo2017.dot.vip
+
+mysql的地址为：localhost(推荐)
+远程连接时使用域名: baifo2017.dot.vip
+数据库名为： 	baifo2017
+用户名： 	    baifo2017
+密码: 	    t5ymznjm
