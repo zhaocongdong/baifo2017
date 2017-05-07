@@ -93,9 +93,8 @@ class aburnjoss extends control
                     $bj->bj_gold        = $_POST['bj_gold'];
                     $bj->stay_time      = (int)$_POST['stay_time'];
 
-                    $bj->wishid         = $xy->id;
+                    $bj->wish_id         = $xy->id;
                     $bj->bj_time        = time();
-                    $bj->wish_id        = 0;
                     $this->insert_bj($bj);
 
                     if (dao::isError()) {
@@ -141,7 +140,36 @@ class aburnjoss extends control
             echo json_encode($res);
         }
     }
+    public function getGP() {
+        if (!empty($_POST)) {
+            $foid = 0;
+            if (isset($_POST['foid']) && !empty($_POST['foid'])) {
+                $foid = $_POST['foid'];
+            }
+            $list = $this->getFoGP($_POST['uid'], 'foid, gp_ids, wish_id, stay_time', $foid);
+            $res = count($list) > 0 ? $list[0] : (object)null;
+            echo json_encode($res);
+        }
+    }
 
+    public function getFoGP($uid, $fields = '*', $foid = 0) {
+        $list = array();
+        if ($foid == 0) { // 单个fo 贡品
+            $list = $this->dao->select($fields)->from($this->tableName_bj)
+                ->where('uid')->eq($uid)
+                ->andWhere('stay_time')->gt(time() + 15)
+                ->orderBy('id desc')
+                ->fetchAll();
+        } else {
+            $list = $this->dao->select($fields)->from($this->tableName_bj)
+                ->where('uid')->eq($uid)
+                ->andWhere('foid')->eq($foid)
+                ->andWhere('stay_time')->gt(time() + 15)
+                ->orderBy('id desc')
+                ->fetchAll();
+        }
+        return $list;
+    }
     public function insert_bj($model) {
         $this->dao->insert($this->tableName_bj)->data($model)->exec();
         $lastId = $this->dao->lastInsertID();

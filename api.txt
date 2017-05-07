@@ -65,6 +65,13 @@ uid, total
 
 {"code":"100"} / {"error":"201","msg":"银两不足"}
 
+获取单个贡品
+/index.php?m=aburnjoss&f=getGP
+
+uid, foid
+
+{"foid":"1","gp_ids":"1|2,99|3","wish_id":"1","stay_time":"1494157904"}
+
 
 
 
