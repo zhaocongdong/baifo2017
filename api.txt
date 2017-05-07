@@ -56,7 +56,7 @@ stay_time:1494082445              // 此次烧香持续到什么时间点,比如
 
 uid
 
-{"wish_list":[{"foid":"1","wish":"\u795d\u4f60\u5e73\u5b89"}],"userinfo":{"gold_num":"0"}}
+{"wish_list":[{"foid":"1","wish":"\u795d\u4f60\u5e73\u5b89"}],"userinfo":{"gold_num":"0"},"bj_list":[{"foid":"1","gp_ids":"1|2,99|3","wish_id":"1","stay_time":"1494157904"}]}
 
 功德箱
 /index.php?m=aburnjoss&f=meritBox

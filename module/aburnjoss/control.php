@@ -55,9 +55,13 @@ class aburnjoss extends control
 
                 $fields = 'foid, wish';
                 $wisht_list = $this->getWishList($uid, $fields);
+
+                $list = $this->getFoGP($_POST['uid'], 'foid, gp_ids, wish_id, stay_time');
+
                 $res = (object)null;
                 $res->wish_list     = $wisht_list;
                 $res->userinfo      = $res_user;
+                $res->bj_list       = $list;
                 echo json_encode($res);
             }
         }
