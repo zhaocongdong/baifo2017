@@ -53,7 +53,7 @@ class aburnjoss extends control
                 $res_user = (object)null;
                 $res_user->gold_num = $user->gold_num;
 
-                $fields = 'foid, foname, wish';
+                $fields = 'id, wish, foid, foname';
                 $wisht_list = $this->getWishList($uid, $fields);
 
                 $list = $this->getFoGP($_POST['uid'], 'foid, gp_ids, wish_id, stay_time');

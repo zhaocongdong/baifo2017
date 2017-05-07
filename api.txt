@@ -56,7 +56,7 @@ stay_time:1494082445              // 此次烧香持续到什么时间点,比如
 
 uid
 
-{"wish_list":[{{"foid":"1","foname":"\u91ca\u8fe6\u725f\u5c3c\u4f5b","wish":"\u795d\u4f60\u5e73\u5b89"}],"userinfo":{"gold_num":"0"},"bj_list":[{"foid":"1","gp_ids":"1|2,99|3","wish_id":"1","stay_time":"1494157904"}]}
+{"wish_list":[{"id":"2","wish":"\u795d\u4f60\u5e73\u5b89","foid":"1","foname":"\u91ca\u8fe6\u725f\u5c3c\u4f5b"}],"userinfo":{"gold_num":"0"},"bj_list":[{"foid":"1","gp_ids":"1|2,99|3","wish_id":"1","stay_time":"1494157904"}]}
 
 功德箱
 /index.php?m=aburnjoss&f=meritBox
