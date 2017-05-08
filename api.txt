@@ -1,3 +1,8 @@
+获取用户信息
+/index.php?m=afreeanimal&f=userInfo
+无参数
+{"id":"1","name":"1111","email":"","phone":"","merit_num":"0","gold_num":"9999999","register_time":"2017-04-29 23:16:25","last_time":"2017-04-29 23:16:25","title":"\u521d\u7ea7\u65bd\u4e3b"}
+
 
 购买放生池背景API:
 /index.php?m=afreeanimal&f=buybg

@@ -25,7 +25,13 @@ class auserModel extends model
     {
         return $this->dao->findById($id)->from('bf_user')->fetch();
     }
-
+    public function getUserTitle($merit) {
+        $list = $this->dao->select('tname as title')->from('bf_title')
+            ->where('merit_start')->le($merit)
+            ->andWhere('merit_end')->ge($merit)
+            ->fetch();
+        return $list;
+    }
     /**
      * Create an article.
      * 

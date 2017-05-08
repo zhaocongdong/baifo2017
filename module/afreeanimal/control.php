@@ -29,7 +29,14 @@ class afreeanimal extends control
             $uid = $_SESSION[USER_ID];
             $this->loadModel('auser');
             $user = $this->auser->getById($uid);
-            var_dump($user);
+            unset($user->password);
+            unset($user->tid);
+            unset($user->tname);
+            unset($user->rmd_uid);
+            // 获取用户级别
+            $title = $this->auser->getUserTitle($user->merit_num);
+            $user->title = $title->title;
+            echo json_encode($user);
         }
     }
 
