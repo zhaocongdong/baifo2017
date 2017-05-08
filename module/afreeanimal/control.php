@@ -24,6 +24,14 @@ class afreeanimal extends control
         $this->view->pageJS = $this->app->getWebRoot() . "assets/js/afreeanimal.js";
         $this->display();
     }
+    public function userInfo() {
+        if (!empty($_SESSION)) {
+            $uid = $_SESSION[USER_ID];
+            $this->loadModel('auser');
+            $user = $this->auser->getById($uid);
+            var_dump($user);
+        }
+    }
 
     // API 放生 与 购买
     public function opAnimal() {
