@@ -61,7 +61,8 @@ class afreeanimal extends control
                 if ($lastId > 0) {
                     if ($opinfo->is_buy == '1') {
                         # TODO 更新 gold
-                        $user->gold_num = $user->gold_num - (int)$opinfo->total;
+                        $user->gold_num     = $user->gold_num - (int)$opinfo->total;
+                        $user->merit_num    = $user->merit_num + (int)$opinfo->total;
                         $this->auser->updateUserGold($user);
                     }
                     $res->code = '100';
@@ -107,7 +108,8 @@ class afreeanimal extends control
                     $res->code = '200';
                 } else {
                     # TODO 更新 gold
-                    $user->gold_num = $user->gold_num - (int)$model->gold;
+                    $user->gold_num     = $user->gold_num - (int)$model->gold;
+                    $user->merit_num    = $user->merit_num + (int)$model->gold;
                     $this->auser->updateUserGold($user);
                     if (dao::isError()) {
                         $res->code = '200';
