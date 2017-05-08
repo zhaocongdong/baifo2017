@@ -77,14 +77,16 @@ class aburnjoss extends control
             if ($user->gold_num > $_POST['bj_gold']) {
                 $xy = (object)null;
                 if (empty($_POST['wish_id'])) { // 许愿
-                    $xy->foid           = $_POST['foid'];
-                    $xy->foname         = $_POST['foname'];
-                    $xy->uid            = $_POST['uid'];
-                    $xy->wish           = $_POST['wish'];
-                    $xy->is_private     = $_POST['is_private'];
+                    if (empty($_POST['wish'])) {
+                        $xy->foid           = $_POST['foid'];
+                        $xy->foname         = $_POST['foname'];
+                        $xy->uid            = $_POST['uid'];
+                        $xy->wish           = $_POST['wish'];
+                        $xy->is_private     = $_POST['is_private'];
 
-                    $xy->create_time    = date(DATE_FORMAT);
-                    $this->insert_xy($xy);
+                        $xy->create_time    = date(DATE_FORMAT);
+                        $this->insert_xy($xy);
+                    }
                 } else {                        // 还愿
                     $xy->id           = $_POST['wish_id'];
                     $this->returnWish($xy->id);
