@@ -16,21 +16,21 @@
         <div class="aburnjoss-container">
             <div class="fo-lists-container">
                 <ul class="fo-lists">
-                    <li class="fo1 active" data-fo="fo1_guanshiyin"></li>
-                    <li class="fo2" data-fo="fo2_shijiamoni"></li>
-                    <li class="fo3" data-fo="fo3_wenshupusa"></li>
-                    <li class="fo4" data-fo="fo4_wenquxingjun"></li>
-                    <li class="fo5" data-fo="fo5_yuelao"></li>
-                    <li class="fo6" data-fo="fo6_songziguanyin"></li>
-                    <li class="fo7" data-fo="fo7_milefo"></li>
-                    <li class="fo8" data-fo="fo8_mazu"></li>
-                    <li class="fo9" data-fo="fo9_guangong"></li>
-                    <li class="fo10" data-fo="fo10_dashizhi"></li>
-                    <li class="fo11" data-fo="fo11_caishenye"></li>
-                    <li class="fo12" data-fo="fo12_dizangwang"></li>
-                    <li class="fo13" data-fo="fo13_amituofo"></li>
-                    <li class="fo14" data-fo="fo14_puxian"></li>
-                    <li class="fo15" data-fo="fo15_yaoshifo"></li>
+                    <li class="fo1 active" data-fo="fo1_guanshiyin" data-name="观世音" data-id="1"></li>
+                    <li class="fo2" data-fo="fo2_shijiamoni" data-name="释迦牟尼佛" data-id="2"></li>
+                    <li class="fo3" data-fo="fo3_wenshupusa" data-name="文殊菩萨" data-id="3"></li>
+                    <li class="fo4" data-fo="fo4_wenquxingjun" data-name="文曲星君" data-id="4"></li>
+                    <li class="fo5" data-fo="fo5_yuelao" data-name="月老" data-id="5"></li>
+                    <li class="fo6" data-fo="fo6_songziguanyin" data-name="送子观音" data-id="6"></li>
+                    <li class="fo7" data-fo="fo7_milefo" data-name="弥勒佛" data-id="7"></li>
+                    <li class="fo8" data-fo="fo8_mazu" data-name="妈祖" data-id="8"></li>
+                    <li class="fo9" data-fo="fo9_guangong" data-name="关帝爷" data-id="9"></li>
+                    <li class="fo10" data-fo="fo10_dashizhi" data-name="大势至菩萨" data-id="10"></li>
+                    <li class="fo11" data-fo="fo11_caishenye" data-name="财神爷" data-id="11"></li>
+                    <li class="fo12" data-fo="fo12_dizangwang" data-name="地藏王菩萨" data-id="12"></li>
+                    <li class="fo13" data-fo="fo13_amituofo" data-name="阿弥陀佛" data-id="13"></li>
+                    <li class="fo14" data-fo="fo14_puxian" data-name="普贤菩萨" data-id="14"></li>
+                    <li class="fo15" data-fo="fo15_yaoshifo" data-name="药师佛" data-id="15"></li>
                 </ul>
                 <div class="fo-handle">
                     <input type="button" class="arrow-left" />
@@ -106,8 +106,8 @@
                 <div class="layer-make-wish-content">
                     <div class="make-wish-or-not">
                         <label>是否许愿：</label>
-                        <label><input type="radio" name="make-wish-or-not">许愿</label>
-                        <label><input type="radio" name="make-wish-or-not" checked="checked">不许愿</label>
+                        <label><input type="radio" name="make-wish-or-not" value="0">许愿</label>
+                        <label><input type="radio" name="make-wish-or-not" value="1" checked="checked">不许愿</label>
                     </div>
                     <select class="wish-options">
                         <option data-desc="学业猛进，考试顺利！学有所成，学业进步！各金榜题名，无往不利！稳中求胜，成绩满分！考试顺利，如愿高中！">学业猛进，考试顺利！</option>
@@ -119,10 +119,10 @@
                     <textarea class="wish-content" name="wish-content">学业猛进，考试顺利！学有所成，学业进步！各金榜题名，无往不利！稳中求胜，成绩满分！考试顺利，如愿高中！</textarea>
                     <div class="wish-private-or-not">
                         <label>
-                            <input type="radio" name="private-or-not" checked="checked" />保密
+                            <input type="radio" name="private-or-not" value="0" checked="checked" />保密
                         </label>
                         <label>
-                            <input type="radio" name="private-or-not" />不保密
+                            <input type="radio" name="private-or-not" value="1" />不保密
                         </label>
                         <label class="wish-handle">
                             <button type="button" class="wish-confirm"></button>

@@ -50,7 +50,8 @@ var fnLoading = function(images,callback){
     }
     loading();
 }
-var GifElement = function(parent,elm){
+var GifElement = function(id,parent,elm){
+    this.id = id;
     this.parent = parent;
     this.elm = elm;
     this.ctx = elm.getContext("2d");
@@ -116,39 +117,70 @@ var fnDoubleDigit = function(n){
 
 var AnimalList = {
     "hamster":{
-        price:20,
-        frames:55,
-        moveFrames:55
+        "name":"仓鼠",
+        "price":20,
+        "frames":55,
+        "moveFrames":70
     },
     "rabbit":{
-        price:20,
-        frames:18,
-        moveFrames:55
+        "name":"玉兔",
+        "price":20,
+        "frames":18,
+        "moveFrames":68
     },
     "goose":{
-        price:25,
-        frames:12,
-        moveFrames:55
+        "name":"鹅",
+        "price":25,
+        "frames":12,
+        "moveFrames":73
     },
     "seaotter":{
-        price:30,
-        frames:14,
-        moveFrames:55
+        "name":"海獭",
+        "price":30,
+        "frames":14,
+        "moveFrames":70
     },
     "deer":{
-        price:60,
-        frames:23,
-        moveFrames:55
+        "name":"梅花鹿",
+        "price":60,
+        "frames":23,
+        "moveFrames":61
     },
     "koala":{
-        price:50,
-        frames:33,
-        moveFrames:104
+        "name":"树懒",
+        "price":50,
+        "frames":33,
+        "moveFrames":104
     },
     "flamingo":{
-        price:80,
-        frames:9,
-        moveFrames:55
+        "name":"火烈鸟",
+        "price":80,
+        "frames":9,
+        "moveFrames":76
+    },
+    "koi":{
+        "name":"锦鲤",
+        "price":15,
+        "frames":10,
+        "moveFrames":28
+    },
+    "mandarinduck":{
+        "name":"鸳鸯",
+        "price":40,
+        "frames":13,
+        "moveFrames":81
+    },
+    "dove":{
+        "name":"白鸽",
+        "price":15,
+        "frames":5,
+        "moveFrames":52
+    },
+    "pigeon":{
+        "name":"灰鸽",
+        "price":15,
+        "frames":43,
+        "moveFrames":55
     }
 }
 
@@ -180,6 +212,22 @@ var AnimalManifest = {
     "flamingo":{
         stay:["./assets/images/afreeanimal/flamingo/flamingo"],
         move:["./assets/images/afreeanimal/flamingo/flamingo2_"]
+    },
+    "koi":{
+        stay:["./assets/images/afreeanimal/koi/koi"],
+        move:["./assets/images/afreeanimal/koi/koi2_"]
+    },
+    "mandarinduck":{
+        stay:["./assets/images/afreeanimal/mandarinduck/mandarinduck"],
+        move:["./assets/images/afreeanimal/mandarinduck/mandarinduck2_"]
+    },
+    "dove":{
+        stay:["./assets/images/afreeanimal/dove/dove"],
+        move:["./assets/images/afreeanimal/dove/dove2_"]
+    },
+    "pigeon":{
+        stay:["./assets/images/afreeanimal/pigeon/pigeon"],
+        move:["./assets/images/afreeanimal/pigeon/pigeon2_"]
     }
 }
 
@@ -206,6 +254,17 @@ var dataController = {
     },
     getMyBG:function(successCallback){
         $.post("index.php?m=afreeanimal&f=getMyBG",{"uid":userId},successCallback,"json");
+    },
+    burnjoss:function(data,successCallback){
+        data.uid = userId;
+        console.log(data);
+        $.post("index.php?m=aburnjoss&f=burnjoss",data,successCallback,"json");
+    },
+    initBj:function(successCallback){
+        $.post("index.php?m=aburnjoss&f=initBJ",{"uid":userId},successCallback,"json");
+    },
+    meritBox:function(total,successCallback){
+        $.post("index.php?m=aburnjoss&f=meritBox",{"total":total,"uid":userId},successCallback,"json");
     }
 }
 
@@ -224,7 +283,12 @@ var AFreeAnimal = {
     oLayerBlockTrans:null,
     totalAmount:0,
     createAnimal:function(name){
-        var _animal = new Animal(name,100,70);
+        console.log(name);
+        if(name == "flamingo"){
+            var _animal = new Animal(name,100,70);
+        }else{
+            var _animal = new Animal(name,100,70);
+        }
         var _animalData = AnimalList[name];
         _animal.setStayFrames(_animalData.frames,150);
         _animal.setMoveFrames(_animalData.moveFrames,150)
@@ -325,6 +389,18 @@ var AFreeAnimal = {
             oLayerAnimalShop.fadeOut();
         });
     },
+    onSwitchAnimalShop:function(){
+        var oAnimalTypeNavs = $(".animal-type-nav span");
+        var oAnimalLists = $(".animal-lists");
+        oAnimalTypeNavs.each(function(){
+            var _$this = $(this);
+            var _id = _$this.index();
+            _$this.bind("click",function(){
+                $(".layer-animal-shop .active").hide().removeClass("active");
+                oAnimalLists.eq(_id).show().addClass("active");
+            });
+        });
+    },
     onEnterSceneShop:function(){
         var _this = this;
         var oButtonEnterSceneShop = $(".pop-layer-scene");
@@ -374,8 +450,8 @@ var AFreeAnimal = {
                 dataController.releaseAnimal(_animal.name);
 
                 _animal.stop();
-                _animal.setImageZoom(0,0,1000,600);
-                _animal.setStartPoint(0,150);
+                _animal.setImageZoom(0,0,650,488);
+                _animal.setStartPoint(0,220);
                 _animal.setCanvasSize(1000,600);
                 _animal.o.style.position = "absolute";
                 _animal.o.style.top = 0;
@@ -391,24 +467,28 @@ var AFreeAnimal = {
         "id":"1",
         "name":"默认场景",
         "price":"0",
+        "frames":11,
         "thumb":"/scene/scene-thumb-1.jpg",
         "sold":0
     },{
         "id":"2",
         "name":"临路池",
         "price":"1",
+        "frames":10,
         "thumb":"/scene/scene-thumb-2.jpg",
         "sold":0
     },{
         "id":"3",
         "name":"天湖",
         "price":"1",
+        "frames":8,
         "thumb":"/scene/scene-thumb-3.jpg",
         "sold":0
     },{
         "id":"4",
         "name":"宁静山林",
         "price":"1",
+        "frames":11,
         "thumb":"/scene/scene-thumb-4.jpg",
         "sold":0
     }],
@@ -457,6 +537,8 @@ var AFreeAnimal = {
                 _this.currentSceneId = _$this.attr("data-id")
                 dataController.setBg(_this.currentSceneId,function(data){
                     _this.renderRepositoryList();
+                    _this.scene.setFrames(_this.sceneList[_this.currentSceneId - 1].frames);
+                    _this.scene.setImage("./assets/images/afreeanimal/scene/scene"+ _this.currentSceneId +"-",".jpg");
                 })
             });
         });
@@ -469,9 +551,16 @@ var AFreeAnimal = {
         var nMaxTop = oAnimalFarm.height();
 
         newAnimal.init();
-        newAnimal.setImageZoom(162,122,325,244);
-        var x = Math.round(Math.random() * nMaxLeft) - 100;
-        var y = Math.round(Math.random() * nMaxTop) - 45;
+        if(name == "flamingo"){
+            newAnimal.setCanvasSize(100,168);
+            newAnimal.setImageZoom(162,0,325,488);
+            var y = Math.round(Math.random() * nMaxTop) - 160;
+        }else{
+            newAnimal.setCanvasSize(100,70);
+            newAnimal.setImageZoom(162,122,325,244);
+            var y = Math.round(Math.random() * nMaxTop) - 65;
+        }
+        var x = Math.round(Math.random() * nMaxLeft) - 80;
         newAnimal.randomRender(x,y);
         this.animalInFarm[nAnimalId] = newAnimal;
         newAnimal.o.id = nAnimalId;
@@ -481,8 +570,16 @@ var AFreeAnimal = {
     renderScene:function(){
         var _scene = new Scene("scene-canvas");
         _scene.setScene(1000,600);
-        _scene.setFrames(11);
-        _scene.setImage("./assets/images/afreeanimal/scene/scene1-",".png");
+        _scene.setFrames(this.sceneList[this.currentSceneId - 1].frames);
+        _scene.setImage("./assets/images/afreeanimal/scene/scene"+ this.currentSceneId +"-",".jpg");
+        _scene.start();
+        this.scene = _scene;
+    },
+    renderGrass:function(){
+        var _scene = new Scene("scene-grass-canvas");
+        _scene.setScene(1000,182);
+        _scene.setFrames(81);
+        _scene.setImage("./assets/images/afreeanimal/grass/grass",".png");
         _scene.start();
     },
     init:function(){
@@ -510,6 +607,7 @@ var AFreeAnimal = {
             _this.renderSceneList();
             _this.renderRepositoryList();
             _this.renderScene();
+            _this.renderGrass();
         });
     },
     renderPage:function(){
@@ -517,6 +615,7 @@ var AFreeAnimal = {
     bind:function(){
         this.onDisplayAnimal();
         this.onEnterPurchaseShop();
+        this.onSwitchAnimalShop();
         this.onEnterSceneShop();
         this.onEnterRepository();
         this.onPurchaseAnimal();
@@ -535,7 +634,6 @@ var AFreeAnimal = {
 var Scene = function(cid){
     this.o = document.getElementById(cid);
     this.ctx = this.o.getContext("2d");
-    this.imgs = [];
 }
 Scene.prototype = {
     setScene:function(w,h){
@@ -546,6 +644,7 @@ Scene.prototype = {
         this.frames = frames;
     },
     setImage:function(src,ext){
+        this.imgs = [];
         for(var i = 0,len = this.frames;i < len;i++){
             var _img = document.createElement("img");
             _img.src = src + (i + 1) + ext;
@@ -555,7 +654,6 @@ Scene.prototype = {
     start:function(){
         var _this = this,
             n = 0;
-
         fnLoading(_this.imgs,function(){
             _this.render();
         });

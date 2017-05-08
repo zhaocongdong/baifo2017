@@ -333,7 +333,8 @@ var ABurnjoss = {
                     nCurrentId = nLiCounts - 2;
                 }
                 nCurrentId = nCurrentId - n;
-
+                _this.nCurrentFoId = oFoLists.eq(nCurrentId).attr("data-id");
+                _this.sCurrentFoName = oFoLists.eq(nCurrentId).attr("data-name");
                 _this.sCurrentFo = oFoLists.eq(nCurrentId).attr("data-fo");
                 _this.stopAll();
                 _this.setCurrentState();
@@ -393,6 +394,10 @@ var ABurnjoss = {
             oLayerBalanceNotEnough.css({"margin-top":-121}).fadeIn().animate({"margin-top":-21},1500).fadeOut();
         }
     },
+    noEnough:function(){
+        var oLayerBalanceNotEnough = $(".layer-balance-not-enough");
+        oLayerBalanceNotEnough.css({"margin-top":-121}).fadeIn().animate({"margin-top":-21},1500).fadeOut();
+    },
     oLayerBlock:$(".layer-block"),
     onOpenMeritBox:function(){
         var _this = this;
@@ -441,16 +446,17 @@ var ABurnjoss = {
     sampleLists:{},
     activeSampleLists:{},
     foSampleList:{},
-    insertElm:function(data,type,id){
+    insertElm:function(data,type,typeId,id){
         var _this = this;
         var sSampleKey = type;
-        var sSampleActiveKey = sSampleKey + "-" + id;
+        var sSampleActiveKey = sSampleKey + "-" + typeId;
+        console.log(sSampleActiveKey);
         if(_this.activeSampleLists[sSampleKey]){
             _this.activeSampleLists[sSampleKey].element.stop();
         }
         if(!_this.sampleLists[sSampleActiveKey]){
             var _parent = document.getElementById("sample-"+sSampleKey);
-            _this.sampleLists[sSampleActiveKey] = new GifElement(_parent,document.createElement("canvas"));
+            _this.sampleLists[sSampleActiveKey] = new GifElement(id,_parent,document.createElement("canvas"));
             _this.sampleLists[sSampleActiveKey].load(data);
         }else{
             _this.sampleLists[sSampleActiveKey].run();
@@ -478,7 +484,7 @@ var ABurnjoss = {
                 _span.title = Tributes[i].children[j].name;
                 _span.setAttribute("data-type","type"+fnDoubleDigit(i+1));
                 _span.setAttribute("data-price",Tributes[i].children[j].price);
-                (function(id,data){
+                (function(typeId,id,data){
                     _span.addEventListener("click",function(){
                         var sDataType = this.getAttribute("data-type");
                         var sSampleKey = sDataType + "-" + id;
@@ -487,15 +493,17 @@ var ABurnjoss = {
                             _this.stopAll();
                             _this.clearSamples();
                             data.include.forEach(function(item){
-                                var arrIndex = item.split("-");
-                                _this.insertElm(Tributes[arrIndex[0]].children[arrIndex[1]],"type"+fnDoubleDigit(parseInt(arrIndex[0])+1),fnDoubleDigit(arrIndex[1]+1))
+                                var arrIndex = item.split("-"),
+                                    sTypeId = fnDoubleDigit(parseInt(arrIndex[0])+1),
+                                    sId = fnDoubleDigit(parseInt(arrIndex[1])+1)
+                                _this.insertElm(Tributes[arrIndex[0]].children[arrIndex[1]],"type"+sTypeId,sId,sTypeId+"|"+sId);
                             });
                         }else{
-                            _this.insertElm(data,sDataType,id);
+                            _this.insertElm(data,sDataType,id,typeId+"|"+id);
                         }
                         _this.calculateTributeAmount();
                     })
-                }(nTributeId,Tributes[i].children[j]));
+                }(fnDoubleDigit(i+1),nTributeId,Tributes[i].children[j]));
                 _li.appendChild(_span);
             }
             _ul.appendChild(_li);
@@ -513,13 +521,19 @@ var ABurnjoss = {
         oConfirmMeritAmount.bind("click",function(){
             nMeritBoxValue = oInputMeritBox.val().trim();
             if(_regex.test(nMeritBoxValue)){
-                console.log(nMeritBoxValue);
                 _this.oLayerBlock.fadeOut();
-                oLayerMeritBox.fadeOut();
-                oHintMeritBox.css({"top":0}).show().animate({"top":300},1000,function(){
-                    setTimeout(function(){
-                        oHintMeritBox.fadeOut();
-                    },500);
+                oLayerMeritBox.fadeOut(function(){
+                    dataController.meritBox(nMeritBoxValue,function(res){
+                        if(res.error == "201"){
+                            _this.noEnough();
+                        }else if(res.code == "100"){
+                            oHintMeritBox.css({"top":0}).show().animate({"top":300},1000,function(){
+                                setTimeout(function(){
+                                    oHintMeritBox.fadeOut();
+                                },500);
+                            });
+                        }
+                    });
                 });
             }else{
                 alert("请输入正确金额");
@@ -536,6 +550,8 @@ var ABurnjoss = {
         var oWishCancel = $(".wish-cancel");
         var oWishContent = $(".wish-content");
         var oWishOptions = $(".wish-options");
+        var oMakeWishOrNot = $(".make-wish-or-not");
+        var oWishPrivateOrNot = $(".wish-private-or-not");
         var _bottom = {},_direction = "bottom",nTimes = 0;
         oConfirmTributes.bind("click",function(){
             if(_this.totalPrice === 0){
@@ -562,10 +578,32 @@ var ABurnjoss = {
             }
         });
         oWishConfirm.bind("click",function(){
+            var tributesIds = "";
+            for(var i in _this.activeSampleLists){
+                tributesIds += _this.activeSampleLists[i].element.id + ",";
+            }
+
+            var postData = {
+                "wish_id":oMakeWishOrNot.find("input:checked").val(),                         // wish_id=0 为许愿; wish_id>0为还愿 wish与is_private可以不传
+                "wish":oWishContent.html(),                      // 许愿内容
+                "is_private":oWishPrivateOrNot.find("input:checked").val(),                      // 许愿是否保密
+                "foid":_this.nCurrentFoId,                            // 佛祖id
+                "foname":_this.sCurrentFoName,
+                "gp_ids":tributesIds,                   // 桌上贡品用,相隔  类型和具体贡品用|相隔
+                "bj_gold":_this.totalPrice,                       // 烧香银两
+                "stay_time":new Date().getTime() + 3000000              // 此次烧香持续到什么时间点,比如5分钟后结束即为当前时间戳+5*60
+            }
+
             oLayerMakeWish.fadeOut(function(){
-                oLayerWishComplete.fadeIn().animate({"marginTop":-41}).fadeOut();
-                _this.foCompleteList.push(_this.sCurrentFo);
-                _this.setCurrentState();
+                dataController.burnjoss(postData,function(res){
+                    if(res.error == "201"){
+                        _this.noEnough();
+                    }else{
+                        oLayerWishComplete.fadeIn().animate({"marginTop":-41}).fadeOut();
+                        _this.foCompleteList.push(_this.sCurrentFo);
+                        _this.setCurrentState();
+                    }
+                });
             });
         });
         oWishCancel.bind("click",function(){
@@ -599,7 +637,6 @@ var ABurnjoss = {
             _timeout = setTimeout(function(){
                 $(".aburnjoss-container").removeClass("has-made-wished");
                 _this.oTributeAmount.html("共 0 两");
-                _this.calculateTributeAmount();
                 var _currentFoSamples;
                 if(_this.foSampleList[_this.sCurrentFo]){
                     _currentFoSamples = _this.foSampleList[_this.sCurrentFo];
@@ -612,10 +649,11 @@ var ABurnjoss = {
                 }
 
                 _this.activeSampleLists = _currentFoSamples;
+                _this.calculateTributeAmount();
             },500);
         }
     },
-    wishData:[{"foName":"安乐佛","foContent":"学业猛进，考试顺利！学有所成，学业进步！各金榜题名，无往不利！稳中求胜，成绩满分！考试顺利，如愿高中！"}],
+    wishData:[],
     renderPyHuanyuanList:function(){
         var _this = this;
         var _wishData = _this.wishData;
@@ -628,7 +666,7 @@ var ABurnjoss = {
         }else{
             var _huanyuanData = "";
             for(var i = 0,len = _wishData.length;i < len;i ++){
-                _huanyuanData += "<li><p class='fo-name'>"+_wishData[i].foName+"</p>";
+                _huanyuanData += "<li id='wish-"+_wishData[i].foId+"'><p class='fo-name'>"+_wishData[i].foName+"</p>";
                 _huanyuanData += "<p class='fo-content'>"+_wishData[i].foContent+"</p></li>";
             }
             oHuanyuanList.html(_huanyuanData);
@@ -646,11 +684,28 @@ var ABurnjoss = {
         }
     },
     initData:function(){
-        this.oTributeAmount = $(".tribute-confirm-submit p");
-        this.foSampleList = {
+        var _this = this;
+        _this.oTributeAmount = $(".tribute-confirm-submit p");
+        _this.foSampleList = {
             "fo1_guanshiyin" :{}
         };
-        this.foCompleteList = [];
+        _this.foCompleteList = [];
+        _this.nCurrentFoId = 1;
+        _this.sCurrentFoName = "观音菩萨";
+        dataController.initBj(function(res){
+            for(var i = 0,len = res.wish_list.length;i < len;i++){
+                var _currentWish = res.wish_list[i];
+                _this.wishData.push({
+                    "foId":_currentWish.foid,
+                    "foName":_currentWish.foname,
+                    "foContent":_currentWish.wish
+                })
+            }
+
+            for(var i = 0,len = res.bj_list;i < len;i++){
+
+            }
+        });
     },
     start:function(){
         this.initData();

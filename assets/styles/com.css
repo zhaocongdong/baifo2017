@@ -243,7 +243,9 @@ button:focus{ outline:none; }
 .has-made-wished .draw-pot{ display:none; }
 .has-made-wished .py-huanyuan{ display:none; }
 
-.afreeanimal-container{ position:relative; width:1000px; height:600px; }
+.afreeanimal-container{ overflow:hidden; position:relative; width:1000px; height:600px; }
+
+#scene-grass-canvas{ position:absolute; left:0; bottom:-70px; }
 
 .top-user-handle-bar{ position:absolute; top:0; left:0; width:100%; height:70px; background-color:rgba(255,255,255,0.3); }
 .user-info{ float:left; width:300px; height:70px; }
@@ -257,7 +259,7 @@ button:focus{ outline:none; }
 .user-handle .pop-layer-scene{ width:48px; height:43px; background-image:url('../images/afreeanimal/pop-layer-scene.png'); }
 .user-handle .pop-layer-repository{ width:45px; height:44px; margin-right:25px; background-image:url('../images/afreeanimal/pop-layer-repository.png'); }
 
-.animal-farm{ position:absolute; top:480px; left:570px; width:430px; height:70px; }
+.animal-farm{ position:absolute; top:480px; left:620px; width:380px; height:70px; }
 .animal-farm canvas{ position:absolute; cursor:pointer; }
 .layer-release-animal{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-110px 0 0 -165px; padding: 40px 50px 50px; width:330px; height:220px; background:url('../images/afreeanimal/layer-release-animal.png') no-repeat 0 0; font:bold 14px/1.3 "微软雅黑"; color:#FF0000; }
 .animal-release-button{ display:block; width:68px; height:32px; margin:15px auto; background:url('../images/afreeanimal/release-animal-button.png') no-repeat 0 0; }
@@ -282,7 +284,7 @@ button:focus{ outline:none; }
 .animal-type-nav .animal-type-1{ background:url('../images/afreeanimal/type-1-nav.png') no-repeat 0 0; }
 .animal-type-nav .animal-type-2{ background:url('../images/afreeanimal/type-2-nav.png') no-repeat 0 0; }
 .animal-type-nav .animal-type-3{ background:url('../images/afreeanimal/type-3-nav.png') no-repeat 0 0; }
-.animal-lists{ overflow:hidden; display:none; width:525px; margin:10px 0 0 30px; padding-bottom:15px; border-bottom:1px solid #333; }
+.animal-lists{ overflow:hidden; display:none; width:525px; margin:10px 0 0 30px; padding-bottom:8px; border-bottom:1px solid #333; }
 .animal-lists.active{ display:block; }
 .animal-lists li{ float:left; width:60px; margin-right:15px; padding-top:53px; background-repeat:no-repeat; cursor:pointer; }
 .animal-lists li span{ display:block; }
@@ -293,6 +295,10 @@ button:focus{ outline:none; }
 .animal-lists .animal-deer { background-image:url('../images/afreeanimal/animal-deer.jpg'); }
 .animal-lists .animal-koala { background-image:url('../images/afreeanimal/animal-koala.jpg'); }
 .animal-lists .animal-flamingo { background-image:url('../images/afreeanimal/animal-flamingo.jpg'); }
+.animal-lists .animal-koi{ background-image:url('../images/afreeanimal/animal-koi.jpg'); }
+.animal-lists .animal-mandarinduck{ background-image:url('../images/afreeanimal/animal-mandarinduck.jpg'); }
+.animal-lists .animal-dove{ background-image:url('../images/afreeanimal/animal-dove.jpg'); }
+.animal-lists .animal-pigeon{ background-image:url('../images/afreeanimal/animal-pigeon.jpg'); }
 .button-close-layer{ width:27px; height:27px; border:none; background:url('../images/aburnjoss/button-close-layer.png') no-repeat 0 0; }
 
 .layer-scene-shop{ display:none; position:absolute; top:170px; left:220px; z-index:12; width:586px; height:276px; background-image:url('../images/afreeanimal/layer-scene-shop.png'); }

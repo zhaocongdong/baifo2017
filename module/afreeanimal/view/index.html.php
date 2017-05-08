@@ -14,6 +14,7 @@
 <div class='container'>
     <div class="afreeanimal-container">
         <canvas id="scene-canvas"></canvas>
+        <canvas id="scene-grass-canvas"></canvas>
         <div class="top-user-handle-bar">
             <div class="user-info">
                 <img alt="" src="./assets/images/aburnjoss/user-default.jpg" class="user-head-default" />
@@ -42,52 +43,52 @@
                 <span class="animal-type-3"></span>
             </div>
             <ul class="animal-lists animal-lists-type-1 active">
-                <li class="animal-1 animal-hamster" data-name="hamster" data-price="20" data-frames="55" data-move-frames="55">
+                <li class="animal-1 animal-hamster" data-name="hamster">
                     <label>仓鼠</label>
                     <span>银两:20</span>
                 </li>
-                <li class="animal-2 animal-rabbit" data-name="rabbit" data-price="20" data-frames="18" data-move-frames="55">
+                <li class="animal-2 animal-rabbit" data-name="rabbit">
                     <label>玉兔</label>
                     <span>银两:20</span>
                 </li>
-                <li class="animal-3 animal-goose" data-name="goose" data-price="25" data-frames="12" data-move-frames="55">
+                <li class="animal-3 animal-goose" data-name="goose">
                     <label>鹅</label>
                     <span>银两:25</span>
                 </li>
-                <li class="animal-4 animal-sea-otter" data-name="seaotter" data-price="30" data-frames="14" data-move-frames="55">
+                <li class="animal-4 animal-sea-otter" data-name="seaotter">
                     <label>海獭</label>
                     <span>银两:30</span>
                 </li>
-                <li class="animal-5 animal-deer" data-name="deer" data-price="60" data-frames="23" data-move-frames="55">
+                <li class="animal-5 animal-deer" data-name="deer">
                     <label>梅花鹿</label>
                     <span>银两:60</span>
                 </li>
-                <li class="animal-6 animal-koala" data-name="koala" data-price="50" data-frames="33" data-move-frames="104">
+                <li class="animal-6 animal-koala" data-name="koala">
                     <label>树懒</label>
                     <span>银两:50</span>
                 </li>
-                <li class="animal-7 animal-flamingo" data-name="flamingo" data-price="80" data-frames="9" data-move-frames="55">
+                <li class="animal-7 animal-flamingo" data-name="flamingo">
                     <label>火烈鸟</label>
                     <span>银两:80</span>
                 </li>
             </ul>
             <ul class="animal-lists animal-lists-type-2">
-                <li class="animal-8">
-                    <span>锦鲤</span>
+                <li class="animal-8 animal-koi" data-name="koi">
+                    <label>锦鲤</label>
                     <span>银两:15</span>
                 </li>
-                <li class="animal-9">
-                    <span>鸳鸯</span>
+                <li class="animal-9 animal-mandarinduck" data-name="mandarinduck">
+                    <label>鸳鸯</label>
                     <span>银两:40</span>
                 </li>
             </ul>
             <ul class="animal-lists animal-lists-type-3">
-                <li class="animal-10">
-                    <span>白鸽</span>
+                <li class="animal-10 animal-dove" data-name="dove">
+                    <label>白鸽</label>
                     <span>银两:15</span>
                 </li>
-                <li class="animal-11">
-                    <span>灰鸽</span>
+                <li class="animal-11 animal-pigeon" data-name="pigeon">
+                    <label>灰鸽</label>
                     <span>银两:40</span>
                 </li>
             </ul>
