@@ -56,7 +56,7 @@ stay_time:1494082445              // 此次烧香持续到什么时间点,比如
 
 uid
 
-{"wish_list":[{{"foid":"1","foname":"\u91ca\u8fe6\u725f\u5c3c\u4f5b","wish":"\u795d\u4f60\u5e73\u5b89"}],"userinfo":{"gold_num":"0"},"bj_list":[{"foid":"1","gp_ids":"1|2,99|3","wish_id":"1","stay_time":"1494157904"}]}
+{"wish_list":[{"id":"2","wish":"\u795d\u4f60\u5e73\u5b89","foid":"1","foname":"\u91ca\u8fe6\u725f\u5c3c\u4f5b"}],"userinfo":{"gold_num":"0"},"bj_list":[{"foid":"1","gp_ids":"1|2,99|3","wish_id":"1","stay_time":"1494157904"}]}
 
 功德箱
 /index.php?m=aburnjoss&f=meritBox
@@ -72,8 +72,24 @@ uid, foid
 
 {"foid":"1","gp_ids":"1|2,99|3","wish_id":"1","stay_time":"1494157904"}
 
+抽签
+/index.php?m=aburnjoss&f=userLot
 
+uid,lot_id
 
+{
+  "id": "1",
+  "no": "第100签",
+  "no_big": null,
+  "title": "三教谈道",
+  "poem": "此卦守常勿动之象。凡事宜待时吉也。",
+  "jx": "下签亥宫",
+  "jie": "此是满签。诸事不利。大作佛力。可保平安。",
+  "jxexp": "佛神灵通与君知，痴人说事转昏迷；老人求得灵签去，不如守旧待时来。",
+  "exp": "完满灵签。尽报君知。依旧勿动。待等时至。",
+  "gu": "三教谈道。北周武帝时。三教(儒释道)互相排斥。皇帝召集大会辩论。经过三次争辩。喻道在我教。理存我方。争执不止。没有结论。痴事一桩。后佛教成为中国人民信仰主流。也有三教同源之说。",
+  "openUrl": "http://localhost/~louis/baifo2017/index.php?m=lot&f=index&id=1"
+}
 
 
 //-----------

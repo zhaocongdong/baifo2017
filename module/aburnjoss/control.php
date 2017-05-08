@@ -39,8 +39,11 @@ class aburnjoss extends control
     private $tableName_bj = 'bf_user_bj'; // 烧香信息表
     private $tableName_xy = 'bf_user_xy'; // 许愿信息表
     private $tableName_merit = 'bf_user_merit';// 功德箱捐赠信息表
+    private $tableName_lot   = 'bf_lot'; //
+    private $tableName_user_lot   = 'bf_user_lot'; //
 
-        // -------- 以下 烧香 API -------
+
+    // -------- 以下 烧香 API -------
     public function initBJ() {
         if (!empty($_POST)) {
             $this->loadModel('auser');
@@ -53,7 +56,7 @@ class aburnjoss extends control
                 $res_user = (object)null;
                 $res_user->gold_num = $user->gold_num;
 
-                $fields = 'foid, foname, wish';
+                $fields = 'id, wish, foid, foname';
                 $wisht_list = $this->getWishList($uid, $fields);
 
                 $list = $this->getFoGP($_POST['uid'], 'foid, gp_ids, wish_id, stay_time');
@@ -156,15 +159,32 @@ class aburnjoss extends control
             echo json_encode($res);
         }
     }
+    public function userLot() {
+        if (!empty($_POST)) {
+            $lot_id = $_POST['lot_id'];
+            $uid    = $_POST['uid'];
+            $lot    = $this->getLot(1);
+            if (!empty($lot)) {
+                $model = (object)null;
+                $model->uid         = $uid;
+                $model->lot_id      = $lot_id;
+                $model->lot_time    = date(DATE_FORMAT);
+                $this->insertUserLot($model);
+
+                $lot->openUrl = APP_DOMAIN . $this->createLink('lot', 'index', array(id=>$lot_id));
+            }
+            echo json_encode($lot);
+        }
+    }
 
     public function getFoGP($uid, $fields = '*', $foid = 0) {
-        $list = array();
         if ($foid == 0) { // 单个fo 贡品
             $list = $this->dao->select($fields)->from($this->tableName_bj)
                 ->where('uid')->eq($uid)
                 ->andWhere('stay_time')->gt(time() + 15)
                 ->orderBy('id desc')
                 ->fetchAll();
+            return $list;
         } else {
             $list = $this->dao->select($fields)->from($this->tableName_bj)
                 ->where('uid')->eq($uid)
@@ -172,8 +192,8 @@ class aburnjoss extends control
                 ->andWhere('stay_time')->gt(time() + 15)
                 ->orderBy('id desc')
                 ->fetchAll();
+            return $list;
         }
-        return $list;
     }
     public function insert_bj($model) {
         $this->dao->insert($this->tableName_bj)->data($model)->exec();
@@ -204,6 +224,16 @@ class aburnjoss extends control
     }
     public function merit($model) {
         $this->dao->insert($this->tableName_merit)->data($model)->exec();
+        $lastId = $this->dao->lastInsertID();
+        $model->id = $lastId;
+        return $model;
+    }
+
+    public function getLot($id) {
+        return $this->dao->findById($id)->from($this->tableName_lot)->fetch();
+    }
+    public function insertUserLot($model) {
+        $this->dao->insert($this->tableName_user_lot)->data($model)->exec();
         $lastId = $this->dao->lastInsertID();
         $model->id = $lastId;
         return $model;
