@@ -78,9 +78,9 @@ GifElement.prototype = {
         fnLoading(this.imgs,function(){
             _this.loading = true;
             _this.parent.appendChild(_this.elm);
-            setTimeout(function(){
-                _this.run()
-            },100);
+            // setTimeout(function(){
+            //     _this.run()
+            // },100);
         });
     },
     run:function(){
@@ -179,8 +179,8 @@ var AnimalList = {
     "pigeon":{
         "name":"灰鸽",
         "price":15,
-        "frames":43,
-        "moveFrames":55
+        "frames":8,
+        "moveFrames":43
     }
 }
 

@@ -349,11 +349,38 @@ var ABurnjoss = {
             }
         };
         oLeftButton.bind("click",function(){
+            oActiveLi = $(".fo-lists li.active");
+            nCurrentId = $(".fo-lists li.active").index();
             fnSlide(1);
         });
         oRightButton.bind("click",function(){
+            oActiveLi = $(".fo-lists li.active");
+            nCurrentId = $(".fo-lists li.active").index();
             fnSlide(-1);
         });
+    },
+    slideToFo:function(){
+        var oActiveLi = $(".fo-lists li.active"),
+            nCurrentId = this.nSelectedWishId - 1,
+            oTargetLi = $(".fo-lists .fo"+this.nSelectedWishId),
+            n;
+        if(nCurrentId > oActiveLi.index()){
+            n = -1;
+        }else{
+            n = 1;
+        }
+        oActiveLi.animate({"left":n*1000},100,function(){
+            $(this).removeClass("active");
+        });
+        oTargetLi.css({"left":-n*1000}).animate({"left":0},100,function(){
+            $(this).addClass("active");
+            isMoving = false;
+        });
+        this.nCurrentFoId = oTargetLi.attr("data-id");
+        this.sCurrentFoName = oTargetLi.attr("data-name");
+        this.sCurrentFo = oTargetLi.attr("data-fo");
+        this.stopAll();
+        this.setCurrentState();
     },
     stopAll:function(){
         for(var prop in this.activeSampleLists){
@@ -450,7 +477,6 @@ var ABurnjoss = {
         var _this = this;
         var sSampleKey = type;
         var sSampleActiveKey = sSampleKey + "-" + typeId;
-        console.log(sSampleActiveKey);
         if(_this.activeSampleLists[sSampleKey]){
             _this.activeSampleLists[sSampleKey].element.stop();
         }
@@ -578,9 +604,9 @@ var ABurnjoss = {
             }
         });
         oWishConfirm.bind("click",function(){
-            var tributesIds = "";
+            var tributesIds = [];
             for(var i in _this.activeSampleLists){
-                tributesIds += _this.activeSampleLists[i].element.id + ",";
+                tributesIds.push(_this.activeSampleLists[i].element.id);
             }
 
             var postData = {
@@ -589,9 +615,9 @@ var ABurnjoss = {
                 "is_private":oWishPrivateOrNot.find("input:checked").val(),                      // 许愿是否保密
                 "foid":_this.nCurrentFoId,                            // 佛祖id
                 "foname":_this.sCurrentFoName,
-                "gp_ids":tributesIds,                   // 桌上贡品用,相隔  类型和具体贡品用|相隔
+                "gp_ids":tributesIds.join(","),                   // 桌上贡品用,相隔  类型和具体贡品用|相隔
                 "bj_gold":_this.totalPrice,                       // 烧香银两
-                "stay_time":new Date().getTime() + 3000000              // 此次烧香持续到什么时间点,比如5分钟后结束即为当前时间戳+5*60
+                "stay_time":(new Date().getTime() + 30000) /1000              // 此次烧香持续到什么时间点,比如5分钟后结束即为当前时间戳+5*60
             }
 
             oLayerMakeWish.fadeOut(function(){
@@ -601,6 +627,10 @@ var ABurnjoss = {
                     }else{
                         oLayerWishComplete.fadeIn().animate({"marginTop":-41}).fadeOut();
                         _this.foCompleteList.push(_this.sCurrentFo);
+                        if(_this.wishData.length === 0){
+                            $(".layer-py-huanyuan ul").html("");
+                        }
+                        $(".layer-py-huanyuan ul").prepend(_this.createWishItem({"foId":_this.nCurrentFoId,"foName":_this.sCurrentFoName,"foContent":oWishContent.html()}));
                         _this.setCurrentState();
                     }
                 });
@@ -619,7 +649,6 @@ var ABurnjoss = {
         var oLayerPyHuanyuan = $(".layer-py-huanyuan");
         var oLyaerPyHuanyuanClose = $(".layer-py-huanyuan-close");
         oPyHuanyuan.bind("click",function(){
-            _this.renderPyHuanyuanList();
             _this.oLayerBlock.fadeIn();
             oLayerPyHuanyuan.fadeIn();
         });
@@ -634,54 +663,62 @@ var ABurnjoss = {
         if(this.foCompleteList.indexOf(this.sCurrentFo) > -1){
             $(".aburnjoss-container").addClass("has-made-wished");
         }else{
-            _timeout = setTimeout(function(){
-                $(".aburnjoss-container").removeClass("has-made-wished");
-                _this.oTributeAmount.html("共 0 两");
-                var _currentFoSamples;
-                if(_this.foSampleList[_this.sCurrentFo]){
-                    _currentFoSamples = _this.foSampleList[_this.sCurrentFo];
-                    for(var i in _currentFoSamples){
-                        _currentFoSamples[i].element.run();
-                    }
-                }else{
-                    _this.foSampleList[_this.sCurrentFo] = {};
-                    _currentFoSamples = {};
-                }
-
-                _this.activeSampleLists = _currentFoSamples;
-                _this.calculateTributeAmount();
-            },500);
+            $(".aburnjoss-container").removeClass("has-made-wished");
         }
+        _this.oTributeAmount.html("共 0 两");
+        _timeout = setTimeout(function(){
+            var _currentFoSamples;
+            if(_this.foSampleList[_this.sCurrentFo]){
+                _currentFoSamples = _this.foSampleList[_this.sCurrentFo];
+                for(var i in _currentFoSamples){
+                    _currentFoSamples[i].element.run();
+                }
+            }else{
+                _this.foSampleList[_this.sCurrentFo] = {};
+                _currentFoSamples = {};
+            }
+
+            _this.activeSampleLists = _currentFoSamples;
+            _this.calculateTributeAmount();
+        },500);
     },
     wishData:[],
+    createWishItem:function(data){
+        var _this = this;
+        var oLayerPyHuanyuan = $(".layer-py-huanyuan");
+        var oLayerPyHuanyuanOrNot = $(".layer-py-huanyuan-or-not");
+        var newItem = $("<li id='wish-"+data.foId+"'><p class='fo-name'>"+data.foName+"</p><p class='fo-content'>"+data.foContent+"</p></li>");
+        newItem.bind("click",function(){
+            _this.nSelectedWishId = data.foId;
+            oLayerPyHuanyuan.fadeOut();
+            oLayerPyHuanyuanOrNot.fadeIn();
+        });
+        return newItem;
+    },
     renderPyHuanyuanList:function(){
         var _this = this;
         var _wishData = _this.wishData;
         var oLayerPyHuanyuan = $(".layer-py-huanyuan");
-        var oHuanyuanList = $(".layer-py-huanyuan ul");
         var oLayerPyHuanyuanOrNot = $(".layer-py-huanyuan-or-not");
+        var oHuanyuanList = $(".layer-py-huanyuan ul");
+        var oPyHuanyuanConfirm = $(".py-huanyuan-confirm");
         var oPyHuanyuanCancel = $(".py-huanyuan-cancel");
         if(_this.wishData.length === 0){
             oHuanyuanList.html("<li>暂无许愿信息</li>");
         }else{
-            var _huanyuanData = "";
             for(var i = 0,len = _wishData.length;i < len;i ++){
-                _huanyuanData += "<li id='wish-"+_wishData[i].foId+"'><p class='fo-name'>"+_wishData[i].foName+"</p>";
-                _huanyuanData += "<p class='fo-content'>"+_wishData[i].foContent+"</p></li>";
+                oHuanyuanList.prepend(_this.createWishItem(_wishData[i]));
             }
-            oHuanyuanList.html(_huanyuanData);
-            oHuanyuanList.find("li").each(function(){
-                var _$this = $(this);
-                _$this.bind("click",function(){
-                    oLayerPyHuanyuan.fadeOut();
-                    oLayerPyHuanyuanOrNot.fadeIn();
-                });
-            });
-            oPyHuanyuanCancel.bind("click",function(){
-                _this.oLayerBlock.fadeOut();
-                oLayerPyHuanyuanOrNot.fadeOut();
-            });
         }
+        oPyHuanyuanConfirm.bind("click",function(){
+            _this.oLayerBlock.fadeOut();
+            oLayerPyHuanyuanOrNot.fadeOut();
+            _this.slideToFo();
+        });
+        oPyHuanyuanCancel.bind("click",function(){
+            _this.oLayerBlock.fadeOut();
+            oLayerPyHuanyuanOrNot.fadeOut();
+        });
     },
     initData:function(){
         var _this = this;
@@ -693,18 +730,35 @@ var ABurnjoss = {
         _this.nCurrentFoId = 1;
         _this.sCurrentFoName = "观音菩萨";
         dataController.initBj(function(res){
+            console.log(res);
+
             for(var i = 0,len = res.wish_list.length;i < len;i++){
-                var _currentWish = res.wish_list[i];
+                var _wishList = res.wish_list[i];
                 _this.wishData.push({
-                    "foId":_currentWish.foid,
-                    "foName":_currentWish.foname,
-                    "foContent":_currentWish.wish
+                    "foId":_wishList.foid,
+                    "foName":_wishList.foname,
+                    "foContent":_wishList.wish
                 })
             }
+            _this.renderPyHuanyuanList();
 
-            for(var i = 0,len = res.bj_list;i < len;i++){
-
+            for(var x = 0,xlen = res.bj_list.length;x < xlen;x++){
+                var _bjList = res.bj_list[x];
+                var _foId = parseInt(_bjList.foid) - 1;
+                var _gpIds = _bjList.gp_ids.split(",");
+                _this.foCompleteList.push($(".fo-lists li").eq(_foId).attr("data-fo"));
+                _this.sCurrentFo = $(".fo-lists li").eq(_foId).attr("data-fo");
+                _this.foSampleList[_this.sCurrentFo] = {};
+                for(var j = 0,jlen = _gpIds.length;j < jlen;j++){
+                    if(_gpIds[j]){
+                        var arrIndex = _gpIds[j].split("|"),
+                            sTypeId = arrIndex[0],
+                            sId = arrIndex[1];
+                        _this.insertElm(Tributes[parseInt(sTypeId)-1].children[parseInt(sId)-1],"type"+sTypeId,sId,_gpIds[j]);
+                    }
+                }
             }
+            _this.setCurrentState();
         });
     },
     start:function(){

@@ -196,7 +196,7 @@ button:focus{ outline:none; }
 
 .layer-block{ display:none; position:absolute; top:0; left:0; z-index:11; width:100%; height:100%; background-color:rgba(0,0,0,0.5); }
 .layer-py-huanyuan{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-217px 0 0 -172px; width:344px; height:435px; background:url('../images/aburnjoss/layer-py-huanyuan-bg.png') no-repeat 0 0; }
-.layer-py-huanyuan ul{ height: 340px; margin: 80px 19px 0 28px; background-color: #fff; }
+.layer-py-huanyuan ul{ overflow:auto; height: 340px; margin: 80px 19px 0 28px; background-color: #fff; }
 .layer-py-huanyuan ul li{ padding:3px 0 8px 5px; border-bottom:1px solid #999; font-weight:bold; }
 .layer-py-huanyuan ul li:hover { background-color:#009dff; color:#fff; cursor:pointer; }
 .layer-py-huanyuan ul li .fo-name{ padding-bottom:3px; color:#e74c3c; }
