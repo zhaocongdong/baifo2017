@@ -29,7 +29,14 @@ class afreeanimal extends control
             $uid = $_SESSION[USER_ID];
             $this->loadModel('auser');
             $user = $this->auser->getById($uid);
-            var_dump($user);
+            unset($user->password);
+            unset($user->tid);
+            unset($user->tname);
+            unset($user->rmd_uid);
+            // 获取用户级别
+            $title = $this->auser->getUserTitle($user->merit_num);
+            $user->title = $title->title;
+            echo json_encode($user);
         }
     }
 
@@ -54,7 +61,8 @@ class afreeanimal extends control
                 if ($lastId > 0) {
                     if ($opinfo->is_buy == '1') {
                         # TODO 更新 gold
-                        $user->gold_num = $user->gold_num - (int)$opinfo->total;
+                        $user->gold_num     = $user->gold_num - (int)$opinfo->total;
+                        $user->merit_num    = $user->merit_num + (int)$opinfo->total;
                         $this->auser->updateUserGold($user);
                     }
                     $res->code = '100';
@@ -100,7 +108,8 @@ class afreeanimal extends control
                     $res->code = '200';
                 } else {
                     # TODO 更新 gold
-                    $user->gold_num = $user->gold_num - (int)$model->gold;
+                    $user->gold_num     = $user->gold_num - (int)$model->gold;
+                    $user->merit_num    = $user->merit_num + (int)$model->gold;
                     $this->auser->updateUserGold($user);
                     if (dao::isError()) {
                         $res->code = '200';

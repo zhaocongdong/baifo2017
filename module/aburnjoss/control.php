@@ -111,7 +111,8 @@ class aburnjoss extends control
 
                     } else {
                         # TODO 更新用户银两
-                        $user->gold_num = $user->gold_num - (int)$bj->bj_gold;
+                        $user->gold_num     = $user->gold_num - (int)$bj->bj_gold;
+                        $user->merit_num    = $user->merit_num + (int)$bj->bj_gold;
                         $this->auser->updateUserGold($user);
                         $res->code = '100';
                     }
@@ -139,7 +140,8 @@ class aburnjoss extends control
                 if (dao::isError()) {
 
                 } else {
-                    $user->gold_num = $user->gold_num - (int)$merit->total;
+                    $user->gold_num     = $user->gold_num - (int)$merit->total;
+                    $user->merit_num    = $user->merit_num + (int)$merit->total;
                     $this->auser->updateUserGold($user);
                     $res->code = '100';
                 }
