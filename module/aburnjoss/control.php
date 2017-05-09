@@ -77,7 +77,7 @@ class aburnjoss extends control
             if ($user->gold_num > $_POST['bj_gold']) {
                 $xy = (object)null;
                 if (empty($_POST['wish_id'])) { // 许愿
-                    if (empty($_POST['wish'])) {
+                    if (!empty($_POST['wish'])) {
                         $xy->foid           = $_POST['foid'];
                         $xy->foname         = $_POST['foname'];
                         $xy->uid            = $_POST['uid'];
