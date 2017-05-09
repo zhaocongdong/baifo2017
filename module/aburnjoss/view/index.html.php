@@ -71,9 +71,10 @@
                     <input type="button" class="arrow-left" />
                     <input type="button" class="arrow-right" />
                 </div>
-                <div class="tribute-confirm-submit">
+                <div class="tribute-confirm-submit tribute-py-shangxiang">
                     <p></p>
-                    <input type="button" value="" title="确认上香" />
+                    <input type="button" value="" title="确认上香" class="tribute-confirm-type-1" />
+                    <input type="button" value="" title="我要还愿" class="tribute-confirm-type-2" />
                 </div>
             </div>
             <div class="py-huanyuan"></div>
@@ -141,9 +142,14 @@
             </div>
             <div class="layer-hint-py-huanyuan"></div>
             <div class="layer-hint-tribute"></div>
+            <div class="layer-hint-tribute-py-huanyuan"></div>
             <div class="layer-hint-merit"></div>
             <div class="layer-wish-complete"></div>
+            <div class="layer-py-huanyuan-complete"></div>
             <div class="layer-balance-not-enough"></div>
+            <div id="layer-glow-container" class="layer-glow">
+                <canvas id="layer-glow" width="600" height="265"></canvas>
+            </div>
         </div>
     </div>
 </div>

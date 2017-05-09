@@ -361,8 +361,8 @@ var ABurnjoss = {
     },
     slideToFo:function(){
         var oActiveLi = $(".fo-lists li.active"),
-            nCurrentId = this.nSelectedWishId - 1,
-            oTargetLi = $(".fo-lists .fo"+this.nSelectedWishId),
+            nCurrentId = this.nSelectedWishFoId - 1,
+            oTargetLi = $(".fo-lists .fo"+this.nSelectedWishFoId),
             n;
         if(nCurrentId > oActiveLi.index()){
             n = -1;
@@ -596,10 +596,13 @@ var ABurnjoss = {
     },
     onConfirmTributes:function(){
         var _this = this;
-        var oConfirmTributes = $(".tribute-confirm-submit input");
+        var oConfirmTributes = $(".tribute-confirm-submit .tribute-confirm-type-1");
+        var oConfirmTributesPyHuanyuan = $(".tribute-confirm-submit .tribute-confirm-type-2");
         var oHintTribute = $(".layer-hint-tribute");
+        var oHintTributePyHuanyuan = $(".layer-hint-tribute-py-huanyuan");
         var oLayerMakeWish = $(".layer-make-wish");
         var oLayerWishComplete = $(".layer-wish-complete");
+        var oLayerPyHuanyuanSuccess = $(".layer-py-huanyuan-complete");
         var oWishConfirm = $(".wish-confirm");
         var oWishCancel = $(".wish-cancel");
         var oWishContent = $(".wish-content");
@@ -631,6 +634,52 @@ var ABurnjoss = {
                 oLayerMakeWish.fadeIn();
             }
         });
+        oConfirmTributesPyHuanyuan.bind("click",function(){
+            if(_this.totalPrice === 0){
+                oHintTributePyHuanyuan.show();
+                (function(){
+                    if(nTimes <= 3){
+                        nTimes++;
+                        if(_direction === "bottom"){
+                            _direction = "top";
+                            _bottom = { "bottom":105 }
+                        }else if(_direction === "top"){
+                            _direction = "bottom"
+                            _bottom = { "bottom":130 }
+                        }
+                        oHintTributePyHuanyuan.animate(_bottom,700,arguments.callee)
+                    }else{
+                        nTimes = 0;
+                        oHintTributePyHuanyuan.stop().hide();
+                        return true;
+                    }
+                }())
+            }else{
+                var tributesIds = [];
+                for(var i in _this.activeSampleLists){
+                    tributesIds.push(_this.activeSampleLists[i].element.id);
+                }
+
+                var postData = {
+                    "wish_id":_this.nSelectedWishId,                         // wish_id=0 为许愿; wish_id>0为还愿 wish与is_private可以不传
+                    "foid":_this.nCurrentFoId,                            // 佛祖id
+                    "foname":_this.sCurrentFoName,
+                    "gp_ids":tributesIds.join(","),                   // 桌上贡品用,相隔  类型和具体贡品用|相隔
+                    "bj_gold":_this.totalPrice,                       // 烧香银两
+                    "stay_time":(new Date().getTime() + 30000) /1000              // 此次烧香持续到什么时间点,比如5分钟后结束即为当前时间戳+5*60
+                }
+
+                dataController.burnjoss(postData,function(res){
+                    if(res.error == "201"){
+                        _this.noEnough();
+                    }else{
+                        oLayerPyHuanyuanSuccess.fadeIn().animate({"marginTop":-41},function(){ $(this).fadeOut() });
+                        _this.foCompleteList.push(_this.sCurrentFo);
+                        _this.setCurrentState();
+                    }
+                });
+            }
+        });
         oWishConfirm.bind("click",function(){
             var tributesIds = [];
             for(var i in _this.activeSampleLists){
@@ -638,8 +687,8 @@ var ABurnjoss = {
             }
 
             var postData = {
-                "wish_id":oMakeWishOrNot.find("input:checked").val(),                         // wish_id=0 为许愿; wish_id>0为还愿 wish与is_private可以不传
-                "wish":oWishContent.html(),                      // 许愿内容
+                "wish_id":0,                         // wish_id=0 为许愿; wish_id>0为还愿 wish与is_private可以不传
+                "wish":oMakeWishOrNot.find("input:checked").val() == "0"?oWishContent.html():"",                      // 许愿内容
                 "is_private":oWishPrivateOrNot.find("input:checked").val(),                      // 许愿是否保密
                 "foid":_this.nCurrentFoId,                            // 佛祖id
                 "foname":_this.sCurrentFoName,
@@ -655,10 +704,10 @@ var ABurnjoss = {
                     }else{
                         oLayerWishComplete.fadeIn().animate({"marginTop":-41}).fadeOut();
                         _this.foCompleteList.push(_this.sCurrentFo);
-                        if(_this.wishData.length === 0){
-                            $(".layer-py-huanyuan ul").html("");
-                        }
-                        $(".layer-py-huanyuan ul").prepend(_this.createWishItem({"foId":_this.nCurrentFoId,"foName":_this.sCurrentFoName,"foContent":oWishContent.html()}));
+                        // if(_this.wishData.length === 0){
+                        //     $(".layer-py-huanyuan ul").html("");
+                        // }
+                        // $(".layer-py-huanyuan ul").prepend(_this.createWishItem({"foId":_this.nCurrentFoId,"foName":_this.sCurrentFoName,"foContent":oWishContent.html()}));
                         _this.setCurrentState();
                     }
                 });
@@ -688,10 +737,15 @@ var ABurnjoss = {
     setCurrentState:function(){
         var _timeout,_this = this;
         clearTimeout(_timeout);
+        _this.stopGlow();
         if(this.foCompleteList.indexOf(this.sCurrentFo) > -1){
             $(".aburnjoss-container").addClass("has-made-wished");
+            _this.startGlow();
         }else{
             $(".aburnjoss-container").removeClass("has-made-wished");
+        }
+        if($(".tribute-confirm-submit").hasClass("tribute-py-huanyuan")){
+            $(".tribute-confirm-submit").addClass("tribute-py-shangxiang").removeClass("tribute-py-huanyuan");
         }
         _this.oTributeAmount.html("共 0 两");
         _timeout = setTimeout(function(){
@@ -718,7 +772,8 @@ var ABurnjoss = {
         var oLayerPyHuanyuanOrNot = $(".layer-py-huanyuan-or-not");
         var newItem = $("<li id='wish-"+data.foId+"'><p class='fo-name'>"+data.foName+"</p><p class='fo-content'>"+data.foContent+"</p></li>");
         newItem.bind("click",function(){
-            _this.nSelectedWishId = data.foId;
+            _this.nSelectedWishId = data.id;
+            _this.nSelectedWishFoId = data.foId;
             oLayerPyHuanyuan.fadeOut();
             oLayerPyHuanyuanOrNot.fadeIn();
         });
@@ -743,11 +798,42 @@ var ABurnjoss = {
             _this.oLayerBlock.fadeOut();
             oLayerPyHuanyuanOrNot.fadeOut();
             _this.slideToFo();
+            $(".tribute-confirm-submit").removeClass("tribute-py-shangxiang").addClass("tribute-py-huanyuan");
         });
         oPyHuanyuanCancel.bind("click",function(){
             _this.oLayerBlock.fadeOut();
             oLayerPyHuanyuanOrNot.fadeOut();
         });
+    },
+    renderGlow:function(){
+        var canvas = document.getElementById("layer-glow"),
+            ctx = canvas.getContext("2d");
+        var imgs = [];
+
+        for(var i = 1;i < 4;i++){
+            var img = document.createElement("img");
+            img.src = "./assets/images/aburnjoss/glow/faguang"+i+".png";
+            imgs.push(img);
+        }
+        var glowing = function(img){
+            ctx.clearRect(0,0,600,265);
+            ctx.drawImage(img,0,0);
+        }
+
+        var _interval;
+        this.startGlow = function(){
+            document.getElementById("layer-glow-container").style.display = "block";
+            var n = 0;
+            _interval = setInterval(function(){
+                glowing(imgs[n]);
+                n = n > 1?0:n + 1;
+            },1000/4);
+        };
+
+        this.stopGlow = function(){
+            document.getElementById("layer-glow-container").style.display = "none";
+            clearInterval(_interval);
+        };
     },
     initData:function(){
         var _this = this;
@@ -764,6 +850,7 @@ var ABurnjoss = {
             for(var i = 0,len = res.wish_list.length;i < len;i++){
                 var _wishList = res.wish_list[i];
                 _this.wishData.push({
+                    "id":_wishList.id,
                     "foId":_wishList.foid,
                     "foName":_wishList.foname,
                     "foContent":_wishList.wish
@@ -794,6 +881,7 @@ var ABurnjoss = {
         this.initData();
         this.foCarousel();
         this.renderTribute();
+        this.renderGlow();
         this.tributeSwitch();
         this.onPyHuanyuan();
         this.onOpenMeritBox();
@@ -801,6 +889,6 @@ var ABurnjoss = {
         this.onConfirmTributes();
         this.onConfirmMeritBox();
     }
-}
+};
 
 ABurnjoss.start();
