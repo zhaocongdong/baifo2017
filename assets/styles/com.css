@@ -3,6 +3,7 @@ ul{ margin:0; padding:0; list-style:none; }
 input[type="button"]{ border:none; background-color:transparent; }
 input[type="button"]:focus{ outline:none; border:none; }
 input[type="button"]:hover{ outline:none; border:none; }
+button{ border:none; background-color:transparent; }
 button:focus{ outline:none; }
 
 .aburnjoss-container{ position:relative; width:1000px; height:700px; }
@@ -214,6 +215,7 @@ button:focus{ outline:none; }
 .draw-title{ position:absolute; right:116px; bottom:238px; width:20px; text-align:left; font:700 17px/1.3 "宋体"; }
 .draw-content{ position:absolute; right:170px; top:80px; }
 .draw-content p{ float:right; width:18px; margin-left:15px; font:700 16px/1.1 "宋体"; }
+.draw-py-jieqian{ position:absolute; top:350px; left:78px; width:172px; height:49px; background-image:url('../images/aburnjoss/py-jieqian.png'); }
 .layer-draw-close{ position:absolute; top:0; right:15px; width:30px; height:30px; background:url('../images/aburnjoss/icon-close.png') no-repeat 0 0; }
 .layer-hint-tribute{ display:none; position:absolute; left:145px; bottom:130px; z-index:12; width:172px; height:67px; background:url('../images/aburnjoss/layer-hint-tribute.png') no-repeat 0 0; }
 .layer-hint-merit{ display:none; position:absolute; top:0; left:50%; z-index:12; margin:0 0 0 -210px; width:420px; height:84px; background:url('../images/aburnjoss/layer-hint-merit.png') no-repeat 0 0; }

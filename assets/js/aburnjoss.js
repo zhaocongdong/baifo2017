@@ -448,6 +448,11 @@ var ABurnjoss = {
         var oDrawOver = $(".draw-over");
         var oDrawResult = $(".draw-result");
         var oLayerDrawClose = $(".layer-draw-close");
+        var oDrawNumber = $(".draw-number");
+        var oDrawContent = $(".draw-content");
+        var oDrawTitle = $(".draw-title");
+        var oPyJieqian = $(".draw-py-jieqian");
+        var sPyJieqianLink = "";
         oDrawPot.bind("click",function(){
             _this.oLayerBlock.fadeIn();
             oLayerDrawPot.fadeIn();
@@ -456,16 +461,34 @@ var ABurnjoss = {
             oDrawStart.hide();
             oDrawOver.show();
             setTimeout(function(){
-                oDrawOver.hide();
-                oDrawResult.fadeIn();
+                dataController.drawLots(function(res){
+                    console.log(res);
+                    oDrawNumber.html(res.no)
+                    oDrawTitle.html(res.title);
+                    sPyJieqianLink = res.openUrl;
+                    var arrDrawContent = res.jxexp.split("；");
+                    console.log(arrDrawContent);
+                    var sDrawContent = "";
+                    for(var i = 0,len = arrDrawContent.length;i < len;i++){
+                        sDrawContent += "<p>"+arrDrawContent[i].replace("，","<br />，")+"</p>";
+                    }
+                    oDrawContent.html(sDrawContent);
+                    oDrawOver.hide();
+                    oDrawResult.fadeIn();
+                });
             },700);
         });
+
         oLayerDrawClose.bind("click",function(){
             _this.oLayerBlock.fadeOut();
             oLayerDrawPot.fadeOut(function(){
                 oDrawResult.hide();
                 oDrawStart.show();
             });
+        });
+
+        oPyJieqian.bind("click",function(){
+            window.location.href = sPyJieqianLink;
         });
     },
     totalPrice:0,
@@ -477,6 +500,7 @@ var ABurnjoss = {
         var _this = this;
         var sSampleKey = type;
         var sSampleActiveKey = sSampleKey + "-" + typeId;
+
         if(_this.activeSampleLists[sSampleKey]){
             _this.activeSampleLists[sSampleKey].element.stop();
         }
@@ -484,14 +508,17 @@ var ABurnjoss = {
             var _parent = document.getElementById("sample-"+sSampleKey);
             _this.sampleLists[sSampleActiveKey] = new GifElement(id,_parent,document.createElement("canvas"));
             _this.sampleLists[sSampleActiveKey].load(data);
-        }else{
-            _this.sampleLists[sSampleActiveKey].run();
         }
 
         _this.foSampleList[_this.sCurrentFo][sSampleKey] = {};
         _this.foSampleList[_this.sCurrentFo][sSampleKey].element = _this.sampleLists[sSampleActiveKey];
         _this.foSampleList[_this.sCurrentFo][sSampleKey].price = data.price;
         _this.activeSampleLists[sSampleKey] = _this.foSampleList[_this.sCurrentFo][sSampleKey];
+    },
+    runElm:function(){
+        for(var prop in this.activeSampleLists){
+            this.activeSampleLists[prop].element.run();
+        }
     },
     renderTribute:function(){
         var _this = this;
@@ -527,6 +554,7 @@ var ABurnjoss = {
                         }else{
                             _this.insertElm(data,sDataType,id,typeId+"|"+id);
                         }
+                        _this.runElm();
                         _this.calculateTributeAmount();
                     })
                 }(fnDoubleDigit(i+1),nTributeId,Tributes[i].children[j]));
@@ -679,6 +707,7 @@ var ABurnjoss = {
             }
 
             _this.activeSampleLists = _currentFoSamples;
+            _this.runElm();
             _this.calculateTributeAmount();
         },500);
     },

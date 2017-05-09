@@ -74,20 +74,22 @@ GifElement.prototype = {
         this.elm.height = data.height;
         this.frames = data.frames;
         this.frameRate = 1000 / data.frameRate;
-
-        fnLoading(this.imgs,function(){
-            _this.loading = true;
-            _this.parent.appendChild(_this.elm);
-            // setTimeout(function(){
-            //     _this.run()
-            // },100);
-        });
+        this.loading = false;
     },
     run:function(){
-        if(this.loading){
-            this.status = "live";
-            this.elm.classList.add("active");
-            this.render(0);
+        var _this = this;
+        if(_this.loading){
+            _this.status = "live";
+            _this.elm.classList.add("active");
+            _this.render(0);
+        }else{
+            fnLoading(_this.imgs,function(){
+                _this.loading = true;
+                _this.parent.appendChild(_this.elm);
+                setTimeout(function(){
+                    _this.run()
+                },100);
+            });
         }
     },
     stop:function(){
@@ -265,6 +267,9 @@ var dataController = {
     },
     meritBox:function(total,successCallback){
         $.post("index.php?m=aburnjoss&f=meritBox",{"total":total,"uid":userId},successCallback,"json");
+    },
+    drawLots:function(successCallback){
+        $.post("index.php?m=aburnjoss&f=userLot",{"uid":userId},successCallback,"json");
     }
 }
 

@@ -93,12 +93,13 @@
                 <img src="./assets/images/aburnjoss/draw-pot-1.gif" class="draw-status draw-start" />
                 <img src="./assets/images/aburnjoss/draw-pot-2.gif" class="draw-status draw-over" />
                 <div class="draw-result">
-                    <p class="draw-number">第肆拾肆签</p>
-                    <h4 class="draw-title">姜维邓艾斗阵</h4>
+                    <p class="draw-number"></p>
+                    <h4 class="draw-title"></h4>
                     <div class="draw-content">
-                        <p>棋逢敌手着相宜<br/>，黑白盘中未决时</p>
-                        <p>皆因一着知胜败<br/>，须教自有好推宜</p>
+                        <!-- <p>棋逢敌手着相宜<br/>，黑白盘中未决时</p>
+                        <p>皆因一着知胜败<br/>，须教自有好推宜</p> -->
                     </div>
+                    <button class="draw-py-jieqian"></button>
                     <a href="javascript:void(0)" class="layer-draw-close"></a>
                 </div>
             </div>
