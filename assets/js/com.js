@@ -249,7 +249,6 @@ var dataController = {
     releaseAnimal:function(name){
         if(userId){
             $.post("index.php?m=afreeanimal&f=opAnimal",{"uid":userId,"name":name,"is_buy":0,"num":-1,"total":0},function(res){
-                console.log(res);
             },"json");
         }else{
             document.location.href = "index.php?m=auser&f=login&backurl=afreeanimal";
@@ -342,6 +341,7 @@ var AFreeAnimal = {
                 if(_this.selectedName != sAnimalName){
                     _this.selectedCount = 1;
                     _this.selectedUnitPrice = AnimalList[sAnimalName].price;
+                    _this.totalAmount = _this.selectedUnitPrice;
                     oAnimalName.html("名称："+$this.find("label").html()).show();
                     oInputAnimalCount.val(_this.selectedCount);
                     oAnimalTotalPrice.html(_this.selectedUnitPrice);
@@ -400,11 +400,14 @@ var AFreeAnimal = {
         oPurchaseAnimalButton.bind("click",function(){
             _this.oLayerBlockTrans.fadeOut();
             oLayerAnimalShop.fadeOut();
-            dataController.purchaseAnimal(_this.selectedName,_this.selectedCount,_this.totalAmount,function(){
+
+            dataController.purchaseAnimal(_this.selectedName,_this.selectedCount,_this.totalAmount,function(res){
                 var animalName = _this.selectedName;
                 for(var i = 0;i < _this.selectedCount;i++){
                     _this.insertAnimalToFarm(animalName);
                 }
+
+                $(".balance").html("银两："+ (parseInt(_this.gold) - parseInt(_this.totalAmount))+"两");
             });
         });
     },
