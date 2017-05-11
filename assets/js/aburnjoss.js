@@ -844,6 +844,8 @@ var ABurnjoss = {
         _this.foCompleteList = [];
         _this.nCurrentFoId = 1;
         _this.sCurrentFoName = "观音菩萨";
+
+        _this.renderPyHuanyuanList();
         dataController.initBj(function(res){
             console.log(res);
 

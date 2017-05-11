@@ -234,39 +234,62 @@ var AnimalManifest = {
 }
 
 var userId = $("#userid").val();
+
 var dataController = {
-    purchaseAnimal:function(name,number,amount){
-        $.post("index.php?m=afreeanimal&f=opAnimal",{"uid":userId,"name":name,"is_buy":1,"num":number,"total":amount},function(res){
-            console.log(res);
-        },"json");
+    getUserInfo:function(successCallback){
+        $.get("index.php?m=afreeanimal&f=userInfo",successCallback,"json");
+    },
+    purchaseAnimal:function(name,number,amount,successCallback){
+        if(userId){
+            $.post("index.php?m=afreeanimal&f=opAnimal",{"uid":userId,"name":name,"is_buy":1,"num":number,"total":amount},successCallback,"json");
+        }else{
+            document.location.href = "index.php?m=auser&f=login&backurl=afreeanimal";
+        }
     },
     releaseAnimal:function(name){
-        $.post("index.php?m=afreeanimal&f=opAnimal",{"uid":userId,"name":name,"is_buy":0,"num":-1,"total":0},function(res){
-            console.log(res);
-        },"json");
+        if(userId){
+            $.post("index.php?m=afreeanimal&f=opAnimal",{"uid":userId,"name":name,"is_buy":0,"num":-1,"total":0},function(res){
+                console.log(res);
+            },"json");
+        }else{
+            document.location.href = "index.php?m=auser&f=login&backurl=afreeanimal";
+        }
     },
     getAnimals:function(successCallback){
         $.post("index.php?m=afreeanimal&f=getAnimal",{"uid":userId},successCallback,"json");
     },
     buyBg:function(bgid,gold,successCallback){
-        $.post("index.php?m=afreeanimal&f=buybg",{"uid":userId,"bgid":bgid,"gold":1},successCallback,"json");
+        if(userId){
+            $.post("index.php?m=afreeanimal&f=buybg",{"uid":userId,"bgid":bgid,"gold":1},successCallback,"json");
+        }else{
+            document.location.href = "index.php?m=auser&f=login&backurl=afreeanimal";
+        }
     },
     setBg:function(bgid,successCallback){
         $.post("index.php?m=afreeanimal&f=setBG",{"uid":userId,"bgid":bgid},successCallback,"json");
     },
     getMyBG:function(successCallback){
-        $.post("index.php?m=afreeanimal&f=getMyBG",{"uid":userId},successCallback,"json");
+        if(userId){
+            $.post("index.php?m=afreeanimal&f=getMyBG",{"uid":userId},successCallback,"json");
+        }
     },
     burnjoss:function(data,successCallback){
-        data.uid = userId;
-        console.log(data);
-        $.post("index.php?m=aburnjoss&f=burnjoss",data,successCallback,"json");
+        if(userId){
+            data.uid = userId;
+            $.post("index.php?m=aburnjoss&f=burnjoss",data,successCallback,"json");
+        }else{
+            document.location.href = "index.php?m=auser&f=login&backurl=afreeanimal";
+        }
     },
     initBj:function(successCallback){
         $.post("index.php?m=aburnjoss&f=initBJ",{"uid":userId},successCallback,"json");
     },
     meritBox:function(total,successCallback){
-        $.post("index.php?m=aburnjoss&f=meritBox",{"total":total,"uid":userId},successCallback,"json");
+        if(userId){
+            $.post("index.php?m=aburnjoss&f=meritBox",{"total":total,"uid":userId},successCallback,"json");
+        }else{
+            document.location.href = "index.php?m=auser&f=login&backurl=afreeanimal";
+        }
     },
     drawLots:function(successCallback){
         $.post("index.php?m=aburnjoss&f=userLot",{"uid":userId},successCallback,"json");
@@ -371,13 +394,14 @@ var AFreeAnimal = {
         var oAnimalFarm = $(".animal-farm");
 
         oPurchaseAnimalButton.bind("click",function(){
-            var animalName = _this.selectedName;
-            for(var i = 0;i < _this.selectedCount;i++){
-                _this.insertAnimalToFarm(animalName);
-            }
-            dataController.purchaseAnimal(_this.selectedName,1,_this.selectedCount,_this.totalAmount);
-            _this.oLayerBlockTrans.fadeOut();
-            oLayerAnimalShop.fadeOut();
+            dataController.purchaseAnimal(_this.selectedName,1,_this.selectedCount,_this.totalAmount,function(){
+                var animalName = _this.selectedName;
+                for(var i = 0;i < _this.selectedCount;i++){
+                    _this.insertAnimalToFarm(animalName);
+                }
+                _this.oLayerBlockTrans.fadeOut();
+                oLayerAnimalShop.fadeOut();
+            });
         });
     },
     onEnterPurchaseShop:function(){
@@ -601,6 +625,10 @@ var AFreeAnimal = {
     },
     getMyBg:function(){
         var _this = this;
+        _this.currentSceneId = 1;
+        _this.renderSceneList();
+        _this.renderScene();
+        _this.renderGrass();
         dataController.getMyBG(function(data){
             for(var i = 0,len = data.length;i < len;i++){
                 if(data[i].using === "1"){

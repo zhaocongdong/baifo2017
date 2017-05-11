@@ -246,7 +246,7 @@ button:focus{ outline:none; }
 .py-huanyuan-handle{ margin:15px 40px 0 0; text-align:right; }
 .py-huanyuan-confirm{ display:inline-block; width:36px; height:40px; margin-right:25px; border:none; background:url('../images/aburnjoss/py-huanyuan-yes.png') no-repeat 0 0; }
 .py-huanyuan-cancel{ display:inline-block; width:36px; height:40px; border:none; background:url('../images/aburnjoss/py-huanyuan-no.png') no-repeat 0 0; }
-.layer-glow{ position:absolute; top:0; left:190px; z-index:12; }
+.layer-glow{ position:absolute; top:0; left:190px; z-index:11; }
 
 .has-made-wished .tribute-lists-container{ display:none; }
 .has-made-wished .draw-pot{ display:none; }

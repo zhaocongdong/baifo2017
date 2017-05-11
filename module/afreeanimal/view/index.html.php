@@ -18,9 +18,9 @@
         <div class="top-user-handle-bar">
             <div class="user-info">
                 <img alt="" src="./assets/images/aburnjoss/user-default.jpg" class="user-head-default" />
-                <p class="nickname">昵称：匆匆2059</p>
-                <p class="title">称呼：高级施主</p>
-                <p class="balance">银两：85两</p>
+                <p class="nickname">昵称：未登录</p>
+                <p class="title">称呼：初级施主</p>
+                <p class="balance">银两：0两</p>
             </div>
             <div class="user-handle">
                 <button class="pop-layer-purchase"></button>
