@@ -13,6 +13,7 @@
 <?php include '../../common/view/header.html.php';?>
 <div class='container'>
     <form method="post">
+        <?php echo html::hidden('backurl', $backurl);?>
         <p>
             <span>用户名:</span><?php echo html::input('name');?>
         </p>

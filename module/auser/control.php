@@ -61,6 +61,8 @@ class auser extends control
             if(dao::isError() || $uid == 0) {
                 die(js::error('注册失败!') . js::locate('back'));
             } else {
+                // 设置默认放生场景
+
                 $_SESSION[USER_ID]   = $uid;
                 $_SESSION[USER_NAME] = $_POST["name"];
                 die(js::locate(inlink('index')));
@@ -69,7 +71,7 @@ class auser extends control
         $this->view->title = "注册";
         $this->display();
     }
-    public function login() {
+    public function login($backurl = '') {
         if (!empty($_POST)) {
             if (empty($_POST['name'])) {
                 die(js::error("请填写用户名!"). js::locate('back'));
@@ -79,13 +81,22 @@ class auser extends control
             }
             $user = $this->getUserByLogin($_POST['name'], $_POST['password']);
             if (!empty($user)) {
-                $_SESSION[USER_ID]   = $user->id;
+                $_SESSION[USER_ID] = $user->id;
                 $_SESSION[USER_NAME] = $_POST["name"];
-                die(js::locate(inlink('index')));
+                if (!empty($_POST['backurl'])){
+                    if ($_POST['backurl'] == 'aburnjoss' || $_POST['backurl'] == 'afreeanimal') {
+                        die(js::locate($this->createLink($_POST['backurl'])));
+                    } else  {
+                        die(js::locate($_POST['backurl']));
+                    }
+                } else {
+                    die(js::locate(inlink('index')));
+                }
             } else {
                 die(js::error("用户名或密码错误!"). js::locate('back'));
             }
         }
+        $this->view->backurl = $backurl;
         $this->view->title = "登录";
         $this->display();
     }
