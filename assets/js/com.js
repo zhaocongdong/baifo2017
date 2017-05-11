@@ -278,7 +278,7 @@ var dataController = {
             data.uid = userId;
             $.post("index.php?m=aburnjoss&f=burnjoss",data,successCallback,"json");
         }else{
-            document.location.href = "index.php?m=auser&f=login&backurl=afreeanimal";
+            document.location.href = "index.php?m=auser&f=login&backurl=aburnjoss";
         }
     },
     initBj:function(successCallback){
@@ -288,11 +288,15 @@ var dataController = {
         if(userId){
             $.post("index.php?m=aburnjoss&f=meritBox",{"total":total,"uid":userId},successCallback,"json");
         }else{
-            document.location.href = "index.php?m=auser&f=login&backurl=afreeanimal";
+            document.location.href = "index.php?m=auser&f=login&backurl=aburnjoss";
         }
     },
     drawLots:function(successCallback){
-        $.post("index.php?m=aburnjoss&f=userLot",{"uid":userId},successCallback,"json");
+        if(userId){
+            $.post("index.php?m=aburnjoss&f=userLot",{"uid":userId},successCallback,"json");
+        }else{
+            document.location.href = "index.php?m=auser&f=login&backurl=aburnjoss";
+        }
     }
 }
 
@@ -394,13 +398,13 @@ var AFreeAnimal = {
         var oAnimalFarm = $(".animal-farm");
 
         oPurchaseAnimalButton.bind("click",function(){
-            dataController.purchaseAnimal(_this.selectedName,1,_this.selectedCount,_this.totalAmount,function(){
+            _this.oLayerBlockTrans.fadeOut();
+            oLayerAnimalShop.fadeOut();
+            dataController.purchaseAnimal(_this.selectedName,_this.selectedCount,_this.totalAmount,function(){
                 var animalName = _this.selectedName;
                 for(var i = 0;i < _this.selectedCount;i++){
                     _this.insertAnimalToFarm(animalName);
                 }
-                _this.oLayerBlockTrans.fadeOut();
-                oLayerAnimalShop.fadeOut();
             });
         });
     },
@@ -477,10 +481,16 @@ var AFreeAnimal = {
             oLayerReleaseAnimal.fadeOut(function(){
                 var _animal = _this.animalInFarm[_this.willReleaseAnimal.getAttribute("id")];
                 dataController.releaseAnimal(_animal.name);
-
                 _animal.stop();
                 _animal.setImageZoom(0,0,650,488);
-                _animal.setStartPoint(0,220);
+                var _animalName = _animal.name;
+                if(_animalName == "pigeon" || _animalName == "dove"){
+                    _animal.setStartPoint(0,0);
+                }else if(_animalName == "mandarinduck" || _animalName == "koi"){
+                    _animal.setStartPoint(0,100);
+                }else{
+                    _animal.setStartPoint(0,220);
+                }
                 _animal.setCanvasSize(1000,600);
                 _animal.o.style.position = "absolute";
                 _animal.o.style.top = 0;
