@@ -18,7 +18,7 @@
           echo html::a($this->createLink('auser', 'index'), $_SESSION[USER_NAME], "class='navbar-brand' style='font-size:17px'");
           echo html::a($this->createLink('auser','logout'), "注销", "class='navbar-brand' style='font-size:14px'");
       } else {
-          echo html::a($this->createLink('auser','login'), "登录", "class='navbar-brand' style='font-size:17px'");
+          echo html::a($this->createLink('auser','login'), "登录", "id='userlogin', class='navbar-brand' style='font-size:17px'");
           echo html::a($this->createLink('auser','register'), "注册", "class='navbar-brand' style='font-size:17px'");
       }
 
