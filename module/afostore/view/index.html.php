@@ -43,37 +43,20 @@ css::import($webRoot . 'module/afostore/css/fostore.css');
                     $pager->show('right', 'short');
                 ?>
             </p>
-            <!--
-            <p class="page">   &nbsp;<span class="current">1</span>&nbsp;<a href="/Shop.html?&amp;p=2">&nbsp;2&nbsp;</a>&nbsp;<a
-                    href="/Shop.html?&amp;p=3">&nbsp;3&nbsp;</a>&nbsp;<a href="/Shop.html?&amp;p=4">&nbsp;4&nbsp;</a>&nbsp;<a
-                    href="/Shop.html?&amp;p=5">&nbsp;5&nbsp;</a>&nbsp;<a href="/Shop.html?&amp;p=6">&nbsp;6&nbsp;</a> <a
-                    href="/Shop.html?&amp;p=9">...9</a> <a href="/Shop.html?&amp;p=2">下一页</a>
-            </p>
-            -->
         </div>
         <div class="sidebar">
-            <div class="sidebar_content"><h3 class="h_title">热门产品</h3>
+            <div class="sidebar_content">
+                <h3 class="h_title">热门产品</h3>
                 <ul class="goods_list">
-                    <li><a href="Shop-1397.html" title="黄金木佛珠"><img class="left" alt="黄金木佛珠" style="opacity: 1;"
-                                                                    src="/Public/Uploads/Product/51f74b0f39387.jpg">
-                            <p class="goods_title">黄金木佛珠</p>
-                            <p class="discount">¥98.00</p></a></li>
-                    <li><a href="Shop-1399.html" title="香柏木佛珠"><img class="left" alt="香柏木佛珠" style="opacity: 1;"
-                                                                    src="/Public/Uploads/Product/51e64d0394c5f.jpg">
-                            <p class="goods_title">香柏木佛珠</p>
-                            <p class="discount">¥80.00</p></a></li>
-                    <li><a href="Shop-1402.html" title="小叶红檀佛珠"><img class="left" alt="小叶红檀佛珠" style="opacity: 1;"
-                                                                     src="/Public/Uploads/Product/51e657a776417.jpg">
-                            <p class="goods_title">小叶红檀佛珠</p>
-                            <p class="discount">¥60.00</p></a></li>
-                    <li><a href="Shop-1405.html" title="黄金木佛珠"><img class="left" alt="黄金木佛珠" style="opacity: 1;"
-                                                                    src="/Public/Uploads/Product/51e659f389544.jpg">
-                            <p class="goods_title">黄金木佛珠</p>
-                            <p class="discount">¥40.00</p></a></li>
-                    <li><a href="Shop-1411.html" title="紫罗兰木佛珠"><img class="left" alt="紫罗兰木佛珠" style="opacity: 1;"
-                                                                     src="/Public/Uploads/Product/51e6674b98968.jpg">
-                            <p class="goods_title">紫罗兰木佛珠</p>
-                            <p class="discount">¥28.00</p></a></li>
+                    <?php foreach ($hot_list as $goods): ?>
+                    <li>
+                        <a href="<?php echo $this->createLink('afostore', 'detail', array('id'=>$goods->id));?>" title="<?php echo $goods->goods_name; ?>">
+                            <img class="left" alt="<?php echo $goods->goods_name; ?>" style="opacity: 1;" src="<?php echo $goods->goods_img; ?>">
+                            <p class="goods_title"><?php echo $goods->goods_name; ?></p>
+                            <p class="discount">¥<?php echo $goods->goods_price; ?></p>
+                        </a>
+                    </li>
+                    <?php endforeach;?>
                 </ul>
             </div>
         </div>

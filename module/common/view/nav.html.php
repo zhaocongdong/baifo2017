@@ -64,7 +64,7 @@
 </div>
 </div>
 <style>
-#header{ background:#ff9;}
+#header{ background:#ff9;margin-bottom: 20px;}
 #header .navbar{background:transparent; border:none;}
 #header .navbar-header a{color:red;}
 #header .navbar-header a:hover {color:purple;}
