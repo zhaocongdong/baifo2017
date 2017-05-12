@@ -165,13 +165,13 @@ class aburnjoss extends control
     }
     public function userLot() {
         if (!empty($_POST)) {
-            $lot_id = $_POST['lot_id'];
+            $lot_id = 0;
             $uid    = $_POST['uid'];
-            $lot    = $this->getLot(1);
+            $lot    = $this->getRandomLot();
             if (!empty($lot)) {
                 $model = (object)null;
                 $model->uid         = $uid;
-                $model->lot_id      = $lot_id;
+                $model->lot_id      = $lot->id;
                 $model->lot_time    = date(DATE_FORMAT);
                 $this->insertUserLot($model);
 
@@ -233,8 +233,10 @@ class aburnjoss extends control
         return $model;
     }
 
-    public function getLot($id) {
-        return $this->dao->findById($id)->from($this->tableName_lot)->fetch();
+    public function getRandomLot() {
+        return $this->dao->select('*')->from($this->tableName_lot)
+            ->orderBy('rand()')
+            ->fetch();
     }
     public function insertUserLot($model) {
         $this->dao->insert($this->tableName_user_lot)->data($model)->exec();
