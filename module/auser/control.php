@@ -121,6 +121,7 @@ class auser extends control
         $_SESSION[USER_ID] = "";
         $_SESSION[USER_NAME] = "";
         die(js::locate(inlink('login')));
+//        die(js::locate('back'));
     }
     public function resetpwd() {
         $res = (object)null;
