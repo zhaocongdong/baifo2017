@@ -26,12 +26,14 @@ function delCookie(name, domain)
         document.cookie= name + "="+cval+";expires="+exp.toGMTString()+";domain="+domain;
     }
 }
-function alert(data,time){
+function myalert(data,time){
 	var dialog = $.dialog({
 		title:'提示信息',
 		content:'<div>'+data+'</div>'
 	});
-	dialog.time(2000);
+	if (time != 0) {
+		dialog.time(2000);
+	}
 }
 function in_buy_car(pid,title,num,price,img,domain,jump){
 	var buycar=getCookie('C20c6320e78a769300345e1b');
@@ -64,7 +66,7 @@ function in_buy_car(pid,title,num,price,img,domain,jump){
 			window.location=jump;
 		}
 	} else {
-		alert('已加入购物车!');
+		myalert('已加入购物车!');
 	}
 }
 function RefreshShopCar(){

@@ -30,6 +30,10 @@ class buycart extends control
      */
     public function index()
     {
+        if (empty($_SESSION[USER_ID])) {
+            die(js::error("请先登录!"). js::locate($this->createLink('auser', 'login')));
+            return;
+        }
         if (!empty($_COOKIE[BUY_CART])) {
             $shop_list = explode('|', $_COOKIE[BUY_CART]);
             $cart_list = array();

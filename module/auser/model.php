@@ -53,21 +53,12 @@ class auserModel extends model
         return $this->dao->lastInsertID();
     }
 
-    /**
-     * Update an article.
-     * 
-     * @param  int    $articleID 
-     * @access public
-     * @return void
-     */
-    public function update($articleID)
-    {
-        $article = fixer::input('post')->specialchars('title, content')->get();
-        $this->dao->update('blog')->data($article)->where('id')->eq($articleID)->exec();
+    public function update($user) {
+        $this->dao->update('bf_user')->data($user)->where('id')->eq($user->id)->exec();
     }
 
     public function updateUserGold($user) {
-        $this->dao->update('bf_user')->data($user)->exec();
+        $this->dao->update('bf_user')->data($user)->where('id')->eq($user->id)->exec();
     }
     /**
      * Delete an article.

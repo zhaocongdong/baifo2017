@@ -37,6 +37,8 @@ class afostore extends control
         $this->view->all_goods = $s;
         $this->view->good_cate = $this->getGoodsTypeById($cate_id);
         $this->view->pager     = $pager;
+        // 热门
+        $this->view->hot_list  = $this->getHotGoods(); // 热门产品
         $this->display();
     }
     public function detail($id) {
@@ -70,6 +72,12 @@ class afostore extends control
     public function getRMDGoods() {
         return $this->dao->select('*')->from('bf_goods')
             ->where('is_rmd')->eq(1)
+            ->orderBy('id desc')
+            ->fetchAll();
+    }
+    public function getHotGoods() {
+        return $this->dao->select('*')->from('bf_goods')
+            ->where('is_hot')->eq(1)
             ->orderBy('id desc')
             ->fetchAll();
     }

@@ -1,0 +1,472 @@
+@charset "UTF-8";
+/*公用样式*/
+body {
+    background: url(../images/register_bg.jpg) repeat-x;
+}
+
+body, h1, p, dl, dt, dd, ul, ol, li, form, input, img {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+body, button, input, select, textarea {
+    font-family: "宋体", tahoma, sans-serif;
+    line-height: 1.5;
+    font-size: 12px;
+    outline: none;
+}
+
+em {
+    font-style: normal;
+}
+
+ul, ol, dl {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #874f0f;
+}
+
+a:hover {
+    color: #FF0000;
+}
+
+img {
+    border: 0;
+    display: inline-block;
+    /*padding-left: 20px;*/
+    /*background: url(../images/form_btn1.png) -20px -641px no-repeat;*/
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.ico {
+    display: block;
+    width: 16px;
+    height: 16px;
+}
+
+.no_outline {
+    cursor: pointer;
+    outline: medium none;
+    text-indent: -9999px;
+}
+
+.header {
+    width: 1000px;
+    height: 85px;
+    margin: 20px auto 0 auto;
+    /*background: url(../images/register_banner.jpg) 270px -20px no-repeat;*/
+}
+
+.header a {
+    outline: none;
+}
+
+h1 {
+    text-indent: -999999px;
+    /*background: url(../images/logo.png) no-repeat;*/
+    width: 107px;
+    height: 50px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.Regist_Wrapper, .Login_Wrapper {
+    width: 1000px;
+    margin: 0 auto;
+    background: #fafafa;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    height: 350px;
+    min-height:500px;
+}
+
+.Regist_Wrapper {
+    padding: 40px 0;
+}
+
+.Login_Wrapper {
+    padding-top: 40px;
+}
+
+.Regist_Wrapper ol {
+    width: 960px;
+    height: 35px;
+    margin: 0 auto 40px auto;
+}
+
+.Regist_Wrapper ol.step1 {
+    background: url(../images/form_btn2.png) 0 -20px no-repeat;
+}
+
+.Regist_Wrapper ol.step2 {
+    background: url(../images/form_btn2.png) 0 -57px no-repeat;
+}
+
+.Regist_Wrapper ol.step3 {
+    background: url(../images/form_btn2.png) 0 -94px no-repeat;
+}
+
+.Regist_Wrapper ol li {
+    width: 33%;
+    float: left;
+    height: 35px;
+    line-height: 35px;
+    text-indent: -9999em;
+}
+
+.Regist_Wrapper a, .Login_Wrapper a {
+    color: #f00;
+}
+
+.Regist_Wrapper a:hover, .Login_Wrapper a:hover {
+    text-decoration: underline;
+}
+
+.long_Text, .short_Text {
+    height: 56px;
+}
+
+.long_Text .textBox {
+    width: 341px;
+    height: 36px;
+    float: left;
+}
+
+.long_Text input, .short_Text input {
+    font-size: 14px;
+    margin-left: 5px;
+    height: 20px;
+    line-height: 20px;
+    color: #808080;
+    border-color: white;
+}
+
+.long_Text input {
+    width: 230px;
+    color: #808080;
+}
+
+.short_Text input {
+    width: 180px;
+    color: #808080;
+}
+
+.form_Info {
+    width: 616px;
+    margin-left: 28px;
+    display: inline;
+}
+
+.form_Info label {
+    font-size: 14px;
+    color: #737373;
+    display: inline-block;
+    width: 83px;
+    height: 35px;
+    line-height: 35px;
+    text-align: right;
+}
+
+.form_Info .prompt {
+    float: right;
+    color: #737373;
+    margin-top: 8px;
+}
+
+.Login_Wrapper .form_Info {
+    position: relative;
+    top: 50px;
+}
+
+.long_Text .prompt {
+    width: 245px;
+    height: 35px;
+    overflow: hidden;
+}
+
+.LNormal .textBox {
+    background: url(../images/form_btn1.png) 82px 0 no-repeat;
+}
+
+.LSelected .textBox {
+    background: url(../images/form_btn1.png) 82px -37px no-repeat;
+}
+
+.LRight .textBox {
+    background: url(../images/form_btn1.png) 82px -74px no-repeat;
+}
+
+.LWrong .textBox {
+    background: url(../images/form_btn1.png) 82px -111px no-repeat;
+}
+
+.short_Text .prompt {
+    width: 255px;
+}
+
+.SNormal .textBox {
+    background: url(../images/form_btn1.png) 82px -148px no-repeat;
+}
+
+.SSelected .textBox {
+    background: url(../images/form_btn1.png) 82px -185px no-repeat;
+}
+
+.SRight .textBox {
+    background: url(../images/form_btn1.png) 82px -259px no-repeat;
+}
+
+.SWrong .textBox {
+    background: url(../images/form_btn1.png) 82px -222px no-repeat;
+}
+
+.short_Text img {
+    position: relative; /*top:7px;*/
+    left: 10px;
+    *left: 20px;
+}
+
+.short_Text .prompt {
+    position: relative;
+    right: -10px;
+}
+
+.Wrong .prompt {
+    color: #fc7b1d;
+}
+
+.prompt .ico {
+    float: left;
+    text-indent: -9999em;
+    outline: none;
+    margin: 2px 10px 18px 0;
+}
+
+.LSelected .ico, .SSelected .ico {
+    background: url(../images/form_btn1.png) 0 -640px no-repeat;
+}
+
+.LRight .ico, .SRight .ico {
+    background: url(../images/form_btn1.png) 0 -658px no-repeat;
+}
+
+.LWrong .ico, .SWrong .ico {
+    background: url(../images/form_btn1.png) 0 -676px no-repeat;
+}
+
+/*sex*/
+.textBox a {
+    width: 73px;
+    height: 36px;
+    border: none;
+    background: transparent;
+}
+
+.long_Text .male {
+    background: url(../images/sex_button.png) 83px 0 no-repeat;
+}
+
+.long_Text .male:hover {
+    background: url(../images/sex_button.png) 83px -37px no-repeat;
+}
+
+.long_Text .female {
+    background: url(../images/sex_button.png) 83px -74px no-repeat;
+}
+
+.long_Text .female:hover {
+    background: url(../images/sex_button.png) 83px -111px no-repeat;
+}
+
+.agreement {
+    margin: 0 0 20px 82px;
+    color: #737373;
+}
+
+.agreement input {
+    position: relative;
+    top: 2px;
+}
+
+.register_Submit, .login_Submit {
+    display: block;
+    width: 198px;
+    height: 45px;
+    text-indent: -9999em;
+    cursor: pointer;
+    position: relative;
+    left: 81px;
+}
+
+.register_Submit {
+    background: url(../images/form_btn1.png) 0 -296px no-repeat;
+}
+
+.register_Submit:hover {
+    background: url(../images/form_btn1.png) 0 -342px no-repeat;
+}
+
+.register_Submit:active {
+    background: url(../images/form_btn1.png) 0 -388px no-repeat;
+}
+
+.login_Submit {
+    background: url(../images/form_btn1.png) 0 -694px no-repeat;
+}
+
+.login_Submit:hover {
+    background: url(../images/form_btn1.png) 0 -740px no-repeat;
+}
+
+.login_Submit:active {
+    background: url(../images/form_btn1.png) 0 -786px no-repeat;
+}
+
+.yes_binding, .no_binding {
+    float: left;
+    width: 117px;
+    height: 37px;
+    text-indent: -9999em;
+    cursor: pointer;
+    position: relative;
+    left: 81px;
+}
+
+.yes_binding {
+    background: url(../images/form_btn1.png) 0 -833px no-repeat;
+    margin-right: 15px;
+}
+
+.yes_binding:hover {
+    background: url(../images/form_btn1.png) 0 -871px no-repeat;
+}
+
+.yes_binding:active {
+    background: url(../images/form_btn1.png) 0 -909px no-repeat;
+}
+
+.no_binding {
+    background: url(../images/form_btn1.png) -118px -833px no-repeat;
+    margin-right: 15px;
+}
+
+.no_binding:hover {
+    background: url(../images/form_btn1.png) -118px -871px no-repeat;
+}
+
+.no_binding:active {
+    background: url(../images/form_btn1.png) -118px -909px no-repeat;
+}
+
+.sideBar_Login {
+    width: 290px;
+    height: 302px;
+    padding: 7px 0 0 40px;
+    background: url(../images/form_btn1.png) -240px -331px no-repeat;
+}
+
+.sideBar_Login p {
+    font-size: 14px;
+    color: #737373;
+    margin-bottom: 10px;
+}
+
+.Login_Wrapper .sideBar_Login {
+    padding-top: 57px;
+}
+
+.login_Btn {
+    display: block;
+    width: 110px;
+    height: 32px;
+    text-indent: -9999em;
+    outline: none;
+}
+
+.QQ_Btn {
+    background: url(../images/form_btn1.png) 0 -435px no-repeat;
+}
+
+.QQ_Btn:hover {
+    background: url(../images/form_btn1.png) 0 -469px no-repeat;
+}
+
+.QQ_Btn:active {
+    background: url(../images/form_btn1.png) 0 -503px no-repeat;
+}
+
+.sina_Btn {
+    background: url(../images/form_btn1.png) -114px -435px no-repeat;
+    margin-top: 10px;
+}
+
+.sina_Btn:hover {
+    background: url(../images/form_btn1.png) -114px -469px no-repeat;
+}
+
+.sina_Btn:active {
+    background: url(../images/form_btn1.png) -114px -503px no-repeat;
+}
+
+.renren_Btn {
+    background: url(../images/form_btn1.png) 0 -537px no-repeat;
+    margin-top: 10px;
+}
+
+.renren_Btn:hover {
+    background: url(../images/form_btn1.png) 0 -571px no-repeat;
+}
+
+.renren_Btn:active {
+    background: url(../images/form_btn1.png) 0 -605px no-repeat;
+}
+
+.shadow {
+    width: 1000px;
+    height: 18px;
+    margin: 0 auto;
+    background: url(../images/form_btn2.png) no-repeat;
+}
+
+.footer {
+    width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.footer ul {
+    color: #874f0f;
+}
+
+.footer li {
+    display: inline;
+}
+
+.footer .copy {
+    font-family: arial;
+    color: #874f0f;
+}
