@@ -50,6 +50,17 @@ css::import($webRoot . 'module/auser/css/auser.css');
                     </span>
                 </p>
             </div>
+            <div class="long_Text clearfix LNormal">
+                <p class="textBox">
+                    <label><em style="color:red;">*</em>邀请码：</label>
+                    <input type="text" name="mycode">
+                </p>
+                <p class="prompt">
+                    <span class="Validform_checktip">
+                        <span class="img">请输入邀请码！</span>
+                    </span>
+                </p>
+            </div>
             <div class="agreement">
                 <input type="checkbox" checked="checked" name="ckb_agree" > 我已阅读并接受
                 <a href="javascript:void(0)" class="xianshi">《拜佛网用户协议》</a>
@@ -57,15 +68,18 @@ css::import($webRoot . 'module/auser/css/auser.css');
             <input type="submit" class="register_Submit" value="确定注册">
             <div class="shengming" style="display: none;">
                 <p>
-                        <span style="font-size:14px;color:#262626">&nbsp;&nbsp;&nbsp;&nbsp;在访问和使用“
-                            <strong>
-                                    <span style="color:#262626; font-size:16px; ">拜佛网</span>
-                                </strong>
-                            ”前，请您务必仔细阅读和透彻理解本条款，并且遵守有关互联网相关法律及本网站的规定与规则。</span>
+                    <span style="font-size:14px;color:#262626">&nbsp;&nbsp;&nbsp;&nbsp;在访问和使用“
+                        <strong>
+                                <span style="color:#262626; font-size:16px; ">拜佛网</span>
+                        </strong>
+                        ”前，请您务必仔细阅读和透彻理解本条款，并且遵守有关互联网相关法律及本网站的规定与规则。
+                    </span>
                     <br>
-                    <span style="font-size:14px;color:#262626">在同意“拜佛网”服务协议（“协议”）之时，你已经同意我们按照本隐私申明来使用和披露您的个人信息。本隐私申明的全部条款属于该协议的一部份。</span>
+                    <span style="font-size:14px;color:#262626">在同意“拜佛网”服务协议（“协议”）之时，你已经同意我们按照本隐私申明来使用和披露您的个人信息。本隐私申明的全部条款属于该协议的一部份。
+                    </span>
                     <br>
-                    <span style="font-size:14px;color:#262626">&nbsp;&nbsp;&nbsp;&nbsp;本网站上关于“拜佛网”平台会员或他们的（联系人及联络信息，相关图片、视讯等）信息均由会员自行提供，会员依法对其提供的任何信息承受全部责任。本网站对策等信息的准确性、完整性、合法性或真实性均不承担任何责任。此外，"拜佛网"对任何使用或提供本网站信息的商业活动及其风险不承担任何责任。</span>
+                    <span style="font-size:14px;color:#262626">&nbsp;&nbsp;&nbsp;&nbsp;本网站上关于“拜佛网”平台会员或他们的（联系人及联络信息，相关图片、视讯等）信息均由会员自行提供，会员依法对其提供的任何信息承受全部责任。本网站对策等信息的准确性、完整性、合法性或真实性均不承担任何责任。此外，"拜佛网"对任何使用或提供本网站信息的商业活动及其风险不承担任何责任。
+                    </span>
                     <br>
                 </p>
                 <p>
