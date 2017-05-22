@@ -7,4 +7,6 @@ tmp/model/*
 tmp/cache/*
 tmp/extension/*
 .idea/*
+.phpintel/*
 .gitkeep
+.phpintel/*

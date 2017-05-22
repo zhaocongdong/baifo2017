@@ -1,0 +1,330 @@
+p{ margin:0; padding:0; }
+ul{ margin:0; padding:0; list-style:none; }
+input[type="button"]{ border:none; background-color:transparent; }
+input[type="button"]:focus{ outline:none; border:none; }
+input[type="button"]:hover{ outline:none; border:none; }
+button{ border:none; background-color:transparent; }
+button:focus{ outline:none; }
+
+.aburnjoss-container{ position:relative; width:1000px; height:700px; }
+.fo-lists-container{ position:relative; z-index:1; width:1000px; height:700px; }
+.fo-lists{ overflow:hidden; position:relative; width:1000px; height:700px; }
+.fo-lists li{ position:absolute; top:0; left:1000px; width:1000px; height:700px; background-repeat:no-repeat; background-position:0 0; }
+.fo-lists li.active{ left:0; }
+.fo-lists li.fo1{ background-image:url('../images/aburnjoss/fo/fo1_guanshiyin.jpg'); }
+.fo-lists li.fo2{ background-image:url('../images/aburnjoss/fo/fo2_shijiamoni.jpg'); }
+.fo-lists li.fo3{ background-image:url('../images/aburnjoss/fo/fo3_wenshupusa.jpg'); }
+.fo-lists li.fo4{ background-image:url('../images/aburnjoss/fo/fo4_wenquxingjun.jpg'); }
+.fo-lists li.fo5{ background-image:url('../images/aburnjoss/fo/fo5_yuelao.jpg'); }
+.fo-lists li.fo6{ background-image:url('../images/aburnjoss/fo/fo6_songziguanyin.jpg'); }
+.fo-lists li.fo7{ background-image:url('../images/aburnjoss/fo/fo7_milefo.jpg'); }
+.fo-lists li.fo8{ background-image:url('../images/aburnjoss/fo/fo8_mazu.jpg'); }
+.fo-lists li.fo9{ background-image:url('../images/aburnjoss/fo/fo9_guangong.jpg'); }
+.fo-lists li.fo10{ background-image:url('../images/aburnjoss/fo/fo10_dashizhi.jpg'); }
+.fo-lists li.fo11{ background-image:url('../images/aburnjoss/fo/fo11_caishenye.jpg'); }
+.fo-lists li.fo12{ background-image:url('../images/aburnjoss/fo/fo12_dizangwang.jpg'); }
+.fo-lists li.fo13{ background-image:url('../images/aburnjoss/fo/fo13_amituofo.jpg'); }
+.fo-lists li.fo14{ background-image:url('../images/aburnjoss/fo/fo14_puxian.jpg'); }
+.fo-lists li.fo15{ background-image:url('../images/aburnjoss/fo/fo15_yaoshifo.jpg'); }
+
+.fo-handle{ position:absolute; top:346px; left:0; z-index:2; width:100%; }
+.fo-handle .arrow-left,
+.fo-handle .arrow-right{ width:49px; height:54px; background-image:url('../images/aburnjoss/arw-left.png'); background-repeat:no-repeat; cursor:pointer; }
+.fo-handle .arrow-left{ float:left; margin-left:50px; }
+.fo-handle .arrow-right{ float:right; margin-right:50px; }
+.fo-handle .arrow-left:hover{ background-image:url('../images/aburnjoss/arw-left-hover.png'); }
+.fo-handle .arrow-right{ background-image:url('../images/aburnjoss/arw-right.png') }
+.fo-handle .arrow-right:hover{ background-image:url('../images/aburnjoss/arw-right-hover.png'); }
+
+.fo-sample-container{ position:absolute; left:155px; top:180px; z-index:1; width:700px; height:270px; }
+#sample-type01{ position: absolute; top: 0; left: 250px; width:200px; height:160px; }
+#sample-type02{ position: absolute; top: -25px; left:140px; width:416px; height:312px; }
+#sample-type03{ position: absolute; top: -95px; left:40px; width:618px; height:463px; }
+#sample-type04{ position: absolute; top:70px; left:250px; width:270px; height:200px; }
+#sample-type05{ position: absolute; top:-90px; left:15px; width:680px; height:510px; }
+#sample-type06{ position: absolute; top:-10px; left:120px; width:520px; height:390px; }
+#sample-type07{ position: absolute; top:-145px; left:-30px; width:820px; height:616px; }
+#sample-type08{ position: absolute; top:130px; left:250px; width:195px; height:200px; }
+#sample-type09{ position: absolute; top:50px; left:150px; width:400px; height:300px; }
+#sample-type10{ position: absolute; top:-50px; left:55px; width:640px; height:480px; }
+
+.fo-sample-container canvas{
+    position:absolute;
+    top:0;
+    left:0;
+    visibility:hidden;
+    -webkit-transform: translate(0,-30px);
+    -moz-transform: translate(0,-30px);
+    -ms-transform: translate(0,-30px);
+    -o-transform: translate(0,-30px);
+    transform: translate(0,-30px);
+}
+.fo-sample-container canvas.active{
+    visibility:visible;
+    -webkit-transform: translate(0,0);
+    -moz-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    -o-transform: translate(0,0);
+    transform: translate(0,0);
+
+    -webkit-transition:all .3s linear;
+    -moz-transition: all .3s linear;
+    -ms-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    transition: all .3s linear
+}
+
+.draw-pot{ position:absolute; left:36px; top:90px; z-index:2; width:80px; height:100px; background:url('../images/aburnjoss/draw-pot.png') no-repeat 0 0; background-size: 100% 100%; cursor:pointer; }
+.merit-box{ position:absolute; left:20px; bottom:0; z-index:2; width:144px; height:99px; background:url('../images/aburnjoss/merit-box.png') no-repeat 0 0; cursor:pointer; }
+.py-huanyuan{ position:absolute; left:35px; top:17px; z-index:2; width:100px; height:50px; background:url('../images/aburnjoss/py-huanyuan.png') no-repeat 0 0; cursor:pointer; }
+
+.tribute-lists-container{ position:absolute; left:167px; bottom:0; z-index:2; width:833px; height:110px; }
+.tribute-lists-bg{ width:665px; height:110px; border:1px solid transparent; background:url('../images/aburnjoss/tribute-bg.png') no-repeat 0 0; }
+.tribute-lists-nav { margin:15px 0 0 35px; font-size:0; }
+.tribute-lists-nav span{ position:relative; display:inline-block; width:52px; height:28px; margin-right:1px; background-repeat:no-repeat; cursor:pointer; }
+.tribute-lists-nav span:hover{}
+.tribute-lists-nav span:hover::after,
+.tribute-lists-nav span.active::after{ content:""; position:absolute; left:21px; bottom:-7px; width:10px; height:7px; background:url('../images/aburnjoss/tribute-nav/top-arrow-hover.png') no-repeat 0 0; }
+.tribute-lists-nav span.nav01{ background-image:url('../images/aburnjoss/tribute-nav/01.png') }
+.tribute-lists-nav span.nav02{ background-image:url('../images/aburnjoss/tribute-nav/02.png') }
+.tribute-lists-nav span.nav03{ background-image:url('../images/aburnjoss/tribute-nav/03.png') }
+.tribute-lists-nav span.nav04{ background-image:url('../images/aburnjoss/tribute-nav/04.png') }
+.tribute-lists-nav span.nav05{ background-image:url('../images/aburnjoss/tribute-nav/05.png') }
+.tribute-lists-nav span.nav06{ background-image:url('../images/aburnjoss/tribute-nav/06.png') }
+.tribute-lists-nav span.nav07{ background-image:url('../images/aburnjoss/tribute-nav/07.png') }
+.tribute-lists-nav span.nav08{ background-image:url('../images/aburnjoss/tribute-nav/08.png') }
+.tribute-lists-nav span.nav09{ background-image:url('../images/aburnjoss/tribute-nav/09.png') }
+.tribute-lists-nav span.nav10{ background-image:url('../images/aburnjoss/tribute-nav/10.png') }
+.tribute-lists-nav span.nav11{ background-image:url('../images/aburnjoss/tribute-nav/11.png') }
+.tribute-lists{ overflow:hidden; position:relative; width:577px; height:50px; margin:11px 0 0 44px; }
+.tribute-lists li{ display:none; position:absolute; top:0; left:0; }
+.tribute-lists li.display-block{ display:block }
+.tribute-lists li span{ display:inline-block; width:50px; height:50px; margin-right:7px; cursor:pointer; }
+
+.tribute-lists li.type01 span{ background:url('../images/aburnjoss/tributes/tribute-type-1.png') no-repeat 0 0; }
+.tribute-lists li.type02 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-1.png'); }
+.tribute-lists li.type02 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-2.png'); }
+.tribute-lists li.type02 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-3.png'); }
+.tribute-lists li.type02 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-4.png'); }
+.tribute-lists li.type02 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-5.png'); }
+.tribute-lists li.type02 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-6.png'); }
+.tribute-lists li.type02 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-2-7.png'); }
+
+.tribute-lists li.type03 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-3-1.png'); }
+.tribute-lists li.type03 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-3-2.png'); }
+.tribute-lists li.type03 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-3-3.png'); }
+.tribute-lists li.type03 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-3-4.png'); }
+.tribute-lists li.type03 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-3-5.png'); }
+.tribute-lists li.type03 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-3-6.png'); }
+.tribute-lists li.type03 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-5ype-3-7.png'); }
+
+.tribute-lists li.type04 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-1.png'); }
+.tribute-lists li.type04 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-2.png'); }
+.tribute-lists li.type04 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-3.png'); }
+.tribute-lists li.type04 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-4.png'); }
+.tribute-lists li.type04 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-5.png'); }
+.tribute-lists li.type04 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-6.png'); }
+.tribute-lists li.type04 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-7.png'); }
+.tribute-lists li.type04 span.t08{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-8.png'); }
+.tribute-lists li.type04 span.t09{ background-image:url('../images/aburnjoss/tributes/tribute-type-4-9.png'); }
+
+.tribute-lists li.type05 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-1.png'); }
+.tribute-lists li.type05 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-2.png'); }
+.tribute-lists li.type05 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-3.png'); }
+.tribute-lists li.type05 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-4.png'); }
+.tribute-lists li.type05 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-5.png'); }
+.tribute-lists li.type05 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-6.png'); }
+.tribute-lists li.type05 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-5-7.png'); }
+
+.tribute-lists li.type06 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-1.png'); }
+.tribute-lists li.type06 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-2.png'); }
+.tribute-lists li.type06 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-3.png'); }
+.tribute-lists li.type06 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-4.png'); }
+.tribute-lists li.type06 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-5.png'); }
+.tribute-lists li.type06 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-6.png'); }
+.tribute-lists li.type06 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-6-7.png'); }
+
+.tribute-lists li.type07 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-1.png'); }
+.tribute-lists li.type07 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-2.png'); }
+.tribute-lists li.type07 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-3.png'); }
+.tribute-lists li.type07 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-4.png'); }
+.tribute-lists li.type07 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-5.png'); }
+.tribute-lists li.type07 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-6.png'); }
+.tribute-lists li.type07 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-7-7.png'); }
+
+.tribute-lists li.type08 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-1.png'); }
+.tribute-lists li.type08 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-2.png'); }
+.tribute-lists li.type08 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-3.png'); }
+.tribute-lists li.type08 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-4.png'); }
+.tribute-lists li.type08 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-5.png'); }
+.tribute-lists li.type08 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-6.png'); }
+.tribute-lists li.type08 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-8-7.png'); }
+
+.tribute-lists li.type09 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-1.png'); }
+.tribute-lists li.type09 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-2.png'); }
+.tribute-lists li.type09 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-3.png'); }
+.tribute-lists li.type09 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-4.png'); }
+.tribute-lists li.type09 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-5.png'); }
+.tribute-lists li.type09 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-6.png'); }
+.tribute-lists li.type09 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-9-7.png'); }
+
+.tribute-lists li.type10 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-1.png'); }
+.tribute-lists li.type10 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-2.png'); }
+.tribute-lists li.type10 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-3.png'); }
+.tribute-lists li.type10 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-4.png'); }
+.tribute-lists li.type10 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-5.png'); }
+.tribute-lists li.type10 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-6.png'); }
+.tribute-lists li.type10 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-10-7.png'); }
+
+.tribute-lists li.type11 span.t01{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-1.jpg'); }
+.tribute-lists li.type11 span.t02{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-2.jpg'); }
+.tribute-lists li.type11 span.t03{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-3.jpg'); }
+.tribute-lists li.type11 span.t04{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-4.jpg'); }
+.tribute-lists li.type11 span.t05{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-5.jpg'); }
+.tribute-lists li.type11 span.t06{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-6.jpg'); }
+.tribute-lists li.type11 span.t07{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-7.jpg'); }
+.tribute-lists li.type11 span.t08{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-8.jpg'); }
+.tribute-lists li.type11 span.t09{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-9.jpg'); }
+.tribute-lists li.type11 span.t10{ background-image:url('../images/aburnjoss/tributes/tribute-type-11-10.jpg'); }
+
+.tribute-handle .arrow-left,
+.tribute-handle .arrow-right{ position:absolute; top:50px; background-repeat:no-repeat; width:35px; height:33px; }
+.tribute-handle .arrow-left{ left:-12px; background-image:url('../images/aburnjoss/tribute-arw-left.png'); }
+.tribute-handle .arrow-right{ left:628px; background-image:url('../images/aburnjoss/tribute-arw-right.png'); }
+.tribute-confirm-submit{ position:absolute; right:5px; bottom:7px; z-index:12; }
+.tribute-confirm-submit p{ padding-left:20px; width:163px; height:24px; margin-bottom:6px; background:url('../images/aburnjoss/tribute-counts-bg.png') no-repeat 0 0; color:#ff0000; font-size:16px; }
+.tribute-confirm-submit input{ display:none; width:156px; height:48px; }
+.tribute-confirm-submit .tribute-confirm-type-1{ background:url('../images/aburnjoss/confirm-tribute.png') no-repeat 0 0; }
+.tribute-confirm-submit .tribute-confirm-type-2{ background:url('../images/aburnjoss/confirm-py-huanyuan.png') no-repeat 0 0; }
+.tribute-py-shangxiang .tribute-confirm-type-1{ display:block; }
+.tribute-py-huanyuan .tribute-confirm-type-2{ display:block; }
+
+.layer-block{ display:none; position:absolute; top:0; left:0; z-index:11; width:100%; height:100%; background-color:rgba(0,0,0,0.5); }
+.layer-py-huanyuan{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-217px 0 0 -172px; width:344px; height:435px; background:url('../images/aburnjoss/layer-py-huanyuan-bg.png') no-repeat 0 0; }
+.layer-py-huanyuan ul{ overflow:auto; height: 340px; margin: 80px 19px 0 28px; background-color: #fff; }
+.layer-py-huanyuan ul li{ padding:3px 0 8px 5px; border-bottom:1px solid #999; font-weight:bold; }
+.layer-py-huanyuan ul li:hover { background-color:#009dff; color:#fff; cursor:pointer; }
+.layer-py-huanyuan ul li .fo-name{ padding-bottom:3px; color:#e74c3c; }
+.layer-py-huanyuan-close{ position:absolute; right:8px; top:16px; width:24px; height:20px; background:url('../images/aburnjoss/x.png') no-repeat 0 0; }
+.layer-py-huanyuan-close:hover{ background-image:url('../images/aburnjoss/x1.png') }
+.layer-merit-box{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-90px 0 0 -148px; width:296px; height:181px; background:url('../images/aburnjoss/layer-merit-bg.png') no-repeat 0 0; }
+.input-merit-amount{ width:260px; margin:85px 0 0 19px; padding-left:5px; color:#f00; }
+.confirm-merit-amount{ display:inline-block; width:99px; height:52px; margin:5px 20px 0 39px; background:url('../images/aburnjoss/button-confirm-1.png') no-repeat 0 0; }
+.close-layer-merit{ display:inline-block; width:99px; height:52px; background:url('../images/aburnjoss/button-close-1.png') no-repeat 0 0; }
+.layer-draw-pot{ display:none; position:absolute; top:0; left:0; z-index:12; width:100%; height:100%; cursor:pointer; }
+.draw-start,.draw-over{ margin: 30px 0 0 150px; }
+.draw-over{ display:none; }
+.draw-result{ display:none; position:absolute; top:50%; left:50%; margin:-250px 0 0 -166px; width:333px; height:500px; background:url('../images/aburnjoss/layer-draw-bg.png') no-repeat 0 0; }
+.draw-number{ position:absolute; right:76px; bottom:261px; width:30px; text-align:center; font:700 20px/1.3 "宋体"; color:red; }
+.draw-title{ position:absolute; right:116px; bottom:238px; width:20px; text-align:left; font:700 17px/1.3 "宋体"; }
+.draw-content{ position:absolute; right:170px; top:80px; }
+.draw-content p{ float:right; width:18px; margin-left:15px; font:700 16px/1.1 "宋体"; }
+.draw-py-jieqian{ position:absolute; top:350px; left:78px; width:172px; height:49px; background-image:url('../images/aburnjoss/py-jieqian.png'); }
+.layer-draw-close{ position:absolute; top:0; right:15px; width:30px; height:30px; background:url('../images/aburnjoss/icon-close.png') no-repeat 0 0; }
+.layer-hint-tribute{ display:none; position:absolute; left:145px; bottom:130px; z-index:12; width:172px; height:67px; background:url('../images/aburnjoss/layer-hint-tribute.png') no-repeat 0 0; }
+.layer-hint-tribute-py-huanyuan{ display:none; position:absolute; left:185px; bottom:105px; z-index:12; width:620px; height:50px; background:url('../images/aburnjoss/layer-hint-tribute-py-huanyuan.png') no-repeat 0 0; }
+.layer-hint-merit{ display:none; position:absolute; top:0; left:50%; z-index:12; margin:0 0 0 -210px; width:420px; height:84px; background:url('../images/aburnjoss/layer-hint-merit.png') no-repeat 0 0; }
+.layer-make-wish{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-185px 0 0 -242px; width:485px; height:371px; background:url('../images/aburnjoss/layer-make-wish.png') no-repeat 0 0; }
+.layer-make-wish-content{ padding:80px 0 0 50px; }
+.make-wish-or-not{ margin-bottom:10px; font-size:20px; }
+.make-wish-or-not label{ display:inline-block; margin-right:25px;  }
+.make-wish-or-not input[type="radio"]{ margin-right:10px; vertical-align:2px; }
+.wish-options{ display:block; width:370px; height:36px; margin-bottom:15px; font-size:14px; color:#F00; }
+.wish-content{ display:block; width:370px; height:80px; margin-bottom:15px; padding:5px 10px; font-size:14px; color:#F00; resize:none; }
+.wish-private-or-not{ font-size:20px; }
+.wish-private-or-not label{ margin-right:5px; }
+.wish-private-or-not input[type="radio"]{ margin-right:10px; vertical-align:3px; }
+.wish-confirm,.wish-cancel{ width:99px; height:52px; border:none; background-color:transparent; background-repeat:no-repeat; background-position:0 0; }
+.wish-confirm{ background-image:url('../images/aburnjoss/button-confirm-1.png'); }
+.wish-cancel{ background-image:url('../images/aburnjoss/button-close-1.png'); }
+.wish-handle{ display:inline-block; vertical-align:middle; }
+.layer-wish-complete{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-141px 0 0 -80px; width:160px; height:82px; background:url('../images/aburnjoss/layer-wish-complete.png') no-repeat 0 0; }
+.layer-py-huanyuan-complete{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-141px 0 0 -80px; width:160px; height:82px; background:url('../images/aburnjoss/layer-py-huanyuan-success.png') no-repeat 0 0; }
+.layer-balance-not-enough{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-41px 0 0 -80px; width:160px; height:82px; background:url('../images/aburnjoss/layer-balance-not-enough.png') no-repeat 0 0; }
+.layer-py-huanyuan-or-not{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-75px 0 0 -200px; width:400px; height:150px; background:url('../images/aburnjoss/layer-py-huanyuan-or-not.png') no-repeat 0 0; }
+.py-huanyuan-text{ display:block; width:313px; height:44px; margin:30px 0 0 40px; background:url('../images/aburnjoss/py-huanyuan-text.png') no-repeat 0 0; }
+.py-huanyuan-handle{ margin:15px 40px 0 0; text-align:right; }
+.py-huanyuan-confirm{ display:inline-block; width:36px; height:40px; margin-right:25px; border:none; background:url('../images/aburnjoss/py-huanyuan-yes.png') no-repeat 0 0; }
+.py-huanyuan-cancel{ display:inline-block; width:36px; height:40px; border:none; background:url('../images/aburnjoss/py-huanyuan-no.png') no-repeat 0 0; }
+.layer-glow{ position:absolute; top:0; left:190px; z-index:11; }
+
+.has-made-wished .tribute-lists-container{ display:none; }
+.has-made-wished .draw-pot{ display:none; }
+.has-made-wished .py-huanyuan{ display:none; }
+
+.afreeanimal-container{ overflow:hidden; position:relative; width:1000px; height:600px; }
+
+#scene-grass-canvas{ position:absolute; left:0; bottom:-70px; }
+
+.top-user-handle-bar{ position:absolute; top:0; left:0; width:100%; height:70px; background-color:rgba(255,255,255,0.3); }
+.user-info{ float:left; width:300px; height:70px; }
+.user-head-default{ float:left; width:50px; margin:10px 10px 0 5px; }
+.user-info p { line-height:18px; color:#fff; }
+.user-info p.nickname{ margin-top:10px; }
+.user-handle{ height:70px; margin-left:300px; text-align:right; }
+.user-handle button{ display:inline-block; margin:15px 10px 0 0; border:none; background-color:transparent; }
+.user-handle button:focus{ outline:none; }
+.user-handle .pop-layer-purchase{ width:42px; height:45px; background-image:url('../images/afreeanimal/pop-layer-purchase.png'); }
+.user-handle .pop-layer-scene{ width:48px; height:43px; background-image:url('../images/afreeanimal/pop-layer-scene.png'); }
+.user-handle .pop-layer-repository{ width:45px; height:44px; margin-right:25px; background-image:url('../images/afreeanimal/pop-layer-repository.png'); }
+
+.animal-farm{ position:absolute; top:480px; left:620px; width:380px; height:70px; }
+.animal-farm canvas{ position:absolute; cursor:pointer; }
+.layer-release-animal{ display:none; position:absolute; top:50%; left:50%; z-index:12; margin:-110px 0 0 -165px; padding: 40px 50px 50px; width:330px; height:220px; background:url('../images/afreeanimal/layer-release-animal.png') no-repeat 0 0; font:bold 14px/1.3 "微软雅黑"; color:#FF0000; }
+.animal-release-button{ display:block; width:68px; height:32px; margin:15px auto; background:url('../images/afreeanimal/release-animal-button.png') no-repeat 0 0; }
+.layer-animal-shop{ position:absolute; top:170px; left:220px; z-index:12; width:586px; height:276px; background:url('../images/afreeanimal/layer-shop-bg.png') no-repeat 0 0; }
+.layer-animal-shop .button-close-layer,
+.layer-scene-shop .button-close-layer{ position:absolute; top:0px; right:0; }
+.animal-show-container{ position:absolute; top:187px; left:28px; width:100px; height:70px; font-family:"微软雅黑"; }
+.animal-handle-container{ position:absolute; top:187px; left:140px; width:400px; }
+.animal-handle-container p{ line-height:1.5; }
+.animal-handle-container .hl1{ font-size:14px; color:#CC0000;}
+.animal-name{ display:none; }
+.animal-count{ position:relative; width:100px; padding-top:5px; font-weight: bold; font-size:16px; color:#003300; }
+.animal-count input{ width:30px; height:20px; padding-left:2px; border:1px solid #003300; background:transparent; text-align:center; }
+.animal-cost{ padding-top:5px; }
+.count-handle-box{ position:absolute; right:0; top:3px; }
+.plus-button{ display:block; width:12px; height:10px; margin-bottom:5px; background:url('../images/afreeanimal/plus-button.png') no-repeat 0 0; cursor:pointer; }
+.minus-button{ display:block; width:12px; height:10px; background:url('../images/afreeanimal/minus-button.png') no-repeat 0 0; cursor:pointer; }
+.animal-handle-container .slogan{ position:absolute; right:0; top:0; width:280px; font-weight:bold; }
+.animal-purchase-button{ position:absolute; bottom:0; right:5px; width:64px; height:28px; background:url('../images/afreeanimal/purchase-button.png') no-repeat 0 0; }
+.animal-type-nav{ width:520px; height:24px; margin:40px 0 0 30px; padding-bottom:4px; border-bottom: 4px solid #003300; }
+.animal-type-nav span{ display:inline-block; width:50px; height:20px; }
+.animal-type-nav .animal-type-1{ background:url('../images/afreeanimal/type-1-nav.png') no-repeat 0 0; }
+.animal-type-nav .animal-type-2{ background:url('../images/afreeanimal/type-2-nav.png') no-repeat 0 0; }
+.animal-type-nav .animal-type-3{ background:url('../images/afreeanimal/type-3-nav.png') no-repeat 0 0; }
+.animal-lists{ overflow:hidden; display:none; width:525px; margin:10px 0 0 30px; padding-bottom:8px; border-bottom:1px solid #333; }
+.animal-lists.active{ display:block; }
+.animal-lists li{ float:left; width:60px; margin-right:15px; padding-top:53px; background-repeat:no-repeat; cursor:pointer; }
+.animal-lists li span{ display:block; }
+.animal-lists .animal-hamster { background-image:url('../images/afreeanimal/animal-hamster.jpg'); }
+.animal-lists .animal-rabbit { background-image:url('../images/afreeanimal/animal-rabbit.jpg'); }
+.animal-lists .animal-goose { background-image:url('../images/afreeanimal/animal-goose.jpg'); }
+.animal-lists .animal-sea-otter { background-image:url('../images/afreeanimal/animal-sea-otter.jpg'); }
+.animal-lists .animal-deer { background-image:url('../images/afreeanimal/animal-deer.jpg'); }
+.animal-lists .animal-koala { background-image:url('../images/afreeanimal/animal-koala.jpg'); }
+.animal-lists .animal-flamingo { background-image:url('../images/afreeanimal/animal-flamingo.jpg'); }
+.animal-lists .animal-koi{ background-image:url('../images/afreeanimal/animal-koi.jpg'); }
+.animal-lists .animal-mandarinduck{ background-image:url('../images/afreeanimal/animal-mandarinduck.jpg'); }
+.animal-lists .animal-dove{ background-image:url('../images/afreeanimal/animal-dove.jpg'); }
+.animal-lists .animal-pigeon{ background-image:url('../images/afreeanimal/animal-pigeon.jpg'); }
+.button-close-layer{ width:27px; height:27px; border:none; background:url('../images/aburnjoss/button-close-layer.png') no-repeat 0 0; }
+
+.layer-scene-shop{ display:none; position:absolute; top:170px; left:220px; z-index:12; width:586px; height:276px; background-image:url('../images/afreeanimal/layer-scene-shop.png'); }
+.scene-shop-list{ margin:50px 0 0 30px; }
+.scene-shop-list li{ float:left; position:relative; margin-right:13px; cursor:pointer; }
+.scene-is-sold{ position:absolute; top:0; left:0; width:100%; height:100%; background:url('../images/afreeanimal/scene-is-sold.png') no-repeat 0 0; }
+.scene-shop-list .scene-thumb{ display:block; width:120px; height:75px; }
+.scene-shop-list .scene-name{ margin:3px 0; }
+
+.layer-user-repository{ display:none; position:absolute; top:80px; right:20px; z-index:12; width:430px; height:70px; background-color:rgba(255,255,255,0.3); }
+.repository-list { overflow: hidden; margin: 7px 22px 0; white-space: nowrap; }
+.repository-list li{ position:relative; display:inline-block; margin-right:9px; }
+.repository-left,.repository-right{ width:15px; height:40px; margin:15px 2px 0; border:none; opacity:0.8; }
+.repository-left{ float:left; background:url('../images/afreeanimal/repository-left.png'); }
+.repository-right{ float:right; background:url('../images/afreeanimal/repository-right.png'); }
+.repository-list li img{ display:block; width:90px; cursor:pointer; }
+.repository-is-set{ position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('../images/afreeanimal/is-set.png'); }
+.layer-user-repository .button-close-layer{ position:absolute; left:-5px; top:-15px; }
+
+.layer-block-transparent{ position:absolute; top:0; left:0; z-index:11; width:100%; height:100%; }

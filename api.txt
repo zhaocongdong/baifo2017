@@ -1,0 +1,111 @@
+获取用户信息
+/index.php?m=afreeanimal&f=userInfo
+无参数
+{"id":"1","name":"1111","email":"","phone":"","merit_num":"0","gold_num":"9999999","register_time":"2017-04-29 23:16:25","last_time":"2017-04-29 23:16:25","title":"\u521d\u7ea7\u65bd\u4e3b"}
+
+
+购买放生池背景API:
+/index.php?m=afreeanimal&f=buybg
+uid,bgid,glod
+{"code":"100"} / {"error":"201","msg":"银两不足"}
+
+获取用户背景
+/index.php?m=afreeanimal&f=getMyBG
+uid
+[{"bgid":"1","using":"0"},{"bgid":"2","using":"1"}]
+
+设置用户的背景
+/index.php?m=afreeanimal&f=setBG
+uid,bgid
+{"code":"100"}
+
+放生或购买小动物:
+/index.php?m=afreeanimal&f=opAnimal
+
+uid:1
+name:树懒
+total:20.09
+num:2
+is_buy:1  // 1-购买 0-放生
+
+{"code":"100"} / {"error":"201","msg":"银两不足"}
+
+获取用户小动物:
+/index.php?m=afreeanimal&f=getAnimal
+
+uid:1
+
+[{"name":"deer","num":"0"},{"name":"flamingo","num":"1"},{"name":"goose","num":"1"},{"name":"hamster","num":"1"},{"name":"koala","num":"1"},{"name":"rabbit","num":"1"},{"name":"seaotter","num":"0"}]
+
+
+
+
+
+点击确定上香
+/index.php?m=aburnjoss&f=burnjoss // m 参数有变化
+
+uid:1
+wish_id:0                         // wish_id=0 为许愿; wish_id>0为还愿 wish与is_private可以不传
+wish:祝你平安                      // 许愿内容
+is_private:1                      // 许愿是否保密
+foid:1                            // 佛祖id
+foname:释迦牟尼佛
+gp_ids:1|2,99|3                   // 桌上贡品用,相隔  类型和具体贡品用|相隔
+bj_gold:100                       // 烧香银两
+stay_time:1494082445              // 此次烧香持续到什么时间点,比如5分钟后结束即为当前时间戳+5*60
+
+{"code":"100"} / {"error":"201","msg":"银两不足"}
+
+上香初始化 用户金额与许愿列表
+/index.php?m=aburnjoss&f=initBJ
+
+uid
+
+{"wish_list":[{"id":"2","wish":"\u795d\u4f60\u5e73\u5b89","foid":"1","foname":"\u91ca\u8fe6\u725f\u5c3c\u4f5b"}],"userinfo":{"gold_num":"0"},"bj_list":[{"foid":"1","gp_ids":"1|2,99|3","wish_id":"1","stay_time":"1494157904"}]}
+
+功德箱
+/index.php?m=aburnjoss&f=meritBox
+
+uid, total
+
+{"code":"100"} / {"error":"201","msg":"银两不足"}
+
+获取单个贡品
+/index.php?m=aburnjoss&f=getGP
+
+uid, foid
+
+{"foid":"1","gp_ids":"1|2,99|3","wish_id":"1","stay_time":"1494157904"}
+
+抽签
+/index.php?m=aburnjoss&f=userLot
+
+uid,lot_id
+
+{
+  "id": "1",
+  "no": "第100签",
+  "no_big": null,
+  "title": "三教谈道",
+  "poem": "此卦守常勿动之象。凡事宜待时吉也。",
+  "jx": "下签亥宫",
+  "jie": "此是满签。诸事不利。大作佛力。可保平安。",
+  "jxexp": "佛神灵通与君知，痴人说事转昏迷；老人求得灵签去，不如守旧待时来。",
+  "exp": "完满灵签。尽报君知。依旧勿动。待等时至。",
+  "gu": "三教谈道。北周武帝时。三教(儒释道)互相排斥。皇帝召集大会辩论。经过三次争辩。喻道在我教。理存我方。争执不止。没有结论。痴事一桩。后佛教成为中国人民信仰主流。也有三教同源之说。",
+  "openUrl": "http://localhost/~louis/baifo2017/index.php?m=lot&f=index&id=1"
+}
+
+
+//-----------
+访问地址：http://baifo2017.get.vip
+
+FTP用户名：	baifo2017
+FTP密码：	t5ymznjm
+上传地址：	baifo2017.dot.vip
+
+mysql的地址为：localhost(推荐)
+远程连接时使用域名: baifo2017.dot.vip
+数据库名为： 	baifo2017
+用户名： 	    baifo2017
+密码: 	    t5ymznjm
