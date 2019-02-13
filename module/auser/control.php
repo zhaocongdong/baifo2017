@@ -45,9 +45,6 @@ class auser extends control
             if ($_POST["password"] != $_POST["repwd"]) {
                 die(js::error("密码不一致!"). js::locate('back'));
             }
-            if (empty($_POST["mycode"])) {
-                die(js::error("请填写邀请码!"). js::locate('back'));
-            }
             if (strtolower($_POST['ckb_agree']) != 'on') {
                 die(js::error("请同意注册协议!"). js::locate('back'));
             }
@@ -55,15 +52,8 @@ class auser extends control
             if (isset($exist_user) && !empty($exist_user)) {
                 die(js::error("该用户名已被使用!"). js::locate('back'));
             }
-            $rmd_code = $_POST["mycode"];
-            $exist_user_code = $this->auser->getUserByRMDCode($rmd_code);
-            if (empty($exist_user_code)) {
-                die(js::error("未查到相关邀请码!"). js::locate('back'));
-            }
             unset($_POST['repwd']);
             unset($_POST['ckb_agree']);
-
-            $_POST["mycode"] = $this->getUserRMDCode();
             $uid = $this->auser->register();
             if(dao::isError() || $uid == 0) {
                 die(js::error('注册失败!') . js::locate('back'));
@@ -80,10 +70,12 @@ class auser extends control
                 $_SESSION[USER_ID]   = $uid;
                 $_SESSION[USER_NAME] = $_POST["name"];
 
-                $rmd_user = $this->auser->getUserByRMDCode($rmd_code);
-                if (isset($rmd_user) && !empty($rmd_user)) {
-                    $rmd_user->gold_num = $rmd_user->gold_num + RMD_GOLD;
-                    $this->auser->updateUserGold($rmd_user);
+                if (!empty($_GET)) {
+                    $rmd_user = $this->auser->getById($_GET[RMD_UID]);
+                    if (isset($rmd_user) && !empty($rmd_user)) {
+                        $rmd_user->gold_num = $rmd_user->gold_num + RMD_GOLD;
+                        $this->auser->updateUserGold($rmd_user);
+                    }
                 }
                 die(js::locate(inlink('index')));
             }
@@ -139,7 +131,7 @@ class auser extends control
             $res->code = '201';
             $res->msg  = '不存在此用户!';
         } else {
-            $user->password = getRandChar(6);
+            $user->password = $this->getRandChar(6);
             $this->auser->update($user);
             if (dao::isError()) {
                 $res->code = '202';
@@ -164,21 +156,20 @@ class auser extends control
         return $user;
     }
 
+    public function getRandChar($length){
+        $str = null;
+        $strPol = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+        $max = strlen($strPol)-1;
+        for($i=0;$i<$length;$i++){
+            $str.=$strPol[rand(0,$max)];//rand($min,$max)生成介于min和max两个数之间的一个随机整数
+        }
+        return $str;
+    }
 
     public function insertBG($model) {
         $this->dao->insert('bf_user_freebg')->data($model)->exec();
         $lastId = $this->dao->lastInsertID();
         $model->id = $lastId;
         return $model;
-    }
-
-    public function getUserRMDCode() {
-        $userRMDCode = getRandChar(6);
-        $user_list = $this->auser->getUserByRMDCode($userRMDCode);
-        if (empty($user_list)) {
-            return $userRMDCode;
-        } else {
-            $this->getUserRMDCode();
-        }
     }
 }

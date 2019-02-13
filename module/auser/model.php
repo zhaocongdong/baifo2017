@@ -25,9 +25,6 @@ class auserModel extends model
     {
         return $this->dao->findById($id)->from('bf_user')->fetch();
     }
-    public function getUserByRMDCode($userRMDCode) {
-        return $this->dao->select()->from('bf_user')->where('mycode')->eq($userRMDCode)->fetch();
-    }
     public function getUserTitle($merit) {
         $list = $this->dao->select('tname as title')->from('bf_title')
             ->where('merit_start')->le($merit)
@@ -49,7 +46,7 @@ class auserModel extends model
             $user->rmd_uid = $_SESSION[RMD_UID];
         }
         $user->merit_num = 0; // 功德
-        $user->gold_num = 1000 + RMD_GOLD; // 银两默认1000
+        $user->gold_num = 1000; // 银两默认1000
         $this->dao->insert('bf_user')->data($user)
             ->check('name', 'unique')
             ->exec();

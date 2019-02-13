@@ -175,7 +175,7 @@ h1 {
 }
 
 .form_Info {
-    /*width: 616px;*/
+    width: 616px;
     margin-left: 28px;
     display: inline;
 }
@@ -191,7 +191,7 @@ h1 {
 }
 
 .form_Info .prompt {
-    /*float: right;*/
+    float: right;
     color: #737373;
     margin-top: 8px;
 }
@@ -202,7 +202,7 @@ h1 {
 }
 
 .long_Text .prompt {
-    /*width: 245px;*/
+    width: 245px;
     height: 35px;
     overflow: hidden;
 }
